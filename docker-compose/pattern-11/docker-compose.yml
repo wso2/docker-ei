@@ -1,0 +1,120 @@
+version: '3'
+services:
+  mysql_rdbms:
+    image: docker.wso2.com/ei-pattern11-rdbms:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/database/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  broker1:
+    image: docker.wso2.com/ei-pattern11-wso2ei-broker-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/broker1/Dockerfile
+    environment:
+      - SLEEP=30
+    ports:
+      - "1886:1886"
+      - "8886:8886"
+      - "5675:5675"
+      - "8675:8675"
+    depends_on:
+      - "mysql_rdbms"
+  broker2:
+    image: docker.wso2.com/ei-pattern11-wso2ei-broker-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/broker2/Dockerfile
+    environment:
+      - SLEEP=60
+    ports:
+      - "1887:1886"
+      - "8887:8886"
+      - "5676:5675"
+      - "8676:8675"
+    depends_on:
+      - "mysql_rdbms"
+      - "broker1"
+  business-process1:
+    image: docker.wso2.com/ei-pattern11-wso2ei-business-process-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/business-process1/Dockerfile
+    environment:
+      - SLEEP=30
+    depends_on:
+      - "mysql_rdbms"
+  business-process2:
+    image: docker.wso2.com/ei-pattern11-wso2ei-business-process-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/business-process2/Dockerfile
+    environment:
+      - SLEEP=60
+    depends_on:
+      - "mysql_rdbms"
+      - "business-process1"
+  analytics1:
+    image: docker.wso2.com/ei-pattern11-wso2ei-analytics-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/analytics1/Dockerfile
+    environment:
+      - SLEEP=30
+    depends_on:
+      - "mysql_rdbms"
+  analytics2:
+    image: docker.wso2.com/ei-pattern11-wso2ei-analytics-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/analytics2/Dockerfile
+    environment:
+      - SLEEP=90
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+  integrator1:
+    image: docker.wso2.com/ei-pattern11-wso2ei-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/integrator1/Dockerfile
+    environment:
+      - SLEEP=120
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+      - "analytics2"
+      - "broker1"
+      - "broker2"
+  integrator2:
+    image: docker.wso2.com/ei-pattern11-wso2ei-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/integrator2/Dockerfile
+    environment:
+      - SLEEP=150
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+      - "analytics2"
+      - "broker1"
+      - "broker2"
+      - "integrator1"
+  nginx:
+    image: docker.wso2.com/ei-pattern11-nginx:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-11/nginx/Dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - "analytics1"
+      - "analytics2"
+      - "broker1"
+      - "broker2"
+      - "business-process1"
+      - "business-process2"
+      - "integrator1"
+      - "integrator2"

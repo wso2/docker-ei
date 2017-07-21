@@ -66,9 +66,9 @@ function showUsageAndExit() {
   echo "[OPTIONAL] Puppet module name. If the module name is not specified \"product name\" will be used."
   echo
 
-  echoBold "Ex: ./build.sh -p 2"
+  echoBold "Ex: ./build.sh -p 2 -r puppet -l integrator|analytics|business-process|broker"
   echoBold "Ex: ./build.sh -l integrator|analytics|business-process|broker -o myorganization -i 1.0.0"
-  echoBold "Ex: ./build.sh -t wso2am-customized"
+  echoBold "Ex: ./build.sh -t wso2ei-customized"
   echo
   exit 1
 }

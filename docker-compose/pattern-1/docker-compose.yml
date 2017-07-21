@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mysql_rdbms:
+    image: docker.wso2.com/ei-pattern1-rdbms:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-1/database/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  integrator:
+    image: docker.wso2.com/ei-pattern1-wso2ei:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-1/integrator/Dockerfile
+    environment:
+      - SLEEP=100
+    ports:
+      - "9443:9443"
+      - "9763:9763"
+      - "8280:8280"
+      - "8243:8243"

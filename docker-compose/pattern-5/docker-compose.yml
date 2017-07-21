@@ -1,0 +1,39 @@
+version: '3'
+services:
+  mysql_rdbms:
+    image: docker.wso2.com/ei-pattern5-rdbms:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-5/database/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  integrator1:
+    image: docker.wso2.com/ei-pattern5-wso2ei-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-5/integrator1/Dockerfile
+    environment:
+      - SLEEP=30
+    depends_on:
+      - "mysql_rdbms"
+  integrator2:
+    image: docker.wso2.com/ei-pattern5-wso2ei-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-5/integrator2/Dockerfile
+    environment:
+      - SLEEP=60
+    depends_on:
+      - "mysql_rdbms"
+      - "integrator1"
+  nginx:
+    image: docker.wso2.com/ei-pattern5-nginx:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-5/nginx/Dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - "integrator1"
+      - "integrator2"
