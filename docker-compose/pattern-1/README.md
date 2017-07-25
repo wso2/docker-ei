@@ -26,6 +26,9 @@ https://docs.docker.com/compose/install/
 
 #### How to run
 
+The downloaded or cloned local copy of WSO2 Enterprise Integrator Docker artifacts will be referred as `DOCKER_HOME`.
+
+Navigate to `<DOCKER_HOME>/docker-compose/pattern-1`
 ```
 docker login docker.wso2.com 
 
@@ -34,7 +37,7 @@ docker-compose up -d
 
 This will deploy the following,
 
-* Mysql server (container) with WSO2_CONFIG_DB, WSO2_REG_DB and WSO2_USER_DB
+* Mysql server (container) with `WSO2_CONFIG_DB, WSO2_REG_DB and WSO2_USER_DB`
 * Integrator profile container
 
 #### How to test
