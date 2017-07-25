@@ -1,4 +1,4 @@
-### WSO2 Enterprise Integrator Pattern8 deployment with Docker compose
+### WSO2 Enterprise Integrator Pattern-8 deployment with Docker compose
 
 ![pattern-design](../patterns/design/wso2ei-6.1.1-pattern-8.png)
 
@@ -26,6 +26,10 @@ https://docs.docker.com/compose/install/
 
 #### How to run
 
+The downloaded or cloned local copy of WSO2 Enterprise Integrator Docker artifacts will be referred as `DOCKER_HOME`.
+
+Navigate to `<DOCKER_HOME>/docker-compose/pattern-8`
+
 ```
 docker login docker.wso2.com 
 
@@ -34,7 +38,7 @@ docker-compose up -d
 
 This will deploy the following,
 
-* Mysql server (container) with WSO2_CONFIG_DB, WSO2_REG_DB, WSO2_USER_DB, WSO2_MB_STORE_DB and WSO2_METRICS_DB
+* Mysql server (container) with `WSO2_CONFIG_DB, WSO2_REG_DB, WSO2_USER_DB, WSO2_MB_STORE_DB and WSO2_METRICS_DB`
 * Two Broker profile containers run as cluster
 * Nginx Load Balancer container
 
