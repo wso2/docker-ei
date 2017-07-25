@@ -1,0 +1,64 @@
+version: '3'
+services:
+  mysql_rdbms:
+    image: docker.wso2.com/ei-pattern6-rdbms:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/database/Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+  analytics1:
+    image: docker.wso2.com/ei-pattern6-wso2ei-analytics-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/analytics1/Dockerfile
+    environment:
+      - SLEEP=30
+    depends_on:
+      - "mysql_rdbms"
+  analytics2:
+    image: docker.wso2.com/ei-pattern6-wso2ei-analytics-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/analytics2/Dockerfile
+    environment:
+      - SLEEP=90
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+  integrator1:
+    image: docker.wso2.com/ei-pattern6-wso2ei-node1:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/integrator1/Dockerfile
+    environment:
+      - SLEEP=150
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+      - "analytics2"
+  integrator2:
+    image: docker.wso2.com/ei-pattern6-wso2ei-node2:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/integrator2/Dockerfile
+    environment:
+      - SLEEP=180
+    depends_on:
+      - "mysql_rdbms"
+      - "analytics1"
+      - "analytics2"
+      - "integrator1"
+  nginx:
+    image: docker.wso2.com/ei-pattern6-nginx:6.1.1
+    build:
+      context: ../
+      dockerfile: pattern-6/nginx/Dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - "analytics1"
+      - "analytics2"
+      - "integrator1"
+      - "integrator2"
