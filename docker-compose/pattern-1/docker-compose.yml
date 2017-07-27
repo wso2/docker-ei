@@ -13,7 +13,7 @@ services:
       context: ../
       dockerfile: pattern-1/integrator/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=30
     ports:
       - "9443:9443"
       - "9763:9763"

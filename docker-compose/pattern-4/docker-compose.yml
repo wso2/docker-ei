@@ -13,7 +13,7 @@ services:
       context: ../
       dockerfile: pattern-4/broker/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=30
     ports:
       - "9446:9446"
       - "9766:9766"

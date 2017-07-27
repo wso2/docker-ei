@@ -13,7 +13,7 @@ services:
       context: ../
       dockerfile: pattern-3/business-process/Dockerfile
     environment:
-      - SLEEP=100
+      - SLEEP=30
     ports:
       - "9445:9445"
       - "9765:9765"
