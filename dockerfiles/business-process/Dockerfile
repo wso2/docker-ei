@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,20 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License
-
+#
 # ------------------------------------------------------------------------
 
-FROM ubuntu:16.04
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
-ENV DEBIAN_FRONTEND noninteractive
+# set to product base image
+FROM wso2ei-base:6.1.1
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests \
-                       wget \
-                       puppet \
-                       iproute2 \
-                       zip \
-                       unzip \
-                       net-tools \
-    && puppet module install puppetlabs/stdlib \
-    && puppet module install 7terminals-java
+# expose business-process ports
+EXPOSE 9445
+
+# set entrypoint to business-process startup script
+ENTRYPOINT ${WSO2_SERVER_HOME}/bin/business-process.sh

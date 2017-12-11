@@ -1,7 +1,6 @@
-#!/bin/bash
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,16 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License
-
+#
 # ------------------------------------------------------------------------
 
-set -e
+# set to product base image
+FROM wso2ei-base:6.1.1
 
-product_name=wso2ei
-product_version=6.1.1
+# expose analytics ports
+EXPOSE 9444 9612 9712
 
-prgdir=$(dirname "$0")
-script_path=$(cd "$prgdir"; pwd)
-common_folder=$(cd "${script_path}/common/scripts/"; pwd)
-
-bash ${common_folder}/docker-build.sh -n ${product_name} -d ${script_path} -v ${product_version} $*
+# set entrypoint to analytics startup script
+ENTRYPOINT ${WSO2_SERVER_HOME}/bin/analytics.sh
