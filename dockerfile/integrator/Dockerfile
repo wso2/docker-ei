@@ -1,7 +1,6 @@
-#!/bin/bash
 # ------------------------------------------------------------------------
 #
-# Copyright 2016 WSO2, Inc. (http://wso2.com)
+# Copyright 2017 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License
-
+#
 # ------------------------------------------------------------------------
 
-set -e
+# set to product base image
+FROM wso2ei-base:6.1.1
 
-self_path=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source "${self_path}/../scripts/base.sh"
+# expose integrator ports
+EXPOSE 8280 8243 9443
 
-echoBold "Building docker base image..."
-docker build -t wso2/wso2base:ubuntu-16.04 ${self_path}
+# set entrypoint to integrator startup script
+ENTRYPOINT ${WSO2_SERVER_HOME}/bin/integrator.sh
