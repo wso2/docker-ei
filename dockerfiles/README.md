@@ -7,6 +7,7 @@ provided by WSO2 Enterprise Integrator 6.1.1, namely : <br>
 4. MSF4J
 5. Analytics
 
+
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
 ```
@@ -69,6 +70,7 @@ in order to obtain latest bug fixes and updates for the product.
     
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
+
 ## How to update configurations
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset of integrator profile using `carbon.xml` is as follows.
@@ -93,10 +95,9 @@ wso2ei-integrator:6.1.1
 
 >In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.1.1/conf folder of the container.
 
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
-
 * [Docker run command reference](https://docs.docker.com/engine/reference/run/)
-
 * [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
