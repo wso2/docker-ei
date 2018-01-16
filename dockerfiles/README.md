@@ -56,7 +56,7 @@ in order to obtain latest bug fixes and updates for the product.
 - For msf4j,
     + `docker run -p 9090:9090 wso2ei-msf4j:6.1.1`
 - For analytics,
-    + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-msf4j:6.1.1`
+    + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-analytics:6.1.1`
 
 ##### 6. Accessing management console per each profile.
 - For integrator,
