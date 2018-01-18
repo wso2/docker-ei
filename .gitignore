@@ -1,28 +1,46 @@
-# Compiled class file
-*.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
-*.ear
 *.zip
 *.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
 
 # IntelliJ IDEA
-.idea/
-*.iml
+.idea
 
-target/
+docker-compose/integrator-analytics/integrator/repository/deployment/server/carbonapps/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/carbonapps/.gitkeep
+
+docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml
+
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default
+
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/registry.xml
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/synapse.xml
+
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/imports
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/.gitkeep
+
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/.gitkeep
+
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/.gitkeep
+
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/.gitkeep
+
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences
+docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/*
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/fault.xml
+!docker-compose/integrator-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/main.xml
+
+docker-compose/integrator-analytics/mysql/data/*
+!docker-compose/integrator-analytics/mysql/data/.gitkeep
