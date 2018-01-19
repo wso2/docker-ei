@@ -1,6 +1,6 @@
-# WSO2 Enterprise Integrator for Integration use-cases with Analytics support
+# WSO2 Enterprise Integrator <br> For Integration Use-cases with Analytics Support
 
-![alt tag](integrator-analytics.png)
+![alt tag](deployment-diagram.png)
 
 ## Prerequisites
 
@@ -8,10 +8,10 @@
 
 ## How to Run
 
-  1. Pull necessary images or build them using its [Dockerfile](../../dockerfiles/README.md):
+  1. Pull necessary images or build them using its [Dockerfile](../../dockerfiles):
      ```
-     docker pull wso2ei-analytics:6.1.1
      docker pull wso2ei-integrator:6.1.1
+     docker pull wso2ei-analytics:6.1.1
      ```
 
   2. Pull MySQL Docker image:
@@ -19,18 +19,18 @@
      docker pull mysql:5.7.19
      ```
 
-  3. Download the latest Docker resources release zip for the product from [releases](https://github.com/wso2/docker-ei/releases) <br>
-     page or clone this repository and switch to latest tag.
+  3. Download the latest Docker resources for the product from [releases](https://github.com/wso2/docker-ei/releases) <br>
+     page or clone this repository to your home machine and switch to latest tag.
 
   4. Switch to docker-compose/integrator-analytics folder:
      ```
      cd [docker-ei]/docker-compose/integrator-analytics
      ```
 
-  5. Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j/) v5.1.34 and copy its JAR file to following path:
+  5. Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j/) v5.1.34 and copy its JAR file to following locations:
      ```
-     cp mysql-connector-java-5.1.34-bin.jar [docker-ei]/docker-compose/integrator-analytics/integrator/lib
-     cp mysql-connector-java-5.1.34-bin.jar [docker-ei]/docker-compose/integrator-analytics/analytics/lib
+     [docker-ei]/docker-compose/integrator-analytics/integrator/lib
+     [docker-ei]/docker-compose/integrator-analytics/analytics/lib
      ```
 
   6. Execute following Docker Compose command to start the deployment:
