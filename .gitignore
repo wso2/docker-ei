@@ -7,6 +7,8 @@
 # IntelliJ IDEA
 .idea
 
+# For integrator-analytics
+
 docker-compose/integrator-analytics/integrator/repository/deployment/server/carbonapps/*
 !docker-compose/integrator-analytics/integrator/repository/deployment/server/carbonapps/.gitkeep
 
@@ -44,3 +46,83 @@ docker-compose/integrator-analytics/integrator/repository/deployment/server/syna
 
 docker-compose/integrator-analytics/mysql/data/*
 !docker-compose/integrator-analytics/mysql/data/.gitkeep
+
+# For integrator-broker-analytics
+
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/carbonapps/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/carbonapps/.gitkeep
+
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/eventpublishers/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml
+
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default
+
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/registry.xml
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/synapse.xml
+
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/imports
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/.gitkeep
+
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/.gitkeep
+
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/.gitkeep
+
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/.gitkeep
+
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences
+docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/*
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/fault.xml
+!docker-compose/integrator-broker-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/main.xml
+
+docker-compose/integrator-broker-analytics/mysql/data/*
+!docker-compose/integrator-broker-analytics/mysql/data/.gitkeep
+
+# For integrator-broker-bps-analytics
+
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/carbonapps/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/carbonapps/.gitkeep
+
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/eventpublishers/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml
+
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default
+
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/registry.xml
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/synapse.xml
+
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/imports
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/imports/.gitkeep
+
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/inbound-endpoints/.gitkeep
+
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/local-entries/.gitkeep
+
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/proxy-services/.gitkeep
+
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences
+docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/*
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/fault.xml
+!docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/server/synapse-configs/default/sequences/main.xml
+
+docker-compose/integrator-broker-bps-analytics/mysql/data/*
+!docker-compose/integrator-broker-bps-analytics/mysql/data/.gitkeep
