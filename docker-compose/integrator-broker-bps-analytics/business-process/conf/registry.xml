@@ -45,7 +45,7 @@
         <readOnly>false</readOnly>
         <registryRoot>/</registryRoot>
         <enableCache>true</enableCache>
-        <cacheId>root@jdbc:mysql://ei-mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true</cacheId>
+        <cacheId>root@jdbc:mysql://wso2ei-mysql:3306/WSO2_REGISTRY_DB</cacheId>
     </remoteInstance>
 
     <mount path="/_system/config" overwrite="virtual">

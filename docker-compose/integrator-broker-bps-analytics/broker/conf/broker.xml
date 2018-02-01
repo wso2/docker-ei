@@ -33,7 +33,7 @@ This file is ciphertool compliant. Refer PRODUCT_HOME/repository/conf/security/c
         The node ID of each member should ALWAYS be unique.-->
         <nodeID>default</nodeID>
         <!-- Thrift is used to maintain and sync slot (message groups) ranges between MB nodes. -->
-        <thriftServerHost>ei-broker</thriftServerHost>
+        <thriftServerHost>wso2ei-broker</thriftServerHost>
         <thriftServerPort>7614</thriftServerPort>
         <thriftSOTimeout>0</thriftSOTimeout>
         <!--Thrift server reconnect timeout. Value specified in SECONDS-->

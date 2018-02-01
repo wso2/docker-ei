@@ -1,8 +1,9 @@
 version: '2.3'
 services:
-  ei-mysql:
-    image: mysql:5.7.19
-    container_name: ei-mysql
+  wso2ei-mysql:
+    image: mysql:5.7.20
+    container_name: wso2ei-mysql
+    hostname: wso2ei-mysql
     ports:
       - 3306
     environment:
@@ -18,9 +19,10 @@ services:
       timeout: 3s
       retries: 10
       start_period: 10s
-  ei-analytics:
+  wso2ei-analytics:
     image: wso2ei-analytics:6.1.1
-    container_name: ei-analytics
+    container_name: wso2ei-analytics
+    hostname: wso2ei-analytics
     ports:
       - 9444:9444
       - 9612:9612
@@ -34,24 +36,26 @@ services:
       retries: 10
       start_period: 30s
     volumes:
-      # mounting JDBC connector jar
-      - ./analytics/lib/mysql-connector-java-5.1.34-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.34-bin.jar
+      # mounting third-party libraries
+      - ./analytics/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./analytics/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/datasources/master-datasources.xml
       - ./analytics/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/registry.xml
       - ./analytics/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/user-mgt.xml
+      - ./analytics/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/carbon.xml
       - ./analytics/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/datasources/analytics-datasources.xml
       # mounting keystores
       - ./analytics/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/repository/resources/security/wso2carbon.jks
       - ./analytics/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/repository/resources/security/client-truststore.jks
     depends_on:
-      ei-mysql:
+      wso2ei-mysql:
         condition: service_healthy
     links:
-      - ei-mysql
-  ei-integrator:
+      - wso2ei-mysql
+  wso2ei-integrator:
     image: wso2ei-integrator:6.1.1
-    container_name: ei-integrator
+    container_name: wso2ei-integrator
+    hostname: wso2ei-integrator
     ports:
       - 9443:9443
       - 8243:8243
@@ -63,13 +67,15 @@ services:
       retries: 10
       start_period: 60s
     volumes:
-      # mounting JDBC connector jar
-      - ./integrator/lib/mysql-connector-java-5.1.34-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.34-bin.jar
+      # mounting third-party libraries
+      - ./integrator/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./integrator/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/conf/datasources/master-datasources.xml
       - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/conf/user-mgt.xml
       - ./integrator/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/conf/registry.xml
       - ./integrator/conf/synapse.properties:/home/wso2carbon/wso2ei-6.1.1/conf/synapse.properties
+      - ./integrator/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/conf/carbon.xml
+      - ./integrator/conf/axis2/axis2.xml:/home/wso2carbon/wso2ei-6.1.1/conf/axis2/axis2.xml
       # mounting carbon apps
       - ./integrator/repository/deployment/server/carbonapps:/home/wso2carbon/wso2ei-6.1.1/repository/deployment/server/carbonapps
       # mounting analytics event publishers
@@ -80,10 +86,10 @@ services:
       - ./integrator/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.1.1/epository/resources/security/wso2carbon.jks
       - ./integrator/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.1.1/repository/resources/security/client-truststore.jks
     depends_on:
-      ei-mysql:
+      wso2ei-mysql:
         condition: service_healthy
-      ei-analytics:
+      wso2ei-analytics:
         condition: service_healthy
     links:
-      - ei-mysql
-      - ei-analytics
+      - wso2ei-mysql
+      - wso2ei-analytics

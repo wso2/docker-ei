@@ -69,7 +69,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://ei-mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true</url>
+                    <url>jdbc:mysql://wso2ei-mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -90,7 +90,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:mysql://ei-mysql:3306/WSO2_USER_DB?autoReconnect=true</url>
+                    <url>jdbc:mysql://wso2ei-mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
@@ -111,7 +111,7 @@
             <definition type="RDBMS">
                 <configuration>
                     <driverClassName>com.mysql.jdbc.Driver</driverClassName>
-                    <url>jdbc:mysql://ei-mysql:3306/WSO2_MB_STORE_DB?autoReconnect=true</url>
+                    <url>jdbc:mysql://wso2ei-mysql:3306/WSO2_MB_STORE_DB?autoReconnect=true&amp;useSSL=false</url>
                     <username>root</username>
                     <password>root</password>
                     <maxActive>50</maxActive>
