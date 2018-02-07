@@ -20,7 +20,7 @@
 FROM wso2ei-base:6.1.1
 
 # expose analytics ports
-EXPOSE 9444 9612 9712
+EXPOSE 9444 9612 9712 7612 7712
 
 # set entrypoint to analytics startup script
 ENTRYPOINT ${WSO2_SERVER_HOME}/bin/analytics.sh

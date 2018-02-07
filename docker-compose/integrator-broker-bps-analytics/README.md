@@ -42,8 +42,9 @@
      > Note that SSL is by default set to false for all MySQL datasource configurations as latest connectors restrict SSL communication only for MySQL servers with verified server certificates.
      
   6. Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.19/) JAR v3.2.19,
-     [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1
-     to your local machine <br> and copy them to following location :
+     [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
+     [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br>
+     to your local machine and copy them to following location :
      ```
      [docker-ei]/docker-compose/integrator-broker-bps-analytics/integrator/lib
      ```
