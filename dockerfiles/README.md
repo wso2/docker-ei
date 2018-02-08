@@ -7,6 +7,8 @@ provided by WSO2 Enterprise Integrator 6.1.1, namely : <br>
 4. MSF4J
 5. Analytics
 
+## Prerequisites
+* [Docker](https://www.docker.com/get-docker) v17.09.0 or above
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
