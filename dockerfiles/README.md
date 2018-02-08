@@ -19,11 +19,11 @@ git clone https://github.com/wso2/docker-ei.git
 >The local copy of the `dockerfiles` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK and WSO2 Enterprise Integrator distributions to `<DOCKERFILE_HOME>/base/files`
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html),
-copy that to and extract in `<DOCKERFILE_HOME>/base/files`.
-- Download [WSO2 Enterprise Integrator 6.1.1 distribution](https://wso2.com/integration), 
-copy that to and extract in `<DOCKERFILE_HOME>/base/files`.
-- Once both JDK and WSO2 Enterprise Integrator distribution is extracted, it may look as follows:
+- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and
+extract into `<DOCKERFILE_HOME>/base/files`.
+- Download [WSO2 Enterprise Integrator 6.1.1 distribution](https://wso2.com/integration) and 
+extract into `<DOCKERFILE_HOME>/base/files`.
+- Once both JDK and WSO2 Enterprise Integrator distribution is extracted, it should be as follows:
 ```
 <DOCKERFILE_HOME>/base/files/jdk<version>
 <DOCKERFILE_HOME>/base/files/wso2ei-6.1.1
