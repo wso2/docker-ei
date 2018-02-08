@@ -32,10 +32,10 @@ ARG FILES=./files
 ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.1.1
 ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 # set jdk configurations
 ARG JDK_DIST=jdk1.8.0*
-ARG JAVA_HOME=${USER_HOME}/${JDK_DIST}
+ARG JAVA_HOME=${USER_HOME}/java
 
 # install required packages
 RUN apt-get update && \
@@ -48,8 +48,8 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
 # copy the jdk and wso2 product distributions to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${USER_HOME}/${JDK_DIST}
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${USER_HOME}/${WSO2_SERVER_DIST}
+COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
 
 # set the user and work directory
 USER ${USER}
