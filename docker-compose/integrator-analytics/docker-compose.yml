@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   wso2ei-mysql:
-    image: mysql:5.7.20
+    image: dockerhub.wso2.com/mysql:5.7.20
     container_name: wso2ei-mysql
     hostname: wso2ei-mysql
     ports:
@@ -20,7 +20,7 @@ services:
       retries: 10
       start_period: 10s
   wso2ei-analytics:
-    image: wso2ei-analytics:6.1.1
+    image: dockerhub.wso2.com/wso2ei-analytics:6.1.1
     container_name: wso2ei-analytics
     hostname: wso2ei-analytics
     ports:
@@ -53,7 +53,7 @@ services:
     links:
       - wso2ei-mysql
   wso2ei-integrator:
-    image: wso2ei-integrator:6.1.1
+    image: dockerhub.wso2.com/wso2ei-integrator:6.1.1
     container_name: wso2ei-integrator
     hostname: wso2ei-integrator
     ports:
