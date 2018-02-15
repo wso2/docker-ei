@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   wso2ei-mysql:
-    image: dockerhub.wso2.com/mysql:5.7.20
+    image: mysql:5.7.20
     container_name: wso2ei-mysql
     hostname: wso2ei-mysql
     ports:
