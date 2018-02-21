@@ -36,8 +36,6 @@ services:
       retries: 10
       start_period: 30s
     volumes:
-      # mounting third-party libraries
-      - ./analytics/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./analytics/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/datasources/master-datasources.xml
       - ./analytics/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/registry.xml
@@ -70,8 +68,6 @@ services:
       retries: 10
       start_period: 60s
     volumes:
-      # mounting third-party libraries
-      - ./broker/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./broker/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/broker/conf/datasources/master-datasources.xml
       - ./broker/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/broker/conf/registry.xml
@@ -104,12 +100,6 @@ services:
       retries: 10
       start_period: 90s
     volumes:
-      # mounting third-party libraries
-      - ./integrator/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
-      - ./integrator/lib/andes-client-3.2.19.jar:/home/wso2carbon/wso2ei-6.1.1/lib/andes-client-3.2.19.jar
-      - ./integrator/lib/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar:/home/wso2carbon/wso2ei-6.1.1/lib/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar
-      - ./integrator/lib/org.wso2.securevault-1.0.0-wso2v2.jar:/home/wso2carbon/wso2ei-6.1.1/lib/org.wso2.securevault-1.0.0-wso2v2.jar
-
       # mounting configurations
       - ./integrator/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/conf/datasources/master-datasources.xml
       - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/conf/user-mgt.xml
