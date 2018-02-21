@@ -32,7 +32,7 @@ ARG FILES=./files
 ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.1.1
 ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_DIST}
 # set jdk configurations
 ARG JDK_DIST=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
@@ -50,6 +50,8 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 # copy the jdk and wso2 product distributions to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
+# copy the mysql connector jar to server distribution
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
 USER ${USER}

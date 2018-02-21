@@ -19,6 +19,19 @@
 # set to product base image
 FROM wso2ei-base:6.1.1
 
+# set user configurations
+ARG USER=wso2carbon
+ARG USER_HOME=/home/${USER}
+# set dependant libs directory
+ARG LIB=./lib/*
+# set wso2 product configurations
+ARG WSO2_SERVER=wso2ei
+ARG WSO2_SERVER_VERSION=6.1.1
+ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_DIST}
+
+COPY --chown=wso2carbon:wso2 ${LIB} ${WSO2_SERVER_HOME}/lib/
+
 # expose integrator ports
 EXPOSE 8280 8243 9443
 
