@@ -18,7 +18,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 >The local copy of the `dockerfiles` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 Enterprise Integrator distributions and MySQL connector to `<DOCKERFILE_HOME>/base/files`
+##### 2. Add JDK, WSO2 Enterprise Integrator distribution and required libraries
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and
 extract into `<DOCKERFILE_HOME>/base/files`.
 - Download [WSO2 Enterprise Integrator 6.1.1 distribution](https://wso2.com/integration) and 
@@ -29,6 +29,12 @@ extract into `<DOCKERFILE_HOME>/base/files`.
 <DOCKERFILE_HOME>/base/files/wso2ei-6.1.1
 ```
 - Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<DOCKERFILE_HOME>/base/files` folder
+- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.19/) JAR v3.2.19,
+           [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
+           [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 to 
+          <br> ```
+           [docker-ei]/dockerfiles/integrator/lib
+           ```. (These libraries are needed for the communication between Integrator & Message Broker)
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
@@ -40,13 +46,6 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 4. Build docker images specific to each profile.
 - For integrator, navigate to `<DOCKERFILE_HOME>/integrator` directory. <br>
   Execute `docker build` command as shown below. 
-    + Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.19/) JAR v3.2.19,
-           [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
-           [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br>
-           to 
-           ```
-           [docker-ei]/dockerfiles/integrator/lib
-           ```. (These libraries are needed for the communication between Integrator & Message Broker)
     + `docker build -t wso2ei-integrator:6.1.1 .`
 - For business process, navigate to `<DOCKERFILE_HOME>/business-process` directory. <br>
   Execute `docker build` command as shown below. 
