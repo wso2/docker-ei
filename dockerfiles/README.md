@@ -46,7 +46,7 @@ in order to obtain latest bug fixes and updates for the product.
            to 
            ```
            [docker-ei]/dockerfiles/integrator/lib
-           ```
+           ```. (These libraries are needed for the communication between Integrator & Message Broker)
     + `docker build -t wso2ei-integrator:6.1.1 .`
 - For business process, navigate to `<DOCKERFILE_HOME>/business-process` directory. <br>
   Execute `docker build` command as shown below. 
