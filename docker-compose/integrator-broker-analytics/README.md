@@ -30,36 +30,19 @@
      cd [docker-ei]/docker-compose/integrator-broker-analytics
      ```
 
-  5. Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) JAR v5.1.45 to your local machine and copy to following locations :
-     ```
-     [docker-ei]/docker-compose/integrator-broker-analytics/integrator/lib
-     [docker-ei]/docker-compose/integrator-broker-analytics/broker/lib
-     [docker-ei]/docker-compose/integrator-broker-analytics/analytics/lib
-     ```
-     
-     > Note that SSL is by default set to false for all MySQL datasource configurations as latest connectors restrict SSL communication only for MySQL servers with verified server certificates.
-     
-  6. Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.19/) JAR v3.2.19,
-     [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
-     [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br>
-     to your local machine and copy them to following location :
-     ```
-     [docker-ei]/docker-compose/integrator-broker-analytics/integrator/lib
-     ```
-
-  7. Before to start deployment process, add a host entry pointing to the Docker host machine IP address. <br>
+  5. Before to start deployment process, add a host entry pointing to the Docker host machine IP address. <br>
      For an example if the Docker host is accessible via 127.0.0.1 on a Linux or Mac machine, add <br>
      following entry to /etc/hosts file :
      ```
      127.0.0.1 wso2ei-integrator wso2ei-analytics wso2ei-broker
      ```
      
-  8. Execute following Docker Compose command to start the deployment :
+  6. Execute following Docker Compose command to start the deployment :
      ```
      docker-compose up
      ```
 
-  9. Access management console via a web browser :
+  7. Access management console via a web browser :
      ```
      For Integrator - https://wso2ei-integrator:9443/carbon
      For Analytics - https://wso2ei-analytics:9444/carbon
