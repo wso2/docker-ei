@@ -36,8 +36,6 @@ services:
       retries: 10
       start_period: 30s
     volumes:
-      # mounting third-party libraries
-      - ./analytics/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./analytics/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/datasources/master-datasources.xml
       - ./analytics/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/analytics/conf/registry.xml
@@ -67,8 +65,6 @@ services:
       retries: 10
       start_period: 60s
     volumes:
-      # mounting third-party libraries
-      - ./integrator/lib/mysql-connector-java-5.1.45-bin.jar:/home/wso2carbon/wso2ei-6.1.1/lib/mysql-connector-java-5.1.45-bin.jar
       # mounting configurations
       - ./integrator/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/conf/datasources/master-datasources.xml
       - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/conf/user-mgt.xml

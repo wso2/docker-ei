@@ -19,6 +19,12 @@
 # set to product base image
 FROM wso2ei-base:6.1.1
 
+# set dependant files directory
+ARG FILES=./files
+
+# copy the mysql connector jar to server distribution
+COPY --chown=wso2carbon:wso2 ${FILES} ${WSO2_SERVER_HOME}/lib/
+
 # expose integrator ports
 EXPOSE 8280 8243 9443
 
