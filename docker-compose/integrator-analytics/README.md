@@ -8,12 +8,11 @@
 
 ## How to Run
 
-  1. Pull necessary images or build them using its [Dockerfile](../../dockerfiles) :
-     ```
-     docker pull wso2ei-integrator:6.1.1
-     docker pull wso2ei-analytics:6.1.1
-     ```
-
+  1. Build Integrator and Analytics Images using [Dockerfiles](../../README.md) 
+     > In the `docker-compose.yml`, remove the `dockerhub.wso2.com/` prefix from the `image` name
+       
+     > For example, change the line `image: dockerhub.wso2.com/wso2ei-analytics:2.1.0` to `image: wso2ei-analytics:2.1.0`
+    
   2. Pull MySQL Docker image :
      ```
      docker pull mysql:5.7.20
