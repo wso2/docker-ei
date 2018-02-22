@@ -8,14 +8,17 @@
 
 ## How to Run
 
-  1. Pull necessary images or build them using their [Dockerfiles](../../dockerfiles) :
+  1. Pull necessary images from dockerhub.wso2.com :
      ```
      docker pull wso2ei-integrator:6.1.1
      docker pull wso2ei-broker:6.1.1
      docker pull wso2ei-business-process:6.1.1
      docker pull wso2ei-analytics:6.1.1
      ```
-
+        >  By default we refer to the latest [WUM](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products) updated Product Docker Images in here. 
+          
+     You can also build the required Docker Images using its [Dockerfile](../../dockerfiles).
+     
   2. Pull MySQL Docker image :
      ```
      docker pull mysql:5.7.20
