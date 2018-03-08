@@ -20,7 +20,7 @@ services:
       retries: 10
       start_period: 20s
   wso2ei-analytics:
-    image: wso2ei-analytics:6.1.1
+    image: dockerhub.wso2.com/wso2ei-analytics:6.1.1
     container_name: wso2ei-analytics
     hostname: wso2ei-analytics
     ports:
@@ -51,7 +51,7 @@ services:
     links:
       - wso2ei-mysql
   wso2ei-business-process:
-    image: wso2ei-business-process:6.1.1
+    image: dockerhub.wso2.com/wso2ei-business-process:6.1.1
     container_name: wso2ei-business-process
     hostname: wso2ei-business-process
     ports:
@@ -84,7 +84,7 @@ services:
       - wso2ei-mysql
       - wso2ei-analytics
   wso2ei-integrator:
-    image: wso2ei-integrator:6.1.1
+    image: dockerhub.wso2.com/wso2ei-integrator:6.1.1
     container_name: wso2ei-integrator
     hostname: wso2ei-integrator
     ports:
@@ -103,7 +103,6 @@ services:
       - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/conf/user-mgt.xml
       - ./integrator/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/conf/registry.xml
       - ./integrator/conf/synapse.properties:/home/wso2carbon/wso2ei-6.1.1/conf/synapse.properties
-      - ./integrator/conf/jndi.properties:/home/wso2carbon/wso2ei-6.1.1/conf/jndi.properties
       - ./integrator/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/conf/carbon.xml
       - ./integrator/conf/axis2/axis2.xml:/home/wso2carbon/wso2ei-6.1.1/conf/axis2/axis2.xml
       # mounting carbon apps
