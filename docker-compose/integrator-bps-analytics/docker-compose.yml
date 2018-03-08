@@ -69,9 +69,9 @@ services:
       - ./business-process/conf/datasources/activiti-datasources.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/datasources/activiti-datasources.xml
       - ./business-process/conf/etc/tasks-config.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/etc/tasks-config.xml
       - ./business-process/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/registry.xml
+      - ./business-process/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/carbon.xml
       - ./business-process/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/user-mgt.xml
       - ./business-process/conf/bps.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/bps.xml
-      - ./business-process/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/conf/carbon.xml
       # mounting keystores
       - ./business-process/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/repository/resources/security/wso2carbon.jks
       - ./business-process/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.1.1/wso2/business-process/repository/resources/security/client-truststore.jks
@@ -124,4 +124,3 @@ services:
       - wso2ei-mysql
       - wso2ei-analytics
       - wso2ei-business-process
-
