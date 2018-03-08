@@ -103,7 +103,6 @@ services:
       - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.1.1/conf/user-mgt.xml
       - ./integrator/conf/registry.xml:/home/wso2carbon/wso2ei-6.1.1/conf/registry.xml
       - ./integrator/conf/synapse.properties:/home/wso2carbon/wso2ei-6.1.1/conf/synapse.properties
-      - ./integrator/conf/carbon.xml:/home/wso2carbon/wso2ei-6.1.1/conf/carbon.xml
       - ./integrator/conf/axis2/axis2.xml:/home/wso2carbon/wso2ei-6.1.1/conf/axis2/axis2.xml
       # mounting carbon apps
       - ./integrator/repository/deployment/server/carbonapps:/home/wso2carbon/wso2ei-6.1.1/repository/deployment/server/carbonapps
