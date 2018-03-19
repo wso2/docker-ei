@@ -13,7 +13,7 @@
             
 ## How to Run
 
-  1. Clone WSO2 API Manager Docker git repository.
+  1. Clone WSO2 Enterprise Integrator Docker git repository.
      ```
      git clone https://github.com/wso2/docker-ei
      ```
