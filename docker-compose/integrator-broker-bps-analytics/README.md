@@ -30,13 +30,14 @@
      ```
      127.0.0.1 wso2ei-integrator wso2ei-analytics wso2ei-broker wso2ei-business-process
      ```
-          
+               
   4. Execute following Docker Compose command to start the deployment :
      ```
      docker-compose up
      ```
      
   5. Access management console via a web browser :
+
      ```
      For Integrator - https://wso2ei-integrator:9443/carbon
      For Analytics - https://wso2ei-analytics:9444/carbon
