@@ -17,14 +17,18 @@
      ```
      git clone https://github.com/wso2/docker-ei
      ```
-     > Note that the local copy of `docker-ei` repository will be referred to as `[docker-ei]` from this point onwards.
+     > If you are to try out an already released zip of this repo, please ignore this 1st step.
 
   2. Switch to `docker-compose/integrator-broker-bps-analytics` folder.
      ```
      cd [docker-ei]/docker-compose/integrator-broker-bps-analytics
      ```
+     > If you are to try out an already released zip of this repo, please ignore this 2nd step also. 
+     Instead, extract the zip file and directly browse to `docker-ei-<released-version>/docker-compose/integrator-broker-bps-analytics` folder. 
+     
+     > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
+     i.e. for example: <br> git checkout tags/v6.1.1.4 and continue below steps.
 
-               
   4. Execute following Docker Compose command to start the deployment.
      ```
      docker-compose up
