@@ -19,18 +19,18 @@
      ```
      > Note that the local copy of `docker-ei` repository will be referred to as `[docker-ei]` from this point onwards.
 
-  2. Switch to docker-compose/integrator-broker-bps-analytics folder :
+  2. Switch to `docker-compose/integrator-broker-bps-analytics` folder.
      ```
      cd [docker-ei]/docker-compose/integrator-broker-bps-analytics
      ```
 
                
-  4. Execute following Docker Compose command to start the deployment :
+  4. Execute following Docker Compose command to start the deployment.
      ```
      docker-compose up
      ```
      
-  5. Access management console via a web browser :
+  5. Access management console via a web browser.
 
      ```
      For Integrator - https://localhost:9443/carbon

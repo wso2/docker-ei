@@ -19,17 +19,17 @@
      ```
      > Note that the local copy of `docker-ei` repository will be referred to as `[docker-ei]` from this point onwards.
 
-  2. Switch to docker-compose/integrator-broker-analytics folder :
+  2. Switch to `docker-compose/integrator-broker-analytics` folder.
      ```
      cd [docker-ei]/docker-compose/integrator-broker-analytics
      ```
 
-  3. Execute following Docker Compose command to start the deployment :
+  3. Execute following Docker Compose command to start the deployment.
      ```
      docker-compose up
      ```
 
-  4. Access management console via a web browser :
+  4. Access management console via a web browser.
      ```
      For Integrator - https://localhost:9443/carbon
      For Analytics - https://localhost:9444/carbon
