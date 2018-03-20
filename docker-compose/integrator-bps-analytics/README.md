@@ -33,6 +33,6 @@
   4. Access management console via a web browser.
      ```
      For Integrator - https://localhost:9443/carbon
-     For Analytics - https://localhost:9444/carbon
+     For Analytics - https://localhost:9444/portal
      For Business Process - https://localhost:9445/carbon
      ```
