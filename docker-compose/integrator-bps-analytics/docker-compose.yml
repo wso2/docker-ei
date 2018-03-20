@@ -20,7 +20,7 @@ services:
       retries: 10
       start_period: 20s
   wso2ei-analytics:
-    image: wso2ei-analytics:6.1.1
+    image: docker.wso2.com/wso2ei-analytics:6.1.1
     container_name: wso2ei-analytics
     hostname: wso2ei-analytics
     ports:
@@ -51,7 +51,7 @@ services:
     links:
       - wso2ei-mysql
   wso2ei-business-process:
-    image: wso2ei-business-process:6.1.1
+    image: docker.wso2.com/wso2ei-business-process:6.1.1
     container_name: wso2ei-business-process
     hostname: wso2ei-business-process
     ports:
@@ -84,7 +84,7 @@ services:
       - wso2ei-mysql
       - wso2ei-analytics
   wso2ei-integrator:
-    image: wso2ei-integrator:6.1.1
+    image: docker.wso2.com/wso2ei-integrator:6.1.1
     container_name: wso2ei-integrator
     hostname: wso2ei-integrator
     ports:
