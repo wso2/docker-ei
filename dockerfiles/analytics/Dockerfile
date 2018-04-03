@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.1.1
+FROM wso2ei-base:6.2.0
 
 # expose analytics ports
 EXPOSE 9444 9612 9712 7612 7712

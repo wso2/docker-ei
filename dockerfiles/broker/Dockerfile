@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.1.1
+FROM wso2ei-base:6.2.0
 
 # expose broker ports
 EXPOSE 9446 5675 8675 1886 8836 7614

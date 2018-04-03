@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.1.1
+FROM wso2ei-base:6.2.0
 
 # expose msf4j ports
 EXPOSE 9090
