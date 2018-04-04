@@ -1,6 +1,6 @@
 # Dockerfiles for WSO2 Enterprise Integrator #
 This section defines dockerfiles and step-by-step instructions to build docker images for multiple profiles <br>
-provided by WSO2 Enterprise Integrator 6.1.1, namely : <br>
+provided by WSO2 Enterprise Integrator 6.2.0, namely : <br>
 1. Integrator
 2. Business Process
 3. Broker
@@ -21,15 +21,15 @@ git clone https://github.com/wso2/docker-ei.git
 ##### 2. Add JDK, WSO2 Enterprise Integrator distribution and required libraries
 - Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and
 extract into `<DOCKERFILE_HOME>/base/files`.
-- Download [WSO2 Enterprise Integrator 6.1.1 distribution](https://wso2.com/integration) and 
+- Download [WSO2 Enterprise Integrator 6.2.0 distribution](https://wso2.com/integration) and 
 extract into `<DOCKERFILE_HOME>/base/files`.
 - Once both JDK and WSO2 Enterprise Integrator distribution is extracted, it should be as follows:
 ```
 <DOCKERFILE_HOME>/base/files/jdk<version>
-<DOCKERFILE_HOME>/base/files/wso2ei-6.1.1
+<DOCKERFILE_HOME>/base/files/wso2ei-6.2.0
 ```
 - Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<DOCKERFILE_HOME>/base/files` folder
-- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.19/) JAR v3.2.19,
+- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.45/) JAR v3.2.19,
 [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
 [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
 `[docker-ei]/dockerfiles/integrator/files`. These libraries are needed for the communication between Integrator <br> and Message Broker.
@@ -39,36 +39,36 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the base docker image.
 - For base, navigate to `<DOCKERFILE_HOME>/base` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-base:6.1.1 .`
+    + `docker build -t wso2ei-base:6.2.0 .`
         
 ##### 4. Build docker images specific to each profile.
 - For integrator, navigate to `<DOCKERFILE_HOME>/integrator` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-integrator:6.1.1 .`
+    + `docker build -t wso2ei-integrator:6.2.0 .`
 - For business process, navigate to `<DOCKERFILE_HOME>/business-process` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-business-process:6.1.1 .`
+    + `docker build -t wso2ei-business-process:6.2.0 .`
 - For broker, navigate to `<DOCKERFILE_HOME>/broker` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-broker:6.1.1 .`
+    + `docker build -t wso2ei-broker:6.2.0 .`
 - For msf4j, navigate to `<DOCKERFILE_HOME>/msf4j` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-msf4j:6.1.1 .`
+    + `docker build -t wso2ei-msf4j:6.2.0 .`
 - For analytics, navigate to `<DOCKERFILE_HOME>/analytics` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-analytics:6.1.1 .`
+    + `docker build -t wso2ei-analytics:6.2.0 .`
     
 ##### 5. Running docker images specific to each profile.
 - For integrator,
-    + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.1.1`
+    + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.2.0`
 - For business process,
-    + `docker run -p 9445:9445 wso2ei-business-process:6.1.1`  
+    + `docker run -p 9445:9445 wso2ei-business-process:6.2.0`  
 - For broker,
-    + `docker run -p 9446:9446 -p 5675:5675 ...all-port-mappings-here... wso2ei-broker:6.1.1` 
+    + `docker run -p 9446:9446 -p 5675:5675 ...all-port-mappings-here... wso2ei-broker:6.2.0` 
 - For msf4j,
-    + `docker run -p 9090:9090 wso2ei-msf4j:6.1.1`
+    + `docker run -p 9090:9090 wso2ei-msf4j:6.2.0`
 - For analytics,
-    + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-analytics:6.1.1`
+    + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-analytics:6.2.0`
 
 ##### 6. Accessing management console per each profile.
 - For integrator,
@@ -88,7 +88,7 @@ Configurations would lie on the Docker host machine and they can be volume mount
 As an example, steps required to change the port offset of integrator profile using `carbon.xml` is as follows.
 
 ##### 1. Stop the integrator container if it's already running.
-In WSO2 Enterprise Integrator 6.1.1 product distribution, carbon.xml file for the integrator profile <br>
+In WSO2 Enterprise Integrator 6.2.0 product distribution, carbon.xml file for the integrator profile <br>
 can be found at `<DISTRIBUTION_HOME>/conf`. Copy the file to some suitable location of the host machine, <br>
 referred to as `<SOURCE_CONFIGS>/carbon.xml` and change the offset value under ports to 1.
 
@@ -102,10 +102,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run 
 -p 8281:8281 -p 8244:8244 -p 9444:9444
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml
-wso2ei-integrator:6.1.1
+wso2ei-integrator:6.2.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.1.1/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.2.0/conf folder of the container.
 
 
 ## Docker command usage references
