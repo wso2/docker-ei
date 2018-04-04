@@ -11,3 +11,4 @@
     <property encrypted="false" name="password">admin</property>
   </to>
 </eventPublisher>
+
