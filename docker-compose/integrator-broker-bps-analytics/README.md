@@ -27,7 +27,7 @@
      Instead, extract the zip file and directly browse to `docker-ei-<released-version>/docker-compose/integrator-broker-bps-analytics` folder. 
      
      > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: <br> git checkout tags/v6.1.1.4 and continue below steps.
+     i.e. for example: <br> git checkout tags/v6.2.0.1 and continue below steps.
 
   4. Execute following Docker Compose command to start the deployment.
      ```

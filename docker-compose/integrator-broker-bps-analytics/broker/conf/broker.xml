@@ -294,6 +294,10 @@ This file is ciphertool compliant. Refer PRODUCT_HOME/repository/conf/security/c
             <!--Number of MessageDeliveryWorker threads that should be started-->
             <deliveryThreadCount>5</deliveryThreadCount>
 
+            <!-- The idle time of a delivery task. Decreasing value might effect increasing delivery when the 
+                 publisher is slow. But system load could go high -->
+            <idleTaskDelay>100</idleTaskDelay>
+
             <!-- Number of parallel threads to execute slot deletion task. Increasing this value will remove slots
                  whose messages are read/delivered to consumers/acknowledged faster reducing heap memory used by
                  server.-->
