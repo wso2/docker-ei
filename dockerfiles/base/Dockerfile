@@ -39,7 +39,7 @@ ARG JAVA_HOME=${USER_HOME}/java
 
 # install required packages
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends --no-install-suggests \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl && \
     rm -rf /var/lib/apt/lists/*
 
@@ -59,4 +59,5 @@ WORKDIR ${USER_HOME}
 # set environment variables
 ENV JAVA_HOME=${JAVA_HOME} \
     PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+    WORKING_DIRECTORY=${USER_HOME}

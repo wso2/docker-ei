@@ -19,8 +19,11 @@
 # set to product base image
 FROM wso2ei-base:6.2.0
 
+# copy entrypoint bash script to user home
+COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
+
 # expose msf4j ports
 EXPOSE 9090
 
-# set entrypoint to msf4j startup script
-ENTRYPOINT ${WSO2_SERVER_HOME}/bin/msf4j.sh
+# set entrypoint to init script
+ENTRYPOINT ["/home/wso2carbon/init.sh"]
