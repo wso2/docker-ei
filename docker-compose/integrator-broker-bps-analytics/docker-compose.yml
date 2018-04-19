@@ -37,14 +37,14 @@ services:
       start_period: 30s
     volumes:
       # mounting configurations
-      - ./analytics/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/conf/datasources/master-datasources.xml
-      - ./analytics/conf/registry.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/conf/registry.xml
-      - ./analytics/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/conf/user-mgt.xml
-      - ./analytics/conf/carbon.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/conf/carbon.xml
-      - ./analytics/conf/datasources/analytics-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/conf/datasources/analytics-datasources.xml
+      - ./analytics/conf/datasources/master-datasources.xml:/home/wso2carbon/volumes/conf/datasources/master-datasources.xml
+      - ./analytics/conf/registry.xml:/home/wso2carbon/volumes/conf/registry.xml
+      - ./analytics/conf/user-mgt.xml:/home/wso2carbon/volumes/conf/user-mgt.xml
+      - ./analytics/conf/carbon.xml:/home/wso2carbon/volumes/conf/carbon.xml
+      - ./analytics/conf/datasources/analytics-datasources.xml:/home/wso2carbon/volumes/conf/datasources/analytics-datasources.xml
       # mounting keystores
-      - ./analytics/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/repository/resources/security/wso2carbon.jks
-      - ./analytics/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/analytics/repository/resources/security/client-truststore.jks
+      - ./analytics/repository/resources/security/wso2carbon.jks:/home/wso2carbon/volumes/repository/resources/security/wso2carbon.jks
+      - ./analytics/repository/resources/security/client-truststore.jks:/home/wso2carbon/volumes/repository/resources/security/client-truststore.jks
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -64,17 +64,17 @@ services:
       start_period: 60s
     volumes:
       # mounting configurations
-      - ./business-process/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/datasources/master-datasources.xml
-      - ./business-process/conf/datasources/bps-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/datasources/bps-datasources.xml
-      - ./business-process/conf/datasources/activiti-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/datasources/activiti-datasources.xml
-      - ./business-process/conf/etc/tasks-config.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/etc/tasks-config.xml
-      - ./business-process/conf/registry.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/registry.xml
-      - ./business-process/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/user-mgt.xml
-      - ./business-process/conf/bps.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/bps.xml
-      - ./business-process/conf/carbon.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/conf/carbon.xml
+      - ./business-process/conf/datasources/master-datasources.xml:/home/wso2carbon/volumes/conf/datasources/master-datasources.xml
+      - ./business-process/conf/datasources/bps-datasources.xml:/home/wso2carbon/volumes/conf/datasources/bps-datasources.xml
+      - ./business-process/conf/datasources/activiti-datasources.xml:/home/wso2carbon/volumes/conf/datasources/activiti-datasources.xml
+      - ./business-process/conf/etc/tasks-config.xml:/home/wso2carbon/volumes/conf/etc/tasks-config.xml
+      - ./business-process/conf/registry.xml:/home/wso2carbon/volumes/conf/registry.xml
+      - ./business-process/conf/user-mgt.xml:/home/wso2carbon/volumes/conf/user-mgt.xml
+      - ./business-process/conf/bps.xml:/home/wso2carbon/volumes/conf/bps.xml
+      - ./business-process/conf/carbon.xml:/home/wso2carbon/volumes/conf/carbon.xml
       # mounting keystores
-      - ./business-process/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/repository/resources/security/wso2carbon.jks
-      - ./business-process/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/business-process/repository/resources/security/client-truststore.jks
+      - ./business-process/repository/resources/security/wso2carbon.jks:/home/wso2carbon/volumes/repository/resources/security/wso2carbon.jks
+      - ./business-process/repository/resources/security/client-truststore.jks:/home/wso2carbon/volumes/repository/resources/security/client-truststore.jks
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -102,14 +102,14 @@ services:
       start_period: 90s
     volumes:
       # mounting configurations
-      - ./broker/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/conf/datasources/master-datasources.xml
-      - ./broker/conf/registry.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/conf/registry.xml
-      - ./broker/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/conf/user-mgt.xml
-      - ./broker/conf/broker.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/conf/broker.xml
-      - ./broker/conf/carbon.xml:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/conf/carbon.xml
+      - ./broker/conf/datasources/master-datasources.xml:/home/wso2carbon/volumes/conf/datasources/master-datasources.xml
+      - ./broker/conf/registry.xml:/home/wso2carbon/volumes/conf/registry.xml
+      - ./broker/conf/user-mgt.xml:/home/wso2carbon/volumes/conf/user-mgt.xml
+      - ./broker/conf/broker.xml:/home/wso2carbon/volumes/conf/broker.xml
+      - ./broker/conf/carbon.xml:/home/wso2carbon/volumes/conf/carbon.xml
       # mounting keystores
-      - ./broker/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/repository/resources/security/wso2carbon.jks
-      - ./broker/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.2.0/wso2/broker/repository/resources/security/client-truststore.jks
+      - ./broker/repository/resources/security/wso2carbon.jks:/home/wso2carbon/volumes/repository/resources/security/wso2carbon.jks
+      - ./broker/repository/resources/security/client-truststore.jks:/home/wso2carbon/volumes/repository/resources/security/client-truststore.jks
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -137,22 +137,22 @@ services:
       start_period: 120s
     volumes:
       # mounting configurations
-      - ./integrator/conf/datasources/master-datasources.xml:/home/wso2carbon/wso2ei-6.2.0/conf/datasources/master-datasources.xml
-      - ./integrator/conf/user-mgt.xml:/home/wso2carbon/wso2ei-6.2.0/conf/user-mgt.xml
-      - ./integrator/conf/registry.xml:/home/wso2carbon/wso2ei-6.2.0/conf/registry.xml
-      - ./integrator/conf/synapse.properties:/home/wso2carbon/wso2ei-6.2.0/conf/synapse.properties
-      - ./integrator/conf/jndi.properties:/home/wso2carbon/wso2ei-6.2.0/conf/jndi.properties
-      - ./integrator/conf/carbon.xml:/home/wso2carbon/wso2ei-6.2.0/conf/carbon.xml
-      - ./integrator/conf/axis2/axis2.xml:/home/wso2carbon/wso2ei-6.2.0/conf/axis2/axis2.xml
+      - ./integrator/conf/datasources/master-datasources.xml:/home/wso2carbon/volumes/conf/datasources/master-datasources.xml
+      - ./integrator/conf/user-mgt.xml:/home/wso2carbon/volumes/conf/user-mgt.xml
+      - ./integrator/conf/registry.xml:/home/wso2carbon/volumes/conf/registry.xml
+      - ./integrator/conf/synapse.properties:/home/wso2carbon/volumes/conf/synapse.properties
+      - ./integrator/conf/jndi.properties:/home/wso2carbon/volumes/conf/jndi.properties
+      - ./integrator/conf/carbon.xml:/home/wso2carbon/volumes/conf/carbon.xml
+      - ./integrator/conf/axis2/axis2.xml:/home/wso2carbon/volumes/conf/axis2/axis2.xml
       # mounting carbon apps
-      - ./integrator/repository/deployment/server/carbonapps:/home/wso2carbon/wso2ei-6.2.0/repository/deployment/server/carbonapps
+      - ./integrator/repository/deployment/server/carbonapps:/home/wso2carbon/volumes/repository/deployment/server/carbonapps
       # mounting analytics event publishers
-      - ./integrator/repository/deployment/server/eventpublishers:/home/wso2carbon/wso2ei-6.2.0/repository/deployment/server/eventpublishers
+      - ./integrator/repository/deployment/server/eventpublishers:/home/wso2carbon/volumes/repository/deployment/server/eventpublishers
       # mounting synapse artifacts
-      - ./integrator/repository/deployment/server/synapse-configs:/home/wso2carbon/wso2ei-6.2.0/repository/deployment/server/synapse-configs
+      - ./integrator/repository/deployment/server/synapse-configs:/home/wso2carbon/volumes/repository/deployment/server/synapse-configs
       # mounting keystores
-      - ./integrator/repository/resources/security/wso2carbon.jks:/home/wso2carbon/wso2ei-6.2.0/epository/resources/security/wso2carbon.jks
-      - ./integrator/repository/resources/security/client-truststore.jks:/home/wso2carbon/wso2ei-6.2.0/repository/resources/security/client-truststore.jks
+      - ./integrator/repository/resources/security/wso2carbon.jks:/home/wso2carbon/volumes/epository/resources/security/wso2carbon.jks
+      - ./integrator/repository/resources/security/client-truststore.jks:/home/wso2carbon/volumes/repository/resources/security/client-truststore.jks
     depends_on:
       wso2ei-mysql:
         condition: service_healthy

@@ -71,6 +71,7 @@ fi
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
 test -d ${volumes}/conf && cp -r ${volumes}/conf/* ${WSO2_SERVER_HOME}/conf
+test -d ${volumes}/repository && cp -r ${volumes}/repository/* ${WSO2_SERVER_HOME}/repository
 
 # check if the external library directories have been mounted
 # if mounted, recursively copy the external libraries to original directories within the product home
