@@ -30,12 +30,6 @@ k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
 # capture the Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
-# check if the WSO2 non-root user has been created
-! getent passwd ${user} >/dev/null 2>&1 && echo "WSO2 Docker non-root user does not exist" && exit 1
-
-# check if the WSO2 non-root group has been created
-! getent group ${group} >/dev/null 2>&1 && echo "WSO2 Docker non-root group does not exist" && exit 1
-
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
 
@@ -70,14 +64,7 @@ fi
 
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
-test -d ${volumes}/conf && cp -r ${volumes}/conf/* ${WSO2_SERVER_HOME}/conf
-test -d ${volumes}/repository && cp -r ${volumes}/repository/* ${WSO2_SERVER_HOME}/repository
-
-# check if the external library directories have been mounted
-# if mounted, recursively copy the external libraries to original directories within the product home
-test -d ${volumes}/dropins && cp -r ${volumes}/dropins/* ${WSO2_SERVER_HOME}/dropins
-test -d ${volumes}/extensions && cp -r ${volumes}/extensions/* ${WSO2_SERVER_HOME}/extensions
-test -d ${volumes}/lib && cp -r ${volumes}/lib/* ${WSO2_SERVER_HOME}/lib
+test -d ${volumes} && cp -r ${volumes}/* ${WSO2_SERVER_HOME}/
 
 # make any runtime or node specific configuration changes
 # for example, setting container IP in relevant configuration files

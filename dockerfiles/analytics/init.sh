@@ -16,25 +16,15 @@
 # ------------------------------------------------------------------------
 set -e
 
-# product profile variable
-wso2_server_profile=analytics
-
 # custom WSO2 non-root user and group variables
 user=wso2carbon
 group=wso2
 
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
-wso2_server_profile_home=${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}
 
 # capture the Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
-
-# check if the WSO2 non-root user has been created
-! getent passwd ${user} >/dev/null 2>&1 && echo "WSO2 Docker non-root user does not exist" && exit 1
-
-# check if the WSO2 non-root group has been created
-! getent group ${group} >/dev/null 2>&1 && echo "WSO2 Docker non-root group does not exist" && exit 1
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
@@ -46,13 +36,13 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
-test -d ${volumes}/conf && cp -r ${volumes}/conf/* ${wso2_server_profile_home}/conf
-test -d ${volumes}/repository && cp -r ${volumes}/repository/* ${wso2_server_profile_home}/repository
+test -d ${volumes} && cp -r ${volumes}/* ${WSO2_SERVER_HOME}/
+
 # make any runtime or node specific configuration changes
 # for example, setting container IP in relevant configuration files
 
 # set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${wso2_server_profile_home}/conf/axis2/axis2.xml
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/analytics/conf/axis2/axis2.xml
 
 # start the WSO2 Carbon server profile
-sh ${WSO2_SERVER_HOME}/bin/${wso2_server_profile}.sh
+sh ${WSO2_SERVER_HOME}/bin/analytics.sh
