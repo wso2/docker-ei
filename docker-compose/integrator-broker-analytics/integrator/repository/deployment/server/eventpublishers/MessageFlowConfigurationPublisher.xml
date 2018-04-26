@@ -9,6 +9,6 @@
     <property name="publishingMode">blocking</property>
     <property name="publishTimeout">0</property>
     <property name="receiverURL">tcp://wso2ei-analytics:7612</property>
-    <property encrypted="true" name="password">eyJjIjoiVk5ISnFkZmZ2WElhcm5YUG9EL0RKanY2Y09pV05wNU1lb3ZBQzhxL1BtcXNaWjVoYmNuKzM4NXl3WlZVK2NJSEJGNUFwM2hyWEJFWkpDZ1ljbzRDaCtnak1SeDNGbnAzczg4ODB6NjR3TW9INjE1OXFnanpxMjM4K2JGbjNENkVNR1JUZVZIU2V3MmY1WG1uNFdyLzh1ZFEwQWhxOFNTTzEyZzlOdFY0aHgra0JQYUdXUkZ0b0U4K0JxTXNwRkZoWTJMK2dtVDYyKzFMSWVHLy9RZXA5dzBhSksvV1ExR1E4UEJOOXFUOUtSK3FmMkRzbThaaVZsclh5cHpvREVqNVd6SjdOVHZxaTdhQzRzdFh5QlVHYUJIQ3ZwWnlwRWhhZTR3dzBSb0dMaW5rM1FtMXlqN0YxaFl3aDNFaG01WDRITHFsN3JTS0hkWmJrM3plZ0tBMmFRXHUwMDNkXHUwMDNkIiwidCI6IlJTQS9FQ0IvT0FFUHdpdGhTSEExYW5kTUdGMVBhZGRpbmciLCJ0cCI6IjUwMUZDMTQzMkQ4NzE1NURDNDMxMzgyQUVCODQzRUQ1NThBRDYxQjEiLCJ0cGQiOiJTSEEtMSJ9</property>
+    <property encrypted="false" name="password">admin</property>
   </to>
 </eventPublisher>
