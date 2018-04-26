@@ -22,11 +22,12 @@ FROM wso2ei-base:6.2.0
 # set dependant files directory
 ARG FILES=./files
 
-# copy mysql connector jar to product distribution
+# copy entrypoint bash script to user home and external libraries to product home
+COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 COPY --chown=wso2carbon:wso2 ${FILES} ${WSO2_SERVER_HOME}/lib
 
 # expose integrator ports
 EXPOSE 8280 8243 9443
 
-# set entrypoint to integrator startup script
-ENTRYPOINT ${WSO2_SERVER_HOME}/bin/integrator.sh
+# set entrypoint to init script
+ENTRYPOINT ["/home/wso2carbon/init.sh"]
