@@ -26,6 +26,8 @@ group=wso2
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
+temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/server
+original_shared_artifacts=${WSO2_SERVER_HOME}/repository/deployment/server
 
 # capture the Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
@@ -35,6 +37,18 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 
 # check if the WSO2 product home exists
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
+
+# copy the backed up artifacts from ${HOME}/shared/
+# copying the initial artifacts to ${HOME}/shared/ was done in the Dockerfile
+# this is to preserve the initial artifacts in a volume mount (the mounted directory can be empty initially)
+# the artifacts will be copied to the <WSO2_SERVER_HOME>/repository/deployment/server location, before the server is started
+if test -d ${temp_shared_artifacts}; then
+    if [ -z "$(ls -A ${original_shared_artifacts}/)" ]; then
+	    # if no artifacts under <WSO2_SERVER_HOME>/repository/deployment/server/; copy them
+        echo "Copying shared server artifacts from temporary location to the original server home location..."
+        cp -r ${temp_shared_artifacts}/* ${original_shared_artifacts}
+    fi
+fi
 
 # check if any changed configuration files have been mounted, using K8s ConfigMap volumes
 
