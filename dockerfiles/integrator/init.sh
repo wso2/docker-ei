@@ -26,7 +26,7 @@ group=wso2
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
-temp_shared_artifacts=${WORKING_DIRECTORY}/shared
+temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/server
 original_shared_artifacts=${WSO2_SERVER_HOME}/repository/deployment/server
 
 # capture the Docker container IP from the container's /etc/hosts file
@@ -46,7 +46,7 @@ if test -d ${temp_shared_artifacts}; then
     if [ -z "$(ls -A ${original_shared_artifacts}/)" ]; then
 	    # if no artifacts under <WSO2_SERVER_HOME>/repository/deployment/server/; copy them
         echo "Copying shared server artifacts from temporary location to the original server home location..."
-        cp -vr ${temp_shared_artifacts} ${original_shared_artifacts}
+        cp -r ${temp_shared_artifacts}/* ${original_shared_artifacts}
     fi
 fi
 
