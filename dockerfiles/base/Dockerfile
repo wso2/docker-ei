@@ -60,8 +60,6 @@ COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
 COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/lib
-# set temporary location for shared artifacts
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST}/repository/deployment/server ${USER_HOME}/tmp/server
 
 # set the user and work directory
 USER ${USER}
