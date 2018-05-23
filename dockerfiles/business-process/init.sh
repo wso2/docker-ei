@@ -22,10 +22,11 @@ group=wso2
 
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
+temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/server
+original_shared_artifacts=${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server
 
 # capture the Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
-
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
@@ -33,11 +34,24 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 # check if the WSO2 product home exists
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
+# copy the backed up artifacts from ${HOME}/tmp/server
+# copying the initial artifacts to ${HOME}/tmp/server was done in the Dockerfile
+# this is to preserve the initial artifacts in a volume mount (the mounted directory can be empty initially)
+# the artifacts will be copied to the <WSO2_SERVER_HOME>/wso2/business-process/repository/deployment/server location,
+# before the server is started
+if test -d ${temp_shared_artifacts}; then
+    if [ -z "$(ls -A ${original_shared_artifacts}/)" ]; then
+	    # if no artifacts under <WSO2_SERVER_HOME>/wso2/business-process/repository/deployment/server; copy them
+        echo "Copying shared server artifacts from temporary location to the original server home location..."
+        cp -r ${temp_shared_artifacts}/* ${original_shared_artifacts}
+    fi
+fi
+
 # copy configuration changes and external libraries
 
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
-test -d ${volumes} && cp -r ${volumes}/* ${WSO2_SERVER_HOME}/
+test -d ${volumes} && cp -rv ${volumes}/* ${WSO2_SERVER_HOME}/
 
 # make any runtime or node specific configuration changes
 # for example, setting container IP in relevant configuration files
