@@ -62,7 +62,7 @@ in order to obtain latest bug fixes and updates for the product.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.2.0`
 - For business process,
-    + `docker run -p 9445:9445 wso2ei-business-process:6.2.0`  
+    + `docker run -p 9445:9445 9765:9765 wso2ei-business-process:6.2.0`  
 - For broker,
     + `docker run -p 9446:9446 -p 5675:5675 ...all-port-mappings-here... wso2ei-broker:6.2.0` 
 - For msf4j,
