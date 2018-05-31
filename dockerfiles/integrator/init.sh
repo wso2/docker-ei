@@ -57,19 +57,16 @@ fi
 # yet, only files mounted at <WSO2_USER_HOME>/volumes will be copied into the product pack
 # hence, the files that were originally mounted using K8s ConfigMap volumes, need to be copied into <WSO2_USER_HOME>/volumes
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf; then
-    # if a ConfigMap volume containing WSO2 configuration files has been mounted
     test ! -d ${volumes}/conf && mkdir -p ${volumes}/conf
     cp -rL ${k8s_volumes}/${wso2_server_profile}/conf/* ${volumes}/conf
 fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-axis2; then
-    # if a ConfigMap volume containing WSO2 axis2 configuration files has been mounted
     test ! -d ${volumes}/conf/axis2 && mkdir -p ${volumes}/conf/axis2
     cp -rL ${k8s_volumes}/${wso2_server_profile}/conf-axis2/* ${volumes}/conf/axis2
 fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-datasources; then
-    # if a ConfigMap volume containing WSO2 data source configuration files has been mounted
     test ! -d ${volumes}/conf/datasources && mkdir -p ${volumes}/conf/datasources
     cp -rL ${k8s_volumes}/${wso2_server_profile}/conf-datasources/* ${volumes}/conf/datasources
 fi
