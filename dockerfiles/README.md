@@ -33,6 +33,17 @@ extract into `<DOCKERFILE_HOME>/base/files`.
 [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
 [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
 `[docker-ei]/dockerfiles/integrator/files`. These libraries are needed for the communication between Integrator <br> and Message Broker.
+- If you intend to use the Docker images with Kubernetes clustered product deployments, download the
+[Kubernetes membership scheme](http://central.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar)
+and [dnsjava for DNS lookups](http://central.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar) JAR artifacts and copy them to
+`<DOCKERFILE_HOME>/base/files` folder.
+- If you **DO NOT** intend to use the Docker images with Kubernetes clustered product deployments, comment out
+the following lines from `<DOCKERFILE_HOME>/base/Dockerfile` file.
+```
+# artifacts for Kubernetes membership scheme based clustering
+COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
+COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins
+```
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
@@ -62,7 +73,7 @@ in order to obtain latest bug fixes and updates for the product.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.2.0`
 - For business process,
-    + `docker run -p 9445:9445 wso2ei-business-process:6.2.0`  
+    + `docker run -p 9445:9445 9765:9765 wso2ei-business-process:6.2.0`  
 - For broker,
     + `docker run -p 9446:9446 -p 5675:5675 ...all-port-mappings-here... wso2ei-broker:6.2.0` 
 - For msf4j,
