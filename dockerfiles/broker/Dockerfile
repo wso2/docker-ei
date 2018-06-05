@@ -22,8 +22,12 @@ FROM wso2ei-base:6.2.0
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
+# set temporary location for shared artifacts
+RUN mkdir -p ${WORKING_DIRECTORY}/tmp/ && \
+    cp -r ${WSO2_SERVER_HOME}/wso2/broker/repository/deployment/ ${WORKING_DIRECTORY}/tmp/
+
 # expose broker ports
-EXPOSE 9446 5675 8675 1886 8836 7614
+EXPOSE 9446 9766 5675 8675 1886 8836 7614 4000
 
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
