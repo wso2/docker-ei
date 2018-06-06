@@ -44,7 +44,7 @@
        This is will become part of the End Point Reference of the
        services deployed on this server instance.
     -->
-    <HostName>localhost</HostName>
+    <HostName>wso2ei-business-process</HostName>
 
     <!--
     Host name to be used for the Carbon management console
