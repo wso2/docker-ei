@@ -47,7 +47,7 @@ if test -d ${temp_shared_artifacts}; then
     if [ -z "$(ls -A ${original_shared_artifacts}/)" ]; then
 	    # if no artifacts under <WSO2_SERVER_HOME>/wso2/business-process/repository/deployment/server; copy them
         echo "Copying shared server artifacts from temporary location to the original server home location..."
-        cp -r ${temp_shared_artifacts}/* ${original_shared_artifacts}
+        cp -R ${temp_shared_artifacts}/* ${original_shared_artifacts}
     fi
 fi
 
@@ -58,37 +58,33 @@ fi
 # yet, only files mounted at <WSO2_USER_HOME>/volumes will be copied into the product pack
 # hence, the files that were originally mounted using K8s ConfigMap volumes, need to be copied into <WSO2_USER_HOME>/volumes
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf; then
-    test ! -d ${volumes}/wso2/${wso2_server_profile}/conf && mkdir -p ${volumes}/wso2/${wso2_server_profile}/conf
-    cp -rL ${k8s_volumes}/${wso2_server_profile}/conf/* ${volumes}/wso2/${wso2_server_profile}/conf
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf/* ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf
 fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-axis2; then
-    test ! -d ${volumes}/wso2/${wso2_server_profile}/conf/axis2 && mkdir -p ${volumes}/wso2/${wso2_server_profile}/conf/axis2
-    cp -rL ${k8s_volumes}/${wso2_server_profile}/conf-axis2/* ${volumes}/wso2/${wso2_server_profile}/conf/axis2
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-axis2/* ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/axis2
 fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-datasources; then
-    test ! -d ${volumes}/wso2/${wso2_server_profile}/conf/datasources && mkdir -p ${volumes}/wso2/${wso2_server_profile}/conf/datasources
-    cp -rL ${k8s_volumes}/${wso2_server_profile}/conf-datasources/* ${volumes}/wso2/${wso2_server_profile}/conf/datasources
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-datasources/* ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/datasources
 fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-etc; then
-    test ! -d ${volumes}/wso2/${wso2_server_profile}/conf/etc && mkdir -p ${volumes}/wso2/${wso2_server_profile}/conf/etc
-    cp -rL ${k8s_volumes}/${wso2_server_profile}/conf-etc/* ${volumes}/wso2/${wso2_server_profile}/conf/etc
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-etc/* ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/etc
 fi
 
 # copy configuration changes and external libraries
 
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
-test -d ${volumes} && cp -r ${volumes}/* ${WSO2_SERVER_HOME}/
+test -d ${volumes} && cp -R ${volumes}/* ${WSO2_SERVER_HOME}/
 
 # make any runtime or node specific configuration changes
 # for example, setting container IP in relevant configuration files
 
 # set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
 sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/axis2/axis2.xml
-
+# set the Docker container IP as the `NodeId` under bps.xml (a unique id for a cluster member)
 sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/bps.xml
 
 # start the WSO2 Carbon server profile
