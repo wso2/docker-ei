@@ -83,7 +83,7 @@ test -d ${volumes} && cp -R ${volumes}/* ${WSO2_SERVER_HOME}/
 # for example, setting container IP in relevant configuration files
 
 # set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/axis2/axis2.xml
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/axis2/axis2.xml
 # set the Docker container IP as the `NodeId` under bps.xml (a unique id for a cluster member)
 sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/bps.xml
 
