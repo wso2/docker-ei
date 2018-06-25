@@ -26,7 +26,7 @@ group=wso2
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
-temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/deployment
+temp_shared_artifacts=${WORKING_DIRECTORY}/wso2-tmp/deployment
 original_shared_artifacts=${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/repository/deployment
 
 # capture the Docker container IP from the container's /etc/hosts file
@@ -38,8 +38,8 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 # check if the WSO2 product home exists
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
-# copy the backed up artifacts from ${HOME}/tmp/deployment
-# copying the initial artifacts to ${HOME}/tmp/deployment was done in the Dockerfile
+# copy the backed up artifacts from ${HOME}/wso2-tmp/deployment
+# copying the initial artifacts to ${HOME}/wso2-tmp/deployment was done in the Dockerfile
 # this is to preserve the initial artifacts in a volume mount (the mounted directory can be empty initially)
 # the artifacts will be copied to the <WSO2_SERVER_HOME>/wso2/broker/repository/deployment/ location,
 # before the server is started
@@ -78,9 +78,9 @@ test -d ${volumes} && cp -R ${volumes}/* ${WSO2_SERVER_HOME}/
 # for example, setting container IP in relevant configuration files
 
 # set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/broker/conf/axis2/axis2.xml
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/axis2/axis2.xml
 # set the Docker container IP as the Apache Thrift server host IP
-sed -i "s#<thriftServerHost>.*</thriftServerHost>#<thriftServerHost>${docker_container_ip}</thriftServerHost>#" ${WSO2_SERVER_HOME}/wso2/broker/conf/broker.xml
+sed -i "s#<thriftServerHost>.*</thriftServerHost>#<thriftServerHost>${docker_container_ip}</thriftServerHost>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/broker.xml
 
 # start the WSO2 Carbon server profile
-sh ${WSO2_SERVER_HOME}/bin/broker.sh
+sh ${WSO2_SERVER_HOME}/bin/${wso2_server_profile}.sh

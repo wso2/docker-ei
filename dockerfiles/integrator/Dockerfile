@@ -26,8 +26,8 @@ ARG FILES=./files
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 COPY --chown=wso2carbon:wso2 ${FILES} ${WSO2_SERVER_HOME}/lib
 # set temporary location for shared artifacts
-RUN mkdir -p ${WORKING_DIRECTORY}/tmp/ && \
-    cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/tmp/
+RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
+    cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/
 
 # expose integrator ports
 EXPOSE 8280 8243 9443 4100
