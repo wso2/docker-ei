@@ -26,7 +26,7 @@ group=wso2
 # file path variables
 volumes=${WORKING_DIRECTORY}/volumes
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
-temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/server
+temp_shared_artifacts=${WORKING_DIRECTORY}/wso2-tmp/server
 original_shared_artifacts=${WSO2_SERVER_HOME}/repository/deployment/server
 
 # capture the Docker container IP from the container's /etc/hosts file
@@ -66,6 +66,10 @@ fi
 
 if test -d ${k8s_volumes}/${wso2_server_profile}/conf-datasources; then
     cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-datasources/* ${WSO2_SERVER_HOME}/conf/datasources
+fi
+
+if test -d ${k8s_volumes}/${wso2_server_profile}/conf-event-publishers; then
+    cp -RL ${k8s_volumes}/${wso2_server_profile}/conf-event-publishers/* ${WSO2_SERVER_HOME}/repository/deployment/server/eventpublishers
 fi
 
 # copy configuration changes and external libraries
