@@ -37,7 +37,7 @@ services:
       start_period: 30s
     volumes:
       # mounting configurations
-      - ./analytics:/home/wso2carbon/volumes/wso2/analytics
+      - ./analytics:/home/wso2carbon/wso2-server-volume/wso2/analytics
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -62,7 +62,7 @@ services:
       start_period: 60s
     volumes:
       # mounting configurations
-      - ./broker:/home/wso2carbon/volumes/wso2/broker
+      - ./broker:/home/wso2carbon/wso2-server-volume/wso2/broker
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -87,7 +87,7 @@ services:
       start_period: 90s
     volumes:
       # mounting configurations
-      - ./integrator:/home/wso2carbon/volumes
+      - ./integrator:/home/wso2carbon/wso2-server-volume
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
