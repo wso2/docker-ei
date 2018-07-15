@@ -20,7 +20,7 @@ services:
       retries: 10
       start_period: 20s
   wso2ei-analytics:
-    image: docker.wso2.com/wso2ei-analytics:6.2.0
+    image: docker.wso2.com/wso2ei-analytics:6.3.0
     container_name: wso2ei-analytics
     hostname: wso2ei-analytics
     ports:
@@ -37,14 +37,14 @@ services:
       start_period: 30s
     volumes:
       # mounting configurations
-      - ./analytics:/home/wso2carbon/volumes/wso2/analytics
+      - ./analytics:/home/wso2carbon/wso2-server-volume/wso2/analytics
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
     links:
       - wso2ei-mysql
   wso2ei-business-process:
-    image: docker.wso2.com/wso2ei-business-process:6.2.0
+    image: docker.wso2.com/wso2ei-business-process:6.3.0
     container_name: wso2ei-business-process
     hostname: wso2ei-business-process
     ports:
@@ -57,7 +57,7 @@ services:
       start_period: 60s
     volumes:
       # mounting configurations
-      - ./business-process:/home/wso2carbon/volumes/wso2/business-process
+      - ./business-process:/home/wso2carbon/wso2-server-volume/wso2/business-process
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -67,7 +67,7 @@ services:
       - wso2ei-mysql
       - wso2ei-analytics
   wso2ei-integrator:
-    image: docker.wso2.com/wso2ei-integrator:6.2.0
+    image: docker.wso2.com/wso2ei-integrator:6.3.0
     container_name: wso2ei-integrator
     hostname: wso2ei-integrator
     ports:
@@ -82,7 +82,7 @@ services:
       start_period: 120s
     volumes:
       # mounting configurations
-      - ./integrator:/home/wso2carbon/volumes
+      - ./integrator:/home/wso2carbon/wso2-server-volume
     depends_on:
       wso2ei-mysql:
         condition: service_healthy

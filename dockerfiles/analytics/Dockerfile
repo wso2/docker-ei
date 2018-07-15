@@ -17,10 +17,14 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.2.0
+FROM wso2ei-base:6.3.0
 
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
+
+# set temporary location for artifacts to be persisted
+RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
+    cp -r ${WSO2_SERVER_HOME}/wso2/analytics/conf/analytics ${WORKING_DIRECTORY}/wso2-tmp/
 
 # expose analytics ports
 EXPOSE 9444 9612 9712 7612 7712

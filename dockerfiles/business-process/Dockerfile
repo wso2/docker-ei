@@ -17,14 +17,14 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.2.0
+FROM wso2ei-base:6.3.0
 
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
 # set temporary location for shared artifacts
-RUN mkdir -p ${WORKING_DIRECTORY}/tmp/ && \
-    cp -r ${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server/ ${WORKING_DIRECTORY}/tmp/
+RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
+    cp -r ${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/
 
 # expose business-process ports
 EXPOSE 9445 9765 4000

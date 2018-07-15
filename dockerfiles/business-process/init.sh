@@ -24,7 +24,7 @@ user=wso2carbon
 group=wso2
 
 # file path variables
-volumes=${WORKING_DIRECTORY}/volumes
+volumes=${WORKING_DIRECTORY}/wso2-server-volume
 k8s_volumes=${WORKING_DIRECTORY}/kubernetes-volumes
 temp_shared_artifacts=${WORKING_DIRECTORY}/tmp/server
 original_shared_artifacts=${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/repository/deployment/server
@@ -83,9 +83,9 @@ test -d ${volumes} && cp -R ${volumes}/* ${WSO2_SERVER_HOME}/
 # for example, setting container IP in relevant configuration files
 
 # set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/axis2/axis2.xml
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/axis2/axis2.xml
 # set the Docker container IP as the `NodeId` under bps.xml (a unique id for a cluster member)
-sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/business-process/conf/bps.xml
+sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/bps.xml
 
 # start the WSO2 Carbon server profile
-sh ${WSO2_SERVER_HOME}/bin/business-process.sh
+sh ${WSO2_SERVER_HOME}/bin/${wso2_server_profile}.sh
