@@ -33,7 +33,7 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 
 # check if any changed configuration files have been mounted
 # if any file changes have been mounted, copy the WSO2 configuration files recursively
-test -d ${volumes} && cp -r ${volumes}/* ${WSO2_SERVER_HOME}/
+test -d ${volumes} && cp -rv ${volumes}/* ${WSO2_SERVER_HOME}/
 
 # start the WSO2 Carbon server profile
-sh ${WSO2_SERVER_HOME}/bin/msf4j.sh
+sh ${WSO2_SERVER_HOME}/bin/micro-integrator.sh
