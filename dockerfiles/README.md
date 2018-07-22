@@ -2,10 +2,11 @@
 This section defines dockerfiles and step-by-step instructions to build docker images for multiple profiles <br>
 provided by WSO2 Enterprise Integrator 6.3.0, namely : <br>
 1. Integrator
-2. Business Process
-3. Broker
-4. MSF4J
-5. Analytics
+2. Micro-Integrator
+3. Business Process
+4. Broker
+5. MSF4J
+6. Analytics
 
 ## Prerequisites
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
@@ -54,24 +55,29 @@ in order to obtain latest bug fixes and updates for the product.
         
 ##### 4. Build docker images specific to each profile.
 - For integrator, navigate to `<DOCKERFILE_HOME>/integrator` directory. <br>
-  Execute `docker build` command as shown below. 
+  Execute `docker build` command as shown below.
     + `docker build -t wso2ei-integrator:6.3.0 .`
+- For micro-integrator, navigate to `<DOCKERFILE_HOME>/micro-integrator` directory. <br>
+  Execute `docker build` command as shown below.
+    + `docker build -t wso2ei-micro-integrator:6.3.0 .`
 - For business process, navigate to `<DOCKERFILE_HOME>/business-process` directory. <br>
-  Execute `docker build` command as shown below. 
+  Execute `docker build` command as shown below.
     + `docker build -t wso2ei-business-process:6.3.0 .`
 - For broker, navigate to `<DOCKERFILE_HOME>/broker` directory. <br>
-  Execute `docker build` command as shown below. 
+  Execute `docker build` command as shown below.
     + `docker build -t wso2ei-broker:6.3.0 .`
 - For msf4j, navigate to `<DOCKERFILE_HOME>/msf4j` directory. <br>
-  Execute `docker build` command as shown below. 
+  Execute `docker build` command as shown below.
     + `docker build -t wso2ei-msf4j:6.3.0 .`
 - For analytics, navigate to `<DOCKERFILE_HOME>/analytics` directory. <br>
-  Execute `docker build` command as shown below. 
+  Execute `docker build` command as shown below.
     + `docker build -t wso2ei-analytics:6.3.0 .`
     
 ##### 5. Running docker images specific to each profile.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.3.0`
+- For micro-integrator,
+    + `docker run -p 8290:8290 -p 8253:8253 wso2ei-micro-integrator:6.3.0`
 - For business process,
     + `docker run -p 9445:9445 9765:9765 wso2ei-business-process:6.3.0`  
 - For broker,

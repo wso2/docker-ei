@@ -5,7 +5,9 @@
 *.tar.gz
 
 # IntelliJ IDEA
-.idea
+.idea/
+
+**/files/*
 
 # For integrator-analytics
 
