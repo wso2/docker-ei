@@ -95,4 +95,4 @@ sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\
 sed -i "s#<hostName>integrator-with-analytics-ei-analytics</hostName>#<hostName>${docker_container_ip}</hostName>#" ${WSO2_SERVER_HOME}/wso2/${wso2_server_profile}/conf/event-processor.xml
 
 # start the WSO2 Carbon server profile
-sh ${WSO2_SERVER_HOME}/bin/analytics.sh
+sh ${WSO2_SERVER_HOME}/bin/${wso2_server_profile}.sh
