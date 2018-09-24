@@ -22,11 +22,8 @@ FROM wso2ei-base:6.4.0
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
-# set temporary location for artifacts to be persisted
-RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/
-
 # expose analytics ports
-
 EXPOSE 9444 9612 9712 7612 7712
+
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
