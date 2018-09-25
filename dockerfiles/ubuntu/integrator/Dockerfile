@@ -30,7 +30,7 @@ RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
     cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/
 
 # expose integrator ports
-EXPOSE 8280 8243 9443 4100
+EXPOSE 9443 8243 8280
 
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
