@@ -2,10 +2,11 @@
 This section defines dockerfiles and step-by-step instructions to build docker images for multiple profiles <br>
 provided by WSO2 Enterprise Integrator 6.4.0, namely : <br>
 1. Integrator
-2. Business Process
-3. Broker
-4. MSF4J
-5. Analytics
+2. Micro integrator
+3. Business Process
+4. Broker
+5. MSF4J
+6. Analytics
 
 ## Prerequisites
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
@@ -56,6 +57,9 @@ in order to obtain latest bug fixes and updates for the product.
 - For integrator, navigate to `<DOCKERFILE_HOME>/integrator` directory. <br>
   Execute `docker build` command as shown below. 
     + `docker build -t wso2ei-integrator:6.4.0-centos .`
+- For micro integrator, navigate to `<DOCKERFILE_HOME>/micro-integrator` directory. <br>
+  Execute `docker build` command as shown below. 
+    + `docker build -t wso2ei-micro-integrator:6.4.0-centos .`        
 - For business process, navigate to `<DOCKERFILE_HOME>/business-process` directory. <br>
   Execute `docker build` command as shown below. 
     + `docker build -t wso2ei-business-process:6.4.0-centos .`
@@ -65,21 +69,28 @@ in order to obtain latest bug fixes and updates for the product.
 - For msf4j, navigate to `<DOCKERFILE_HOME>/msf4j` directory. <br>
   Execute `docker build` command as shown below. 
     + `docker build -t wso2ei-msf4j:6.4.0-centos .`
-- For analytics, navigate to `<DOCKERFILE_HOME>/analytics` directory. <br>
+- For analytics dashboard, navigate to `<DOCKERFILE_HOME>/analytics/analytics-dashboard` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t wso2ei-analytics:6.4.0-centos .`
+    + `docker build -t analytics-dashboard:6.4.0-centos .`
+- For analytics worker, navigate to `<DOCKERFILE_HOME>/analytics/analytics-worker` directory. <br>
+   Execute `docker build` command as shown below. 
+     + `docker build -t analytics-worker:6.4.0-centos .`
     
 ##### 5. Running docker images specific to each profile.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.4.0-centos`
+- For micro-integrator,
+    + `docker build -t wso2ei-micro-integrator:6.4.0-centos`
 - For business process,
     + `docker run -p 9445:9445  -p 9765:9765 wso2ei-business-process:6.4.0-centos`  
 - For broker,
     + `docker run -p 9446:9446 -p 5675:5675 ...all-port-mappings-here... wso2ei-broker:6.4.0-centos` 
 - For msf4j,
     + `docker run -p 9090:9090 wso2ei-msf4j:6.4.0-centos`
-- For analytics,
-    + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-analytics:6.4.0-centos`
+- For analytics dashboard,
+    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 analytics-dashboard:6.4.0-centos`
+- for analytics worker,
+    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 analytics-worker:6.4.0-centos`
 
 ##### 6. Accessing management console per each profile.
 - For integrator,

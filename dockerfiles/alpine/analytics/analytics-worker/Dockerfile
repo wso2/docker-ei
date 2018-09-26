@@ -23,7 +23,7 @@ FROM wso2ei-base:6.4.0
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
 # expose analytics ports
-EXPOSE 9444 9612 9712 7612 7712
+EXPOSE 9444 7612 7712 9161
 
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
