@@ -29,7 +29,7 @@ extract into `<DOCKERFILE_HOME>/base/files`.
 <DOCKERFILE_HOME>/base/files/jdk<version>
 <DOCKERFILE_HOME>/base/files/wso2ei-6.4.0
 ```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<DOCKERFILE_HOME>/base/files` folder
+- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<DOCKERFILE_HOME>/base/files`,`<DOCKERFILE_HOME>/analytics/dashboard/files`and `<DOCKERFILE_HOME>/analytics/worker/files` folder
 - Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.45/) JAR v3.2.19,
 [Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
 [Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
@@ -71,16 +71,16 @@ in order to obtain latest bug fixes and updates for the product.
     + `docker build -t wso2ei-msf4j:6.4.0-alpine .`
 - For analytics dashboard, navigate to `<DOCKERFILE_HOME>/analytics/analytics-dashboard` directory. <br>
   Execute `docker build` command as shown below. 
-    + `docker build -t analytics-dashboard:6.4.0-alpine .`
+    + `docker build -t wso2ei-dashboard:6.4.0-alpine .`
 - For analytics worker, navigate to `<DOCKERFILE_HOME>/analytics/analytics-worker` directory. <br>
    Execute `docker build` command as shown below. 
-     + `docker build -t analytics-worker:6.4.0-alpine .`
+     + `docker build -t wso2ei-worker:6.4.0-alpine .`
     
 ##### 5. Running docker images specific to each profile.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.4.0-alpine`
 - For micro-integrator,
-    + `docker build -t wso2ei-micro-integrator:6.4.0-alpine`
+    + `docker run -p 8290:8290 -p 8253:8253 wso2ei-micro-integrator:6.4.0-alpine`
 - For business process,
     + `docker run -p 9445:9445  -p 9765:9765 wso2ei-business-process:6.4.0-alpine`  
 - For broker,
@@ -88,9 +88,9 @@ in order to obtain latest bug fixes and updates for the product.
 - For msf4j,
     + `docker run -p 9090:9090 wso2ei-msf4j:6.4.0-alpine`
 - For analytics dashboard,
-    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 analytics-dashboard:6.4.0-alpine`
+    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 wso2ei-dashboard:6.4.0-alpine`
 - for analytics worker,
-    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 analytics-worker:6.4.0-alpine`
+    + `docker run -p 9444:9444 -p 7612:7612 -p 7712:7712 -p 9161:9161 wso2ei-worker:6.4.0-alpine`
 
 ##### 6. Accessing management console per each profile.
 - For integrator,
