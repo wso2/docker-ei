@@ -48,8 +48,9 @@ RUN apt-get update && \
     ; echo "\n\
     Welcome to WSO2 Docker Resources \n\
     --------------------------------- \n\
-    This image contains a WSO2 product released under Apache 2.0 license.\n\
-    For more information, visit @ https://wso2.com \n" \
+    This Docker container comprises of a WSO2 product, running with its latest updates \n\
+    which are under the End User License Agreement (EULA) 2.0. \n\
+    Read more about EULA 2.0 here @ https://wso2.com/licenses/wso2-update/2.0 \n" \
     > /etc/motd
 
 # create a user group and a user
@@ -60,7 +61,6 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/ 
 # artifacts for Kubernetes membership scheme based clustering
 COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
 COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins

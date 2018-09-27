@@ -45,10 +45,11 @@ RUN  apk add --update --no-cache \
 RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
      adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
 
-RUN echo 'printf " Welcome to WSO2 Docker Resources \n\
-    --------------------------------- \n\
-    This image contains a WSO2 product released under Apache 2.0 license.\n\
-    For more information, visit @ https://wso2.com \n"\' > "$ENV"
+RUN echo 'printf "Welcome to WSO2 Docker resources.\n\
+----------------------------------\n\
+The Docker container contains the WSO2 product with its latest updates,\n\
+which are under the End User License Agreement (EULA) 2.0.\n\
+Read more about EULA 2.0 (https://wso2.com/licenses/wso2-update/2.0).\n"' > "$ENV"
 
 # create java prefs dir
 # this is to avoid warning logs printed by FileSystemPreferences class
@@ -66,7 +67,6 @@ RUN apk --no-cache add ca-certificates wget; \
 # copy jdk, wso2 product distribution to user's home directory and copy mysql connector jar to product distribution
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/ 
 # artifacts for Kubernetes membership scheme based clustering
 COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
 COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins

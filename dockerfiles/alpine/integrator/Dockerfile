@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.4.0
+FROM wso2ei-base:6.4.0-alpine
 
 # set dependant files directory
 ARG FILES=./files
