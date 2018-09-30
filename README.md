@@ -2,8 +2,8 @@
 
 This repository contains following Docker resources :
 
-- WSO2 Enterprise Integrator Docker resources for Alpine, CentOS and Ubuntu
-- Docker Compose resources to evaluate most common Integration deployment profiles
+- Per profile Docker resources of WSO2 Enterprise Integrator v6.4.x for Alpine, CentOS, Ubuntu
+- Docker Compose resources to evaluate most common Integration deployment patterns
 
 Per profile Docker resources for WSO2 Enterprise Integrator help you build generic Docker images for deploying the
 corresponding product servers in containerized environments. Each Docker image includes the JDK, the relevant product distribution
