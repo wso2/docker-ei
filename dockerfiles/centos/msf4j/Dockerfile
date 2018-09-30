@@ -23,7 +23,7 @@ FROM wso2ei-base:6.4.0-centos
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
 # expose msf4j ports
-
 EXPOSE 9090
+
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]

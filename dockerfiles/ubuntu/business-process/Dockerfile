@@ -27,7 +27,7 @@ RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
     cp -r ${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/server/
 
 # expose business-process ports
-EXPOSE 9445 9765
+EXPOSE 9445 9765 4000
 
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
