@@ -16,10 +16,13 @@
 # ------------------------------------------------------------------------
 set -e
 
+# product profile
+server_profile=business-process
+
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-deployment_volume=${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server
+deployment_volume=${WSO2_SERVER_HOME}/wso2/${server_profile}/repository/deployment/server
 
 # original deployment artifacts
 original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp/server
@@ -83,8 +86,10 @@ test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # make any node specific configuration changes
-# for example, set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/conf/axis2/axis2.xml
+# set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/axis2/axis2.xml
+# set the Docker container IP as the `NodeId` under bps.xml (a unique id for a cluster member)
+sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/bps.xml
 
 # start WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/business-process.sh
+sh ${WSO2_SERVER_HOME}/bin/${server_profile}.sh

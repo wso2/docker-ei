@@ -25,9 +25,10 @@ ARG FILES=./files
 # copy entrypoint bash script to user home and external libraries to product home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 COPY --chown=wso2carbon:wso2 ${FILES} ${WSO2_SERVER_HOME}/lib
+
 # set temporary location for shared artifacts
 RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
-    cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/
+    cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/server/
 
 # expose integrator ports
 EXPOSE 8280 8243 9443 4100

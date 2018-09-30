@@ -20,10 +20,38 @@ set -e
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
 
+# a grace period for mounts to be setup
+echo "Waiting for all volumes to be mounted..."
+sleep 5
 
-# custom WSO2 non-root user and group variables
-user=wso2carbon
-group=wso2
+verification_count=0
+verifyMountBeforeStart()
+{
+  if [ ${verification_count} -eq 5 ]
+  then
+    echo "Mount verification timed out"
+    return
+  fi
+
+  # increment the number of times the verification had occurred
+  verification_count=$((verification_count+1))
+
+  if [ ! -e $1 ]
+  then
+    echo "Directory $1 does not exist"
+    echo "Waiting for the volume to be mounted..."
+    sleep 5
+
+    echo "Retrying..."
+    verifyMountBeforeStart $1
+  else
+    echo "Directory $1 exists"
+  fi
+}
+
+verifyMountBeforeStart ${config_volume}
+verification_count=0
+verifyMountBeforeStart ${artifact_volume}
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
