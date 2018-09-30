@@ -7,18 +7,18 @@ services:
       - 3306
     environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: analytics
+        MYSQL_DATABASE: WSO2_EI_ANALYTICS_DB
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      interval: 30s
+      timeout: 60s
+      retries: 5
   wso2ei-analytics-worker:
     image: docker.wso2.com/wso2ei-analytics-worker:6.4.0
     container_name: wso2ei-analytics-worker
     ports:
-      - "9091:9091"
-      - "9444:9444"
+      - 9091:9091
+      - 9444:9444
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9091"]
       interval: 5s
@@ -35,7 +35,7 @@ services:
     image: docker.wso2.com/wso2ei-analytics-dashboard:6.4.0
     container_name: wso2ei-analytics-dashboard
     ports:
-      - "9643:9643"
+      - 9643:9643
     healthcheck:
       test: ["CMD", "nc", "-z","localhost", "9643"]
       interval: 10s

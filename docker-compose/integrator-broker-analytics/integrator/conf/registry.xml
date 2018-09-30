@@ -45,12 +45,12 @@
         <readOnly>false</readOnly>
         <registryRoot>/</registryRoot>
         <enableCache>true</enableCache>
-        <cacheId>root@jdbc:mysql://wso2ei-mysql:3306/WSO2_REGISTRY_DB</cacheId>
+        <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
     </remoteInstance>
 
     <mount path="/_system/config" overwrite="virtual">
         <instanceId>WSO2_REGISTRY_DB</instanceId>
-        <targetPath>/_system/config/integrator</targetPath>
+        <targetPath>/_system/integrator/config</targetPath>
     </mount>
 
     <mount path="/_system/governance" overwrite="virtual">
