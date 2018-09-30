@@ -16,10 +16,13 @@
 # ------------------------------------------------------------------------
 set -e
 
+# product profile
+server_profile=broker
+
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-deployment_volume=${WSO2_SERVER_HOME}/wso2/broker/repository/deployment
+deployment_volume=${WSO2_SERVER_HOME}/wso2/${server_profile}/repository/deployment
 
 # original deployment artifacts
 original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp/deployment
@@ -83,8 +86,10 @@ test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # make any node specific configuration changes
-# for example, set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/conf/axis2/axis2.xml
+# set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
+sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/axis2/axis2.xml
+# set the Docker container IP as the Apache Thrift server host IP
+sed -i "s#<thriftServerHost>.*</thriftServerHost>#<thriftServerHost>${docker_container_ip}</thriftServerHost>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/broker.xml
 
 # start WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/broker.sh
+sh ${WSO2_SERVER_HOME}/bin/${server_profile}.sh

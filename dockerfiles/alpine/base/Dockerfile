@@ -31,8 +31,8 @@ ARG FILES=./files
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.4.0
-ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_DIST}
+ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 ENV ENV=${USER_HOME}"/.ashrc"
 
 # install required packages
@@ -45,6 +45,7 @@ RUN  apk add --update --no-cache \
 RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
      adduser -u ${USER_ID} -D -g '' -h ${USER_HOME} -G ${USER_GROUP} ${USER} ;
 
+# MOTD login message
 RUN echo 'printf "Welcome to WSO2 Docker resources.\n\
 ----------------------------------\n\
 The Docker container contains the WSO2 product with its latest updates,\n\
@@ -65,20 +66,17 @@ RUN apk --no-cache add ca-certificates wget; \
     apk add glibc-2.27-r0.apk;
 
 # copy jdk, wso2 product distribution to user's home directory and copy mysql connector jar to product distribution
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
-# artifacts for Kubernetes membership scheme based clustering
-COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins
+# add libraries for Kubernetes membership scheme based clustering
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
 
 # set environment variables
-ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
-    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
+ENV JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs" \
+    WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
-
-# set environment variables
-ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
-    WORKING_DIRECTORY=${USER_HOME}
