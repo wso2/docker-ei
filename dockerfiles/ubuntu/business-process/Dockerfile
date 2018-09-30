@@ -24,7 +24,7 @@ COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
 # set temporary location for shared artifacts
 RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
-    cp -r ${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/
+    cp -r ${WSO2_SERVER_HOME}/wso2/business-process/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/server/
 
 # expose business-process ports
 EXPOSE 9445 9765

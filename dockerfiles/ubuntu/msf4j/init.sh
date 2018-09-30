@@ -19,10 +19,6 @@ set -e
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-deployment_volume=${WSO2_SERVER_HOME}/repository/deployment
-
-# original deployment artifacts
-original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp/deployment
 
 # capture Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)

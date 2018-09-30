@@ -19,7 +19,7 @@ set -e
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-deployment_volume=${WSO2_SERVER_HOME}/repository/deployment
+deployment_volume=${WSO2_SERVER_HOME}/wso2/broker/repository/deployment
 
 # original deployment artifacts
 original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp/deployment
@@ -38,7 +38,7 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 # these artifacts will be copied to deployment_volume if it is empty, before the server is started
 if test -d ${original_deployment_artifacts}; then
     if [ -z "$(ls -A ${deployment_volume}/)" ]; then
-	    # if no artifact is found under <WSO2_SERVER_HOME>/repository/deployment; copy originals
+	    # if no artifact is found under <WSO2_SERVER_HOME>/wso2/broker/repository/deployment; copy originals
         echo "Copying original deployment artifacts from temporary location to server..."
         cp -R ${original_deployment_artifacts}/* ${deployment_volume}/
     fi

@@ -24,7 +24,7 @@ COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
 
 # set temporary location for shared artifacts
 RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && \
-    cp -r ${WSO2_SERVER_HOME}/wso2/broker/repository/deployment/ ${WORKING_DIRECTORY}/wso2-tmp/
+    cp -r ${WSO2_SERVER_HOME}/wso2/broker/repository/deployment/ ${WORKING_DIRECTORY}/wso2-tmp/deployment/
 
 # expose broker ports
 EXPOSE 9446 9766 5675 8675 1886 8836 7614
