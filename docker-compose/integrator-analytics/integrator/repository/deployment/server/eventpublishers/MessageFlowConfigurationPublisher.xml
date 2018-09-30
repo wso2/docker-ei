@@ -8,7 +8,7 @@
     <property name="protocol">thrift</property>
     <property name="publishingMode">blocking</property>
     <property name="publishTimeout">0</property>
-    <property name="receiverURL">tcp://wso2ei-analytics:7612</property>
+    <property name="receiverURL">tcp://wso2ei-analytics-worker:7612</property>
     <property encrypted="false" name="password">admin</property>
   </to>
 </eventPublisher>
