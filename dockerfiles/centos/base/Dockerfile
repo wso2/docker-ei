@@ -28,14 +28,14 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
+# set jdk configurations
+ARG JDK=jdk1.8.0*
+ARG JAVA_HOME=${USER_HOME}/java
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.4.0
-ARG WSO2_SERVER_DIST=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_DIST}
-# set jdk configurations
-ARG JDK_DIST=jdk1.8.0*
-ARG JAVA_HOME=${USER_HOME}/java
+ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 
 # install required packages
 RUN yum update -y && \
@@ -53,13 +53,12 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
 # copy jdk, wso2 product distribution to user's home directory and copy mysql connector jar to product distribution
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_DIST} ${WSO2_SERVER_HOME}
+COPY --chown=wso2carbon:wso2 ${FILES}/${JDK} ${JAVA_HOME}
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/ 
-# artifacts for Kubernetes membership scheme based clustering
-COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins
+# add libraries for Kubernetes membership scheme based clustering
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
 
 # set the user and work directory
 USER ${USER}
