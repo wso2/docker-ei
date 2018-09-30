@@ -6,11 +6,12 @@
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
    in order to run the steps provided in following Quick start guide. <br><br>
-  * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
+ * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 Enterprise Integrator. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
-  * If you wish to run the Docker Compose setup using Docker images built locally, build Integrator, Broker, Business Process,
-   Analytics Images using [Dockerfiles](../../dockerfiles/README.md) and remove the `docker.wso2.com/` prefix from the `image` name In the `docker-compose.yml`. <br><br>
-            
+ * If you wish to run the Docker Compose configuration using Docker images built locally, build the Enterprise Integrator's Integrator, Business Process Server, Message Broker, Analytics Dashboard and Analytics Worker
+   images using [EI Dockerfiles](../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
+   For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.4.0` to <br> `image: wso2ei-integrator:6.4.0`. <br><br>
+               
 ## How to Run
 
   1. Clone WSO2 Enterprise Integrator Docker git repository.
@@ -27,7 +28,7 @@
      Instead, extract the zip file and directly browse to `docker-ei-<released-version>/docker-compose/integrator-broker-bps-analytics` folder. 
      
      > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: <br> git checkout tags/v6.3.0.1 and continue below steps.
+     i.e. for example: <br> git checkout tags/v6.4.0.1 and continue below steps.
 
   4. Execute following Docker Compose command to start the deployment.
      ```
@@ -38,7 +39,7 @@
 
      ```
      For Integrator - https://localhost:9443/carbon
-     For Analytics - https://localhost:9444/portal
+     For Analytics - https://localhost:9643/portal
      For Business Process - https://localhost:9445/carbon
      For Broker - https://localhost:9446/carbon
      ```
