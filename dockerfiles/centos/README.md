@@ -30,7 +30,7 @@ git clone https://github.com/wso2/docker-ei.git
 extract into `<DOCKERFILE_HOME>/base/files`.
 - Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) and 
 extract into `<DOCKERFILE_HOME>/base/files`.
-- Once both JDK and WSO2 Enterprise Integrator distribution is extracted, it should be as follows:
+- Once both JDK and WSO2 Enterprise Integrator distribution are extracted, it should be as follows:
 ```
 <DOCKERFILE_HOME>/base/files/jdk<version>
 <DOCKERFILE_HOME>/base/files/wso2ei-6.4.0
