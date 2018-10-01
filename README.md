@@ -1,14 +1,17 @@
-# Docker Resources for WSO2 Enterprise Integrator
+# Docker Resources for WSO2 Integration
 
 This repository contains following Docker resources :
 
-- Per-profile Dockerfiles to create docker images
-- Docker-compose files to evaluate most common deployment profiles
+- Per profile Docker resources of WSO2 Enterprise Integrator v6.4.x for Alpine, CentOS, Ubuntu
+- Docker Compose resources to evaluate most common Integration deployment patterns
 
-Per-profile dockerfiles enables us to build generic Docker images for deploying the product as profiles <br>
-in containerized environments. Each includes the JDK, product distribution and a collection of utility libraries. <br>
-Configurations, JDBC driver, extensions and other deployable artifacts are designed to be provided via volume mounts.
+Per profile Docker resources for WSO2 Enterprise Integrator help you build generic Docker images for deploying the
+corresponding product servers in containerized environments. Each Docker image includes the JDK, the relevant product distribution
+and a collection of utility libraries. Configurations, custom JDBC drivers other than the default MySQL JDBC driver provided,
+extensions and other deployable artifacts are designed to be provided via volume mounts to the containers spawned.
 
-Docker Compose files have been created according to most common Enterprise Integrator deployment profiles <br>
-for allowing users to evaluate product features to meet their co-operate integration requirements. The Docker Compose <br>
-files make use of the per-profile docker images of WSO2 Enterprise Integrator and MySQL Docker image.
+Docker Compose files have been created according to the most common Integration deployment patterns available for allowing users
+to quickly evaluate product features along side their co-operate Integration requirements. The Compose files make use of per profile
+Docker images of WSO2 Enterprise Integrator and MySQL.
+
+**Change log** from previous v6.4.0.1 release: [View Here](CHANGELOG.md)
