@@ -335,7 +335,7 @@
     </transportReceiver-->
 
     <!--Uncomment this and configure as appropriate for JMS transport support with WSO2 EI Broker Profile -->
-    <!--transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
+    <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
            <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
             <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
@@ -356,7 +356,7 @@
             <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
             <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
-    </transportReceiver-->
+    </transportReceiver>
 
     <!--Uncomment this for FIX transport support
     <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
@@ -428,8 +428,8 @@
     <!--Uncomment this local transport to use local transport in mediation flow-->
     <!--<transportSender name="local" class="org.apache.axis2.transport.local.NonBlockingLocalTransportSender"/>-->
 
-   <!-- uncomment this and configure to use connection pools for sending messages>
-     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
+   <!-- uncomment this and configure to use connection pools for sending messages -->
+     <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/>
 
     <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
 
