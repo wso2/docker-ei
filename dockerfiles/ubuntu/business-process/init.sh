@@ -59,4 +59,4 @@ sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\
 sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/bps.xml
 
 # start WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/${server_profile}.sh
+sh ${WSO2_SERVER_HOME}/bin/${server_profile}.sh "$@"
