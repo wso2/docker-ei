@@ -44,9 +44,7 @@ which is under the Apache License, Version 2.0. \n\
 Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
 
 # install required packages
-RUN  apk add --update --no-cache \
-     curl \
-     netcat-openbsd && \
+RUN  apk add --update --no-cache netcat-openbsd && \
      rm -rf /var/cache/apk/*
 
 # create a user group and a user
@@ -58,9 +56,7 @@ RUN echo $MOTD > "$ENV"
 
 # copy wso2 product distribution to user's home directory and copy mysql connector jar to product distribution
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib
-# copy entrypoint bash script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/
 
 # set the user and work directory
 USER ${USER_ID}
@@ -69,9 +65,3 @@ WORKDIR ${USER_HOME}
 # set environment variables
 ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
-
-# expose micro-integrator ports
-EXPOSE 8290 8253
-
-# set entrypoint to init script
-ENTRYPOINT ["/home/wso2carbon/init.sh"]

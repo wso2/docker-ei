@@ -62,17 +62,18 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
 
-# copy wso2 product distribution to user's home directory and copy relevant libraries (mysql connector jar and integrator libraries) to product distribution
+# copy wso2 product distribution to user's home directory
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
-COPY --chown=wso2carbon:wso2 ${FILES}/lib ${WSO2_SERVER_HOME}/lib
+# copy shared artifacts to a temporary location
+COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
+# copy relevant libraries (mysql connector jar and integrator libraries) to product distribution
+COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
+COPY --chown=wso2carbon:wso2 ${FILES}/lib ${WSO2_SERVER_HOME}/lib/
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
-
-# set temporary location for shared artifacts
-RUN mkdir -p ${WORKING_DIRECTORY}/wso2-tmp/ && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp/server/
 
 # set the user and work directory
 USER ${USER_ID}
