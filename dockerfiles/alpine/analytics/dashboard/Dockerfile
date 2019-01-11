@@ -17,15 +17,13 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-base:6.4.0-alpine
-ARG FILES=./files
+FROM wso2ei-analytics-base:6.4.0-alpine
 
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/
 
 # expose analytics ports
-EXPOSE 9444 7612 7712 9161
+EXPOSE 9713 9643 9613 7713 7613
 
 # set entrypoint to init script
 ENTRYPOINT ["/home/wso2carbon/init.sh"]
