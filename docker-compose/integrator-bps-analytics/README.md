@@ -8,7 +8,7 @@
    in order to run the steps provided in following Quick start guide. <br><br>
   * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 Enterprise Integrator. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
-  * If you wish to run the Docker Compose setup using Docker images built locally, build Integrator, Business Process and Analytics Images using [Dockerfiles](../../dockerfiles/README.md) 
+  * If you wish to run the Docker Compose setup using Docker images built locally, build Integrator, Business Process and Analytics Images using [Dockerfiles](../../dockerfiles) 
     and remove the `dockerhub.wso2.com/` prefix from the `image` name in the <br>`docker-compose.yml`. For example, change the line `image: dockerhub.wso2.com/wso2ei-analytics:6.3.0` 
     to <br>`image: wso2ei-analytics:6.3.0`. <br><br>
   
