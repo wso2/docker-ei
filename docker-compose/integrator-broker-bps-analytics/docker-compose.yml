@@ -15,10 +15,10 @@ services:
       - ./mysql/data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 20s
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
   wso2ei-analytics:
     image: docker.wso2.com/wso2ei-analytics:6.3.0
     container_name: wso2ei-analytics
@@ -37,7 +37,7 @@ services:
       start_period: 30s
     volumes:
       # mounting configurations
-      - ./analytics:/home/wso2carbon/wso2-server-volume/wso2/analytics
+      - ./analytics:/home/wso2carbon/wso2-config-volume/
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -57,7 +57,7 @@ services:
       start_period: 60s
     volumes:
       # mounting configurations
-      - ./business-process:/home/wso2carbon/wso2-server-volume/wso2/business-process
+      - ./business-process:/home/wso2carbon/wso2-config-volume/
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -85,7 +85,7 @@ services:
       start_period: 90s
     volumes:
       # mounting configurations
-      - ./broker:/home/wso2carbon/wso2-server-volume/wso2/broker
+      - ./broker:/home/wso2carbon/wso2-config-volume/
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
@@ -113,7 +113,7 @@ services:
       start_period: 120s
     volumes:
       # mounting configurations
-      - ./integrator:/home/wso2carbon/wso2-server-volume
+      - ./integrator:/home/wso2carbon/wso2-config-volume/
     depends_on:
       wso2ei-mysql:
         condition: service_healthy
