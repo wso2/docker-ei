@@ -26,14 +26,20 @@ profile distribution.
 ``` 
 
 Extract the generated profile distribution to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
-
 - Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
 and copy that to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
+- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.82/) JAR v3.2.82,
+[Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
+[Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
+`<INTEGRATOR_DOCKERFILE_HOME>/files/lib`. These libraries are needed for the communication between Integrator <br> and Message Broker.
 - Once all of these are in place, it should look as follows:
 
   ```bash
   <INTEGRATOR_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
   <INTEGRATOR_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
+  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/andes-client-3.2.82.jar
+  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar
+  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/org.wso2.securevault-1.0.0-wso2v2-sources.jar
   ```
   
 >Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
@@ -58,10 +64,10 @@ in order to obtain latest bug fixes and updates for the product.
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
-##### 1. Stop the Broker profile container if it's already running.
+##### 1. Stop the Integrator profile container if it's already running.
 In Integrator profile product distribution, `carbon.xml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and change
-the offset value under ports to 1.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and
+increase the offset value under ports by 1
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
 ```
@@ -71,7 +77,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9443:9443 \
+-p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-integrator:6.4.0
 ```
