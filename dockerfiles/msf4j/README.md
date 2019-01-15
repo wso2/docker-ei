@@ -13,7 +13,7 @@ MSF4J profile for WSO2 Enterprise Integrator 6.3.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/msf4j` directory will be referred to as `MSF4J_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/msf4j` directory will be referred to as `MSF4J_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK, MSF4J profile distribution and MySQL connector to `<MSF4J_DOCKERFILE_HOME>/files`.
 
@@ -69,7 +69,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.yml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9090:9090 \
+-p 9091:9091 \
 --volume <SOURCE_CONFIGS>/carbon.yml:<TARGET_CONFIGS>/carbon.yml \
 wso2ei-msf4j:6.3.0
 ```

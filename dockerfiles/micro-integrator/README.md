@@ -13,7 +13,7 @@ Micro Integrator profile for WSO2 Enterprise Integrator 6.3.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/micro-integrator` directory will be referred to as `MICRO_ESB_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/micro-integrator` directory will be referred to as `MICRO_ESB_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK, Micro Integrator profile distributions and MySQL connector to `<MICRO_ESB_DOCKERFILE_HOME>/files`.
 
@@ -69,7 +69,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 8290:8290 -p 8253:8253 \
+-p 8291:8291 -p 8254:8254 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-micro-integrator:6.3.0
 ```

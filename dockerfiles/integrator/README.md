@@ -13,7 +13,7 @@ Integrator profile for WSO2 Enterprise Integrator 6.3.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/integrator` directory will be referred to as `INTEGRATOR_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/integrator` directory will be referred to as `INTEGRATOR_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK, Integrator profile distributions and MySQL connector to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
 
@@ -81,7 +81,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9443:9443 \
+-p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-integrator:6.3.0
 ```
