@@ -28,6 +28,7 @@ rat.txt
 
 # exception to the rule
 !**/files/.gitkeep
+!**/files/lib/
 
 # For integrator-analytics
 

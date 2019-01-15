@@ -25,7 +25,6 @@ profile distribution.
 ``` 
 
 Extract the generated profile distribution to `<BPS_DOCKERFILE_HOME>/files`.
-
 - Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
 and copy that to `<BPS_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
@@ -58,10 +57,9 @@ You may map other container service ports, which have been exposed to Docker hos
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
-##### 1. Stop the Broker profile container if it's already running.
+##### 1. Stop the Business Process Server profile container if it's already running.
 In Business Process Server profile product distribution, `carbon.xml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/business-process/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and change
-the offset value under ports to 1.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and increase the offset value under ports by 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
 ```
@@ -71,7 +69,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9445:9445 \
+-p 9446:9446 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-business-process:6.4.0-alpine
 ```
