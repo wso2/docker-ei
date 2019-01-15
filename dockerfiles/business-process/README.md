@@ -60,10 +60,10 @@ You may map other container service ports, which have been exposed to Docker hos
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
 As an example, steps required to change the port offset using `carbon.xml` is as follows.
 
-##### 1. Stop the Broker profile container if it's already running.
+##### 1. Stop the Business Process Server profile container if it's already running.
 In Business Process Server profile product distribution, `carbon.xml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/business-process/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and change
-the offset value under ports to 1.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and increase
+the offset value under ports by 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
 ```
