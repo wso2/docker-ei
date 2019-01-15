@@ -12,7 +12,7 @@ Business Process Server profile for WSO2 Enterprise Integrator 6.3.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/business-process` directory will be referred to as `BPS_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/business-process` directory will be referred to as `BPS_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Add JDK, Business Process Server distributions and MySQL connector to `<BPS_DOCKERFILE_HOME>/files`.
 
@@ -73,7 +73,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9445:9445 \
+-p 9446:9446 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-business-process:6.3.0
 ```
