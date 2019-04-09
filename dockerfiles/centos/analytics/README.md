@@ -84,9 +84,9 @@ Configurations would lie on the Docker host machine and they can be volume mount
 As an example, steps required to change the port offset using `deployment.yaml` is as follows.
 
 ##### 1. Stop the Enterprise Integrator Analytics container if it's already running.
-In WSO2 Enterprise Integrator 6.4.0 product distribution, `deployment.yaml` configuration file <br>
+In Analytics Worker profile product distribution, `deployment.yaml` configuration file <br>
 can be found at `<DISTRIBUTION_HOME>/wso2/analytics/conf/worker`. Copy the file to some suitable location of the host machine, <br>
-referred to as `<SOURCE_CONFIGS>/deployment.yaml` and change the offset value under ports to 2.
+referred to as `<SOURCE_CONFIGS>/deployment.yaml` and increase the offset value under ports by 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`
 ```
@@ -96,7 +96,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run 
--p 9444:9444
+-p 9445:9445
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
 wso2ei-analytics-worker:6.4.0-centos
 ```
