@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set to product base image
-FROM wso2ei-analytics-base:6.4.0
+FROM wso2ei-analytics-base:6.5.0
 
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${WORKING_DIRECTORY}/

@@ -1,6 +1,6 @@
 # Dockerfile for Integrator profile of WSO2 Enterprise Integrator #
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
-Integrator profile for WSO2 Enterprise Integrator 6.4.0.
+Integrator profile for WSO2 Enterprise Integrator 6.5.0.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Add Integrator profile distribution and MySQL connector to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
 
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
+- Download [WSO2 Enterprise Integrator 6.5.0 distribution](https://wso2.com/integration/) distribution.
 Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the Integrator
 profile distribution.
 
@@ -35,7 +35,7 @@ and copy that to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <INTEGRATOR_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
+  <INTEGRATOR_DOCKERFILE_HOME>/files/wso2ei-6.5.0/
   <INTEGRATOR_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
   <INTEGRATOR_DOCKERFILE_HOME>/files/lib/andes-client-3.2.82.jar
   <INTEGRATOR_DOCKERFILE_HOME>/files/lib/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar
@@ -48,10 +48,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<INTEGRATOR_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-integrator:6.4.0 .`
+    + `docker build -t wso2ei-integrator:6.5.0 .`
     
 ##### 4. Running the Docker image.
-- `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.4.0`
+- `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.5.0`
 
 ##### 5. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
@@ -79,10 +79,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2ei-integrator:6.4.0
+wso2ei-integrator:6.5.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.4.0/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/conf folder of the container.
 
 
 ## Docker command usage references
