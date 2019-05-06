@@ -1,7 +1,7 @@
 # Dockerfile for WSO2 Enterprise Integrator Analytics #
 
 This section defines the step-by-step instructions to build [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker images for multiple profiles
-provided by WSO2 Enterprise Integrator 6.4.0, namely:<br>
+provided by WSO2 Enterprise Integrator 6.5.0, namely:<br>
 
 1. Dashboard
 2. Worker
@@ -22,7 +22,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Add Analytics profile distribution and MySQL connector to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
 
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
+- Download [WSO2 Enterprise Integrator 6.5.0 distribution](https://wso2.com/integration/) distribution.
 Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the Micro Integrator
 profile distribution.
 
@@ -36,7 +36,7 @@ and copy that to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2ei-6.4.0/
+  <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2ei-6.5.0/
   <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-<version>-bin.jar
   ```
 
@@ -47,23 +47,23 @@ in order to obtain latest bug fixes and updates for the product.
 
 - For base, navigate to `<ANALYTICS_DOCKERFILE_HOME>/base` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-analytics-base:6.4.0-alpine .`
+    + `docker build -t wso2ei-analytics-base:6.5.0-alpine .`
     
 ##### 4. Build Docker images specific to each profile.
 
 - For dashboard, navigate to `<ANALYTICS_DOCKERFILE_HOME>/dashboard` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-analytics-dashboard:6.4.0-alpine .`
+    + `docker build -t wso2ei-analytics-dashboard:6.5.0-alpine .`
 - For worker, navigate to `<ANALYTICS_DOCKERFILE_HOME>/worker` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-analytics-worker:6.4.0-alpine .`
+    + `docker build -t wso2ei-analytics-worker:6.5.0-alpine .`
     
 ##### 5. Running Docker images specific to each profile.
 
 - For dashboard,
-    + `docker run -p 9713:9713 -p 9643:9643 ...all-port-mappings-here... wso2ei-analytics-dashboard:6.4.0-alpine`
+    + `docker run -p 9713:9713 -p 9643:9643 ...all-port-mappings-here... wso2ei-analytics-dashboard:6.5.0-alpine`
 - For worker,
-    + `docker run -p 9444:9444 ...all-port-mappings-here... wso2ei-analytics-worker:6.4.0-alpine`
+    + `docker run -p 9444:9444 ...all-port-mappings-here... wso2ei-analytics-worker:6.5.0-alpine`
     
 ##### 6. Accessing the Dashboard portal.
 
@@ -96,10 +96,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 docker run 
 -p 9445:9445
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2ei-analytics-worker:6.4.0-alpine
+wso2ei-analytics-worker:6.5.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.4.0/wso2/analytics/conf/worker folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/analytics/conf/worker folder of the container.
 
 
 ## Docker command usage references
