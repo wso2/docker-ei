@@ -1,6 +1,6 @@
 # Dockerfile for MSF4J profile of WSO2 Enterprise Integrator #
 This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image
-MSF4J profile for WSO2 Enterprise Integrator 6.4.0.
+MSF4J profile for WSO2 Enterprise Integrator 6.5.0.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Add MSF4J profile distribution and MySQL connector to `<MSF4J_DOCKERFILE_HOME>/files`.
 
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
+- Download [WSO2 Enterprise Integrator 6.5.0 distribution](https://wso2.com/integration/) distribution.
 Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the MSF4J
 profile distribution.
 
@@ -31,7 +31,7 @@ and copy that to `<MSF4J_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <MSF4J_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
+  <MSF4J_DOCKERFILE_HOME>/files/wso2ei-6.5.0/
   <MSF4J_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
   ```
 
@@ -41,10 +41,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<MSF4J_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-msf4j:6.4.0-alpine .`
+    + `docker build -t wso2ei-msf4j:6.5.0-alpine .`
     
 ##### 4. Running the Docker image.
-- `docker run -p 9090:9090 wso2ei-msf4j:6.4.0-alpine`
+- `docker run -p 9090:9090 wso2ei-msf4j:6.5.0-alpine`
     
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
@@ -68,10 +68,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.yml
 docker run \
 -p 9091:9091 \
 --volume <SOURCE_CONFIGS>/carbon.yml:<TARGET_CONFIGS>/carbon.yml \
-wso2ei-msf4j:6.4.0-alpine
+wso2ei-msf4j:6.5.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.4.0/wso2/msf4j/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/msf4j/conf folder of the container.
 
 
 ## Docker command usage references

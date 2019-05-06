@@ -1,6 +1,6 @@
 # Dockerfile for Broker profile of WSO2 Enterprise Integrator #
 This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image
-Broker profile for WSO2 Enterprise Integrator 6.4.0.
+Broker profile for WSO2 Enterprise Integrator 6.5.0.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Add Broker profile distribution and MySQL connector to `<BROKER_DOCKERFILE_HOME>/files`.
 
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
+- Download [WSO2 Enterprise Integrator 6.5.0 distribution](https://wso2.com/integration/) distribution.
 Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the Broker
 profile distribution.
 
@@ -31,7 +31,7 @@ and copy that to `<BROKER_DOCKERFILE_HOME>/files`.
 - Once all of these are in place, it should look as follows:
 
   ```bash
-  <BROKER_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
+  <BROKER_DOCKERFILE_HOME>/files/wso2ei-6.5.0/
   <BROKER_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
   ```
   
@@ -41,10 +41,10 @@ in order to obtain latest bug fixes and updates for the product.
 ##### 3. Build the Docker image.
 - Navigate to `<BROKER_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-broker:6.4.0-alpine .`
+    + `docker build -t wso2ei-broker:6.5.0-alpine .`
     
 ##### 4. Running the Docker image.
-- `docker run -p 9446:9446 ...all-port-mappings-here... wso2ei-broker:6.4.0-alpine`
+- `docker run -p 9446:9446 ...all-port-mappings-here... wso2ei-broker:6.5.0-alpine`
 >Here, only port 9446 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
 
@@ -74,10 +74,10 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 docker run \
 -p 9447:9447 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2ei-broker:6.4.0-alpine
+wso2ei-broker:6.5.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.4.0/wso2/broker/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/broker/conf folder of the container.
 
 
 ## Docker command usage references
