@@ -10,7 +10,7 @@
    from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 Enterprise Integrator. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
  * If you wish to run the Docker Compose configuration using Docker images built locally, build the Enterprise Integrator's Integrator, Analytics Dashboard and Analytics Worker
    images using [EI Dockerfiles](../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
-   For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.4.0` to <br> `image: wso2ei-integrator:6.4.0`. <br><br>
+   For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.5.0` to <br> `image: wso2ei-integrator:6.5.0`. <br><br>
        
 ## How to Run
 
