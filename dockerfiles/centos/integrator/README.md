@@ -29,18 +29,11 @@ profile distribution.
 Extract the generated profile distribution to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
 - Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
 and copy that to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
-- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.82/) JAR v3.2.82,
-[Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
-[Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
-`<INTEGRATOR_DOCKERFILE_HOME>/files/lib`. These libraries are needed for the communication between Integrator <br> and Message Broker.
 - Once all of these are in place, it should look as follows:
 
   ```bash
   <INTEGRATOR_DOCKERFILE_HOME>/files/wso2ei-6.5.0/
   <INTEGRATOR_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
-  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/andes-client-3.2.82.jar
-  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar
-  <INTEGRATOR_DOCKERFILE_HOME>/files/lib/org.wso2.securevault-1.0.0-wso2v2-sources.jar
   ```
   
 >Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
