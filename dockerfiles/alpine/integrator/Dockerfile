@@ -30,7 +30,7 @@ ARG USER_HOME=/home/${USER}
 ARG FILES=./files
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2ei
-ARG WSO2_SERVER_VERSION=6.4.0
+ARG WSO2_SERVER_VERSION=6.5.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 ENV ENV=${USER_HOME}"/.ashrc"
@@ -69,9 +69,8 @@ COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-# copy relevant libraries (mysql connector jar and integrator libraries) to product distribution
+# copy mysql connector jar to the server as a third party library
 COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
-COPY --chown=wso2carbon:wso2 ${FILES}/lib ${WSO2_SERVER_HOME}/lib/
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins

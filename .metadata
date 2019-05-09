@@ -1,0 +1,1634 @@
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+# ----------------------------------------------------------------------
+---
+# command line arguments
+params:
+  existing_version: 6.4.0
+  new_version: 6.5.0
+  wso2ei: "wso2ei-6.5.0"
+# files based configurations
+files:
+  - file_path: docker-compose/integrator-analytics/docker-compose.yml
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: docker-compose/integrator-analytics/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: "docker-compose/integrator-analytics/integrator/conf/axis2/axis2.xml"
+    relative_path: "{$arg.wso2ei}/conf/axis2/axis2.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "transportReceiver[@name=\"http\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">http://wso2ei-integrator:8280</parameter>
+      - operation: replace
+        xpath: "transportReceiver[@name=\"https\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">https://wso2ei-integrator:8243</parameter>
+  - file_path: "docker-compose/integrator-analytics/integrator/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-integrator</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-integrator</MgtHostName>
+      - operation: replace
+        xpath: "Axis2Config/HideAdminServiceWSDLs"
+        value: "false"
+  - file_path: "docker-compose/integrator-analytics/integrator/conf/synapse.properties"
+    relative_path: "{$arg.wso2ei}/conf/synapse.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace
+        current_value: "mediation.flow.statistics.enable=false"
+        new_value: "mediation.flow.statistics.enable=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.payloads=false"
+        new_value: "mediation.flow.statistics.tracer.collect.payloads=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.properties=false"
+        new_value: "mediation.flow.statistics.tracer.collect.properties=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.collect.all=false"
+        new_value: "mediation.flow.statistics.collect.all=true"
+  - file_path: "docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+    file_type: "xml"
+    configurations:
+      - operation: replace
+        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
+        value: "tcp://wso2ei-analytics-worker:7612"
+  - file_path: "docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+    file_type: "xml"
+    configurations:
+      - operation: replace
+        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
+        value: "tcp://wso2ei-analytics-worker:7612"
+  - file_path: "docker-compose/integrator-analytics/dashboard/wso2/analytics/conf/dashboard/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/dashboard/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-analytics/worker/wso2/analytics/conf/worker/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/worker/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+
+
+  - file_path: "docker-compose/integrator-bps-analytics/docker-compose.yml"
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: docker-compose/integrator-bps-analytics/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/bin/wso2server.sh"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/bin/wso2server.sh"
+    file_type: sh
+    configurations:
+      - operation: "add"
+        xpath: "-Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600"
+        value: "    -Dhttpclient.hostnameVerifier=AllowAll \\\n"
+      - operation: "add"
+        xpath: "-Dhttpclient.hostnameVerifier=AllowAll"
+        value: "    -Dorg.opensaml.httpclient.https.disableHostnameVerification=true \\\n"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/datasources/bps-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/bps-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_BUSINESS_PROCESS_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/maxActive"
+        value: "50"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/maxWait"
+        value: "60000"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/datasources/activiti-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/activiti-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_ACTIVITY_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/etc/tasks-config.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/etc/tasks-config.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "taskServerMode"
+        value: "STANDALONE"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/bps.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/bps.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "tns:ODESchedulerThreadPoolSize"
+        value: "10"
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-business-process</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-business-process</MgtHostName>
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+      - operation: add
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: add
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/business-process/config</targetPath>
+          </mount>
+      - operation: add
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+  - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-bps-analytics/dashboard/wso2/analytics/conf/dashboard/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/dashboard/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/axis2/axis2.xml"
+    relative_path: "{$arg.wso2ei}/conf/axis2/axis2.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "transportReceiver[@name=\"http\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">http://wso2ei-integrator:8280</parameter>
+      - operation: replace
+        xpath: "transportReceiver[@name=\"https\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">https://wso2ei-integrator:8243</parameter>
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>80</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-integrator</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-integrator</MgtHostName>
+      - operation: replace
+        xpath: "Axis2Config/HideAdminServiceWSDLs"
+        value: "false"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/integrator/config</targetPath>
+          </mount>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/synapse.properties"
+    relative_path: "{$arg.wso2ei}/conf/synapse.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace
+        current_value: "mediation.flow.statistics.enable=false"
+        new_value: "mediation.flow.statistics.enable=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.payloads=false"
+        new_value: "mediation.flow.statistics.tracer.collect.payloads=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.properties=false"
+        new_value: "mediation.flow.statistics.tracer.collect.properties=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.collect.all=false"
+        new_value: "mediation.flow.statistics.collect.all=true"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
+        value: "tcp://wso2ei-analytics-worker:7612"
+  - file_path: "docker-compose/integrator-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
+        value: "tcp://wso2ei-analytics-worker:7612"
+  - file_path: "docker-compose/integrator-bps-analytics/worker/wso2/analytics/conf/worker/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/worker/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+
+  - file_path: docker-compose/integrator-broker-analytics/docker-compose.yml
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>80</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_MB_STORE_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+      - operation: "add"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration"
+        value:
+          |
+          <minIdle>5</minIdle>
+  - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/broker.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/broker.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "coordination/thriftServerHost"
+        value: "wso2ei-broker"
+      - operation: "replace"
+        xpath: "coordination/thriftServerPort"
+        value: "7614"
+  - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-broker</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-broker</MgtHostName>
+  - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/broker/config</targetPath>
+          </mount>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+  - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-broker-analytics/dashboard/wso2/analytics/conf/dashboard/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/dashboard/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-broker-analytics/worker/wso2/analytics/conf/worker/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/worker/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/axis2/axis2.xml"
+    relative_path: "{$arg.wso2ei}/conf/axis2/axis2.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "transportReceiver[@name=\"http\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">http://wso2ei-integrator:8280</parameter>
+      - operation: replace
+        xpath: "transportReceiver[@name=\"https\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">https://wso2ei-integrator:8243</parameter>
+      - operation: add
+        xpath: "."
+        value: |
+          <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
+            <parameter name="myTopicConnectionFactory" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
+            </parameter>
+            <parameter name="myQueueConnectionFactory" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            </parameter>
+            <parameter name="default" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            </parameter>
+          </transportReceiver>
+      - operation: add
+        xpath: "."
+        value: |
+          <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/>
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>80</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-integrator</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-integrator</MgtHostName>
+      - operation: replace
+        xpath: "Axis2Config/HideAdminServiceWSDLs"
+        value: "false"
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/jndi.properties"
+    relative_path: "{$arg.wso2ei}/conf/jndi.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace_line
+        current_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://wso2ei-broker:5675?retries='5'&connectdelay='50''"
+      - operation: replace_line
+        current_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://wso2ei-broker:5675?retries='5'&connectdelay='50''"
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/integrator/config</targetPath>
+          </mount>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/synapse.properties"
+    relative_path: "{$arg.wso2ei}/conf/synapse.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace
+        current_value: "mediation.flow.statistics.enable=false"
+        new_value: "mediation.flow.statistics.enable=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.payloads=false"
+        new_value: "mediation.flow.statistics.tracer.collect.payloads=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.properties=false"
+        new_value: "mediation.flow.statistics.tracer.collect.properties=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.collect.all=false"
+        new_value: "mediation.flow.statistics.collect.all=true"
+  - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: docker-compose/integrator-broker-bps-analytics/docker-compose.yml
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>80</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_MB_STORE_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+      - operation: "add"
+        xpath: "datasources/datasource[name=\"WSO2_MB_STORE_DB\"]/definition/configuration"
+        value:
+          |
+          <minIdle>5</minIdle>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/broker.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/broker.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "coordination/thriftServerHost"
+        value: "wso2ei-broker"
+      - operation: "replace"
+        xpath: "coordination/thriftServerPort"
+        value: "7614"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-broker</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-broker</MgtHostName>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/broker/config</targetPath>
+          </mount>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/bin/wso2server.sh"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/bin/wso2server.sh"
+    file_type: sh
+    configurations:
+      - operation: "add"
+        xpath: "-Dorg.apache.cxf.io.CachedOutputStream.Threshold=104857600"
+        value: "    -Dhttpclient.hostnameVerifier=AllowAll \\\n"
+      - operation: "add"
+        xpath: "-Dhttpclient.hostnameVerifier=AllowAll"
+        value: "    -Dorg.opensaml.httpclient.https.disableHostnameVerification=true \\\n"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/datasources/bps-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/bps-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_BUSINESS_PROCESS_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/maxActive"
+        value: "50"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"BPS_DS\"]/definition/configuration/maxWait"
+        value: "60000"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/datasources/activiti-datasources.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/datasources/activiti-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/url"
+        value: "jdbc:mysql://mysql:3306/WSO2_ACTIVITY_DB?autoReconnect=true&amp;useSSL=false"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "datasources/datasource[name=\"ACTIVITI_DB\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/etc/tasks-config.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/etc/tasks-config.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "taskServerMode"
+        value: "STANDALONE"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/bps.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/bps.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "tns:ODESchedulerThreadPoolSize"
+        value: "10"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-business-process</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-business-process</MgtHostName>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+      - operation: add
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: add
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/business-process/config</targetPath>
+          </mount>
+      - operation: add
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/dashboard/wso2/analytics/conf/dashboard/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/dashboard/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: "replace"
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/axis2/axis2.xml"
+    relative_path: "{$arg.wso2ei}/conf/axis2/axis2.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "transportReceiver[@name=\"http\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">http://wso2ei-integrator:8280</parameter>
+      - operation: replace
+        xpath: "transportReceiver[@name=\"https\"]"
+        value: |
+         <parameter name="WSDLEPRPrefix" locked="false">https://wso2ei-integrator:8243</parameter>
+      - operation: add
+        xpath: "."
+        value: |
+          <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
+            <parameter name="myTopicConnectionFactory" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
+            </parameter>
+            <parameter name="myQueueConnectionFactory" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            </parameter>
+            <parameter name="default" locked="false">
+              <parameter name="java.naming.factory.initial" locked="false">org.wso2.andes.jndi.PropertiesFileInitialContextFactory</parameter>
+              <parameter name="java.naming.provider.url" locked="false">conf/jndi.properties</parameter>
+              <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+              <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+            </parameter>
+          </transportReceiver>
+      - operation: add
+        xpath: "."
+        value: |
+          <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/datasources/master-datasources.xml"
+    relative_path: "{$arg.wso2ei}/conf/datasources/master-datasources.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_REGISTRY_DB</name>
+              <description>The datasource is used for registry metadata</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_REGISTRY_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>80</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+      - operation: "add"
+        xpath: "datasources"
+        value:
+          |
+          <datasource>
+              <name>WSO2_USER_DB</name>
+              <description>The datasource is used for user mangement and userstore</description>
+              <jndiConfig>
+                  <name>jdbc/WSO2_USER_DB</name>
+              </jndiConfig>
+              <definition type="RDBMS">
+                  <configuration>
+                      <url>jdbc:mysql://mysql:3306/WSO2_USER_DB?autoReconnect=true&amp;useSSL=false</url>
+                      <username>root</username>
+                      <password>root</password>
+                      <driverClassName>com.mysql.jdbc.Driver</driverClassName>
+                      <maxActive>50</maxActive>
+                      <maxWait>60000</maxWait>
+                      <testOnBorrow>true</testOnBorrow>
+                      <validationQuery>SELECT 1</validationQuery>
+                      <validationInterval>30000</validationInterval>
+                  </configuration>
+              </definition>
+          </datasource>
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/carbon.xml"
+    relative_path: "{$arg.wso2ei}/conf/carbon.xml"
+    file_type: "xml"
+    configurations:
+      - operation: add
+        xpath: "."
+        value: |
+          <HostName>wso2ei-integrator</HostName>
+      - operation: add
+        xpath: "."
+        value: |
+          <MgtHostName>wso2ei-integrator</MgtHostName>
+      - operation: replace
+        xpath: "Axis2Config/HideAdminServiceWSDLs"
+        value: "false"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/jndi.properties"
+    relative_path: "{$arg.wso2ei}/conf/jndi.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace_line
+        current_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://wso2ei-broker:5675?retries='5'&connectdelay='50''"
+      - operation: replace_line
+        current_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://wso2ei-broker:5675?retries='5'&connectdelay='50''"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/registry.xml"
+    relative_path: "{$arg.wso2ei}/conf/registry.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "add"
+        xpath: "."
+        value: |
+          <dbConfig name="WSO2_REGISTRY_DB">
+              <dataSource>jdbc/WSO2_REGISTRY_DB</dataSource>
+          </dbConfig>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <remoteInstance url="https://localhost:8243/registry">
+              <id>WSO2_REGISTRY_DB</id>
+              <dbConfig>WSO2_REGISTRY_DB</dbConfig>
+              <readOnly>false</readOnly>
+              <registryRoot>/</registryRoot>
+              <enableCache>true</enableCache>
+              <cacheId>root@jdbc:mysql://mysql:3306/WSO2_REGISTRY_DB</cacheId>
+          </remoteInstance>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/config" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/integrator/config</targetPath>
+          </mount>
+      - operation: "add"
+        xpath: "."
+        value: |
+          <mount path="/_system/governance" overwrite="virtual">
+              <instanceId>WSO2_REGISTRY_DB</instanceId>
+              <targetPath>/_system/governance</targetPath>
+          </mount>
+      - operation: "replace"
+        xpath: "indexingConfiguration/startIndexing"
+        value: "true"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/synapse.properties"
+    relative_path: "{$arg.wso2ei}/conf/synapse.properties"
+    file_type: "txt"
+    configurations:
+      - operation: replace
+        current_value: "mediation.flow.statistics.enable=false"
+        new_value: "mediation.flow.statistics.enable=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.payloads=false"
+        new_value: "mediation.flow.statistics.tracer.collect.payloads=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.properties=false"
+        new_value: "mediation.flow.statistics.tracer.collect.properties=true"
+      - operation: replace
+        current_value: "mediation.flow.statistics.collect.all=false"
+        new_value: "mediation.flow.statistics.collect.all=true"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/user-mgt.xml"
+    relative_path: "{$arg.wso2ei}/conf/user-mgt.xml"
+    file_type: "xml"
+    configurations:
+      - operation: "replace"
+        xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
+        value: "jdbc/WSO2_USER_DB"
+  - file_path: "docker-compose/integrator-broker-bps-analytics/worker/wso2/analytics/conf/worker/deployment.yaml"
+    relative_path: "{$arg.wso2ei}/wso2/analytics/conf/worker/deployment.yaml"
+    file_type: yaml
+    configurations:
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/jdbcUrl"
+        value: "jdbc:mysql://mysql:3306/WSO2_EI_ANALYTICS_DB?useSSL=false"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/username"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/password"
+        value: "root"
+      - operation: replace
+        xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
+        value: "com.mysql.jdbc.Driver"
+
+  - file_path: dockerfiles/alpine/analytics/base/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/analytics/dashboard/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/analytics/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/analytics/worker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/broker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/broker/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/business-process/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/business-process/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/integrator/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/integrator/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/msf4j/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/alpine/msf4j/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/analytics/base/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/analytics/dashboard/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/analytics/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/analytics/worker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/broker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/broker/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/business-process/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/business-process/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/integrator/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/integrator/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/msf4j/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/centos/msf4j/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/analytics/base/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/analytics/dashboard/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/analytics/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/analytics/worker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/broker/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/broker/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/business-process/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/business-process/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/integrator/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/integrator/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/msf4j/Dockerfile
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: dockerfiles/ubuntu/msf4j/README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
+  - file_path: README.md
+    relative_path: ~
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "{$arg.existing_version}"
+        new_value: "{$arg.new_version}"
