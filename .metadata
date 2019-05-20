@@ -20,6 +20,7 @@ params:
   wso2ei: "wso2ei-6.5.0"
 # files based configurations
 files:
+  # Docker Compose resources for the deployment of WSO2 Enterprise Integrator's Integrator profile with Analytics profile
   - file_path: docker-compose/integrator-analytics/docker-compose.yml
     relative_path: ~
     file_type: txt
@@ -61,6 +62,12 @@ files:
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
+      - operation: replace
+        xpath: "Analytics/ServerURL"
+        value: "tcp://wso2ei-analytics-worker:7612"
+      - operation: replace
+        xpath: "Analytics/AuthServerURL"
+        value: "ssl://wso2ei-analytics-worker:7712"
   - file_path: "docker-compose/integrator-analytics/integrator/conf/synapse.properties"
     relative_path: "{$arg.wso2ei}/conf/synapse.properties"
     file_type: "txt"
@@ -77,20 +84,6 @@ files:
       - operation: replace
         current_value: "mediation.flow.statistics.collect.all=false"
         new_value: "mediation.flow.statistics.collect.all=true"
-  - file_path: "docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
-    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
-    file_type: "xml"
-    configurations:
-      - operation: replace
-        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
-        value: "tcp://wso2ei-analytics-worker:7612"
-  - file_path: "docker-compose/integrator-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
-    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
-    file_type: "xml"
-    configurations:
-      - operation: replace
-        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
-        value: "tcp://wso2ei-analytics-worker:7612"
   - file_path: "docker-compose/integrator-analytics/dashboard/wso2/analytics/conf/dashboard/deployment.yaml"
     relative_path: "{$arg.wso2ei}/wso2/analytics/conf/dashboard/deployment.yaml"
     file_type: yaml
@@ -124,7 +117,7 @@ files:
         xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
         value: "com.mysql.jdbc.Driver"
 
-
+  # Docker Compose resources for the deployment of WSO2 Enterprise Integrator's Integrator profile with BPS and Analytics profiles
   - file_path: "docker-compose/integrator-bps-analytics/docker-compose.yml"
     relative_path: ~
     file_type: txt
@@ -405,6 +398,12 @@ files:
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
+      - operation: replace
+        xpath: "Analytics/ServerURL"
+        value: "tcp://wso2ei-analytics-worker:7612"
+      - operation: replace
+        xpath: "Analytics/AuthServerURL"
+        value: "ssl://wso2ei-analytics-worker:7712"
   - file_path: "docker-compose/integrator-bps-analytics/integrator/conf/registry.xml"
     relative_path: "{$arg.wso2ei}/conf/registry.xml"
     file_type: "xml"
@@ -466,20 +465,6 @@ files:
       - operation: "replace"
         xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
         value: "jdbc/WSO2_USER_DB"
-  - file_path: "docker-compose/integrator-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
-    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
-    file_type: "xml"
-    configurations:
-      - operation: "replace"
-        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
-        value: "tcp://wso2ei-analytics-worker:7612"
-  - file_path: "docker-compose/integrator-bps-analytics/integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
-    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
-    file_type: "xml"
-    configurations:
-      - operation: "replace"
-        xpath: "to[@eventAdapterType=\"wso2event\"]/property[@name=\"receiverURL\"]"
-        value: "tcp://wso2ei-analytics-worker:7612"
   - file_path: "docker-compose/integrator-bps-analytics/worker/wso2/analytics/conf/worker/deployment.yaml"
     relative_path: "{$arg.wso2ei}/wso2/analytics/conf/worker/deployment.yaml"
     file_type: yaml
@@ -497,6 +482,7 @@ files:
         xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
         value: "com.mysql.jdbc.Driver"
 
+  # Docker Compose resources for the deployment of WSO2 Enterprise Integrator's Integrator profile with Broker and Analytics profiles
   - file_path: docker-compose/integrator-broker-analytics/docker-compose.yml
     relative_path: ~
     file_type: txt
@@ -778,6 +764,12 @@ files:
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
+      - operation: replace
+        xpath: "Analytics/ServerURL"
+        value: "tcp://wso2ei-analytics-worker:7612"
+      - operation: replace
+        xpath: "Analytics/AuthServerURL"
+        value: "ssl://wso2ei-analytics-worker:7712"
   - file_path: "docker-compose/integrator-broker-analytics/integrator/conf/jndi.properties"
     relative_path: "{$arg.wso2ei}/conf/jndi.properties"
     file_type: "txt"
@@ -849,6 +841,8 @@ files:
       - operation: "replace"
         xpath: "Realm/Configuration/Property[@name=\"dataSource\"]"
         value: "jdbc/WSO2_USER_DB"
+
+  # Docker Compose resources for the deployment of WSO2 Enterprise Integrator's Integrator profile with BPS, Broker and Analytics profiles
   - file_path: docker-compose/integrator-broker-bps-analytics/docker-compose.yml
     relative_path: ~
     file_type: txt
@@ -1285,6 +1279,12 @@ files:
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
+      - operation: replace
+        xpath: "Analytics/ServerURL"
+        value: "tcp://wso2ei-analytics-worker:7612"
+      - operation: replace
+        xpath: "Analytics/AuthServerURL"
+        value: "ssl://wso2ei-analytics-worker:7712"
   - file_path: "docker-compose/integrator-broker-bps-analytics/integrator/conf/jndi.properties"
     relative_path: "{$arg.wso2ei}/conf/jndi.properties"
     file_type: "txt"
@@ -1373,6 +1373,7 @@ files:
         xpath: "wso2.datasources/dataSources[name=\"EI_ANALYTICS\"]/definition/configuration/driverClassName"
         value: "com.mysql.jdbc.Driver"
 
+  # Docker resources for WSO2 Enterprise Integrator product profiles
   - file_path: dockerfiles/alpine/analytics/base/Dockerfile
     relative_path: ~
     file_type: txt
