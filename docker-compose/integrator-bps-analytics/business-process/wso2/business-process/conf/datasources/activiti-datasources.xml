@@ -12,7 +12,7 @@
       </jndiConfig>
       <definition type="RDBMS">
         <configuration>
-          <url>jdbc:mysql://mysql:3306/WSO2_ACTIVITY_DB?autoReconnect=true&amp;amp;useSSL=false</url>
+          <url>jdbc:mysql://mysql:3306/WSO2_ACTIVITY_DB?autoReconnect=true&amp;useSSL=false</url>
           <username>root</username>
           <password>root</password>
           <driverClassName>com.mysql.jdbc.Driver</driverClassName>
