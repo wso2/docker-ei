@@ -10,7 +10,7 @@
    subscription, you can sign up for a WSO2 Free Trial Subscription from [here](https://wso2.com/free-trial-subscription).
    Otherwise, you can proceed with Docker images which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose configuration using Docker images built locally, build the Enterprise Integrator's Integrator, Message Broker, Analytics Dashboard and Analytics Worker
-   images using [EI Dockerfiles](../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
+   images using [EI Dockerfiles](../../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
    For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.4.0` to <br> `image: wso2ei-integrator:6.4.0`. <br><br>
    
 ## How to Run
@@ -27,7 +27,7 @@
      ```
      > If you are to try out an already released zip of this repo, please ignore this 2nd step also. 
      Instead, extract the zip file and directly browse to `docker-ei-<released-version>/docker-compose/integrator-broker-analytics` folder. 
-     
+
      > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
      i.e. for example: <br> git checkout tags/v6.5.0.1 and continue below steps.
 
@@ -36,9 +36,9 @@
     
    **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
 
-  4. Execute following Docker Compose command to start the deployment.
+  4. Execute the `deploy.sh` script to start the deployment.
      ```
-     docker-compose up
+     ./deploy.sh
      ```
 
   4. Access management console via a web browser.
