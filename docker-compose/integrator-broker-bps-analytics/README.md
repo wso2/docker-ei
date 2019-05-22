@@ -6,8 +6,9 @@
 
  * Install [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Docker](https://www.docker.com/get-docker) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose)
    in order to run the steps provided in following Quick start guide. <br><br>
- * In order to run this Docker Compose setup, you will need an active [Free Trial Subscription](https://wso2.com/free-trial-subscription) 
-   from WSO2 since the referring Docker images hosted at docker.wso2.com contains the latest updates and fixes for WSO2 Enterprise Integrator. You can sign up for a Free Trial Subscription [here](https://wso2.com/free-trial-subscription). <br><br>
+ * In order to use Docker images with WSO2 updates, you need an active WSO2 subscription. If you do not possess an active WSO2
+   subscription, you can sign up for a WSO2 Free Trial Subscription from [here](https://wso2.com/free-trial-subscription).
+   Otherwise, you can proceed with Docker images which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose configuration using Docker images built locally, build the Enterprise Integrator's Integrator, Business Process Server, Message Broker, Analytics Dashboard and Analytics Worker
    images using [EI Dockerfiles](../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
    For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.4.0` to <br> `image: wso2ei-integrator:6.4.0`. <br><br>
@@ -29,6 +30,11 @@
      
      > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
      i.e. for example: <br> git checkout tags/v6.4.0.1 and continue below steps.
+
+  3. [Optional] If you are using WSO2 product Docker images with WSO2 updates, replace the WSO2 product Docker image names
+    (relevant `image` attribute under each WSO2 product profile service) in the Docker Compose deployment definition.
+    
+   **Note**: By default, each product profile service is configured to use WSO2 product Docker images with GA releases.
 
   4. Execute following Docker Compose command to start the deployment.
      ```
