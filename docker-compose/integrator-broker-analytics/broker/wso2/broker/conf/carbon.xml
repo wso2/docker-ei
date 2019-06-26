@@ -655,6 +655,6 @@
 	</ExternalAPIManager-->
     <LoadAPIContextsInServerStartup>true</LoadAPIContextsInServerStartup>
   </APIManagement>
-  <HostName>wso2ei-broker</HostName>
-  <MgtHostName>wso2ei-broker</MgtHostName>
+  <HostName>localhost</HostName>
+  <MgtHostName>localhost</MgtHostName>
 </Server>
