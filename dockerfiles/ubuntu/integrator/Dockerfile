@@ -17,23 +17,27 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to AdoptOpenJDK Ubuntu Docker image
-FROM adoptopenjdk/openjdk8:jdk8u212-b03
-MAINTAINER WSO2 Docker Maintainers "dev@wso2.org"
+FROM adoptopenjdk:8u212-b03-jdk-hotspot
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
-# set user configurations
+# set Docker image build arguments
+# build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set dependant files directory
-ARG FILES=./files
-# set wso2 product configurations
-ARG WSO2_SERVER=wso2ei
+# build arguments for WSO2 product installation
+ARG WSO2_SERVER_NAME=wso2ei
 ARG WSO2_SERVER_VERSION=6.5.0
-ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
-ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
-# set WSO2 EULA
+ARG WSO2_SERVER_PROFILE_NAME=integrator
+ARG WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER=1
+ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
+ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
+ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binary/download_file?file_path=${WSO2_SERVER}.zip
+# build arguments for external artifacts
+ARG MYSQL_CONNECTOR_VERSION=5.1.47
+# build argument for MOTD
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
 ------------------------------------ \n\
@@ -41,50 +45,47 @@ This Docker container comprises of a WSO2 product, running with its latest GA re
 which is under the Apache License, Version 2.0. \n\
 Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
 
+# create the non-root user and group and set MOTD login message
+RUN \
+    groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
+    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+
+# copy init script to user home
+COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl \
-    netcat && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
-    >> /etc/bash.bashrc \
-    ; echo "$MOTD" > /etc/motd
-
-# create a user group and a user
-RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
-    useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
-
-# create java prefs dir
-# this is to avoid warning logs printed by FileSystemPreferences class
-RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
-    mkdir -p ${USER_HOME}/.java/.userPrefs  && \
-    chmod -R 755 ${USER_HOME}/.java && \
-    chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
-
-# copy wso2 product distribution to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
-# copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
-# copy entrypoint bash script to user home
-COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
-# add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
+RUN \
+    apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        netcat \
+        unzip \
+        wget \
+        zip \
+    && rm -rf /var/lib/apt/lists/*
+# add the WSO2 product distribution to user's home directory
+RUN \
+    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    && rm -rf ${WSO2_SERVER_HOME}/jdk \
+    && rm -f ${WSO2_SERVER}.zip \
+    && echo "${WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER}" | bash ${WSO2_SERVER_HOME}/bin/profile-creator.sh \
+    && rm -rf ${WSO2_SERVER_HOME} \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip \
+    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
+    && rm -f ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip
+# add MySQL JDBC connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
-    WORKING_DIRECTORY=${USER_HOME} \
-    JAVA_OPTS="-Djava.util.prefs.systemRoot=${USER_HOME}/.java -Djava.util.prefs.userRoot=${USER_HOME}/.java/.userPrefs"
+ENV WORKING_DIRECTORY=${USER_HOME} \
+    WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose integrator ports
 EXPOSE 8280 8243 9443 4100
 
-# set entrypoint to init script
-ENTRYPOINT ["/home/wso2carbon/init.sh"]
+# initiate container and start WSO2 Carbon server
+ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
