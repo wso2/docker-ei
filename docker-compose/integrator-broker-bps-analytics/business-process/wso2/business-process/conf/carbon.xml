@@ -649,6 +649,5 @@
 	</ExternalAPIManager-->
     <LoadAPIContextsInServerStartup>true</LoadAPIContextsInServerStartup>
   </APIManagement>
-  <HostName>wso2ei-business-process</HostName>
-  <MgtHostName>wso2ei-business-process</MgtHostName>
+  <MgtHostName>localhost</MgtHostName>
 </Server>

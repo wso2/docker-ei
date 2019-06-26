@@ -663,6 +663,6 @@
     <Username>admin</Username>
     <Password>admin</Password>
   </Analytics>
-  <HostName>wso2ei-integrator</HostName>
-  <MgtHostName>wso2ei-integrator</MgtHostName>
+  <HostName>localhost</HostName>
+  <MgtHostName>localhost</MgtHostName>
 </Server>

@@ -54,11 +54,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-integrator</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-integrator</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
@@ -253,11 +253,7 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-business-process</HostName>
-      - operation: add
-        xpath: "."
-        value: |
-          <MgtHostName>wso2ei-business-process</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
   - file_path: "docker-compose/integrator-bps-analytics/business-process/wso2/business-process/conf/registry.xml"
     relative_path: "{$arg.wso2ei}/wso2/business-process/conf/registry.xml"
     file_type: "xml"
@@ -390,11 +386,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-integrator</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-integrator</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
@@ -576,11 +572,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-broker</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-broker</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
   - file_path: "docker-compose/integrator-broker-analytics/broker/wso2/broker/conf/registry.xml"
     relative_path: "{$arg.wso2ei}/wso2/broker/conf/registry.xml"
     file_type: "xml"
@@ -756,11 +752,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-integrator</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-integrator</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
@@ -936,11 +932,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-broker</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-broker</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
   - file_path: "docker-compose/integrator-broker-bps-analytics/broker/wso2/broker/conf/registry.xml"
     relative_path: "{$arg.wso2ei}/wso2/broker/conf/registry.xml"
     file_type: "xml"
@@ -1107,11 +1103,7 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-business-process</HostName>
-      - operation: add
-        xpath: "."
-        value: |
-          <MgtHostName>wso2ei-business-process</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
   - file_path: "docker-compose/integrator-broker-bps-analytics/business-process/wso2/business-process/conf/registry.xml"
     relative_path: "{$arg.wso2ei}/wso2/business-process/conf/registry.xml"
     file_type: "xml"
@@ -1271,11 +1263,11 @@ files:
       - operation: add
         xpath: "."
         value: |
-          <HostName>wso2ei-integrator</HostName>
+          <HostName>localhost</HostName>
       - operation: add
         xpath: "."
         value: |
-          <MgtHostName>wso2ei-integrator</MgtHostName>
+          <MgtHostName>localhost</MgtHostName>
       - operation: replace
         xpath: "Axis2Config/HideAdminServiceWSDLs"
         value: "false"
