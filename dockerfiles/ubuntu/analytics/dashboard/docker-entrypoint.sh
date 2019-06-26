@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # ------------------------------------------------------------------------
 # Copyright 2018 WSO2, Inc. (http://wso2.com)
 #
@@ -14,17 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License
 # ------------------------------------------------------------------------
-set -e
 
-# product profile
-server_profile=business-process
+set -e
 
 # volume mounts
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
 artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
-
-# capture Docker container IP from the container's /etc/hosts file
-docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
@@ -33,15 +28,9 @@ test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not 
 test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" && exit 1
 
 # copy any configuration changes mounted to config_volume
-test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
+test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
-test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
-
-# make any node specific configuration changes
-# set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
-sed -i "s#<parameter\ name=\"localMemberHost\".*<\/parameter>#<parameter\ name=\"localMemberHost\">${docker_container_ip}<\/parameter>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/axis2/axis2.xml
-# set the Docker container IP as the `NodeId` under bps.xml (a unique id for a cluster member)
-sed -i "s#<tns:NodeId>.*<\/tns:NodeId>#<tns:NodeId>${docker_container_ip}<\/tns:NodeId>#" ${WSO2_SERVER_HOME}/wso2/${server_profile}/conf/bps.xml
+test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 Carbon server
-sh ${WSO2_SERVER_HOME}/bin/${server_profile}.sh "$@"
+sh ${WSO2_SERVER_HOME}/bin/analytics-dashboard.sh "$@"
