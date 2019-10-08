@@ -1,7 +1,7 @@
-# Dockerfile for Server profile of WSO2 Streaming Integrator #
+# Dockerfile for WSO2 Streaming Integrator #
 
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
-MSF4J profile for WSO2 Streaming Integrator 1.0.0.
+for WSO2 Streaming Integrator 1.0.0.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ MSF4J profile for WSO2 Streaming Integrator 1.0.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/streaming-integrator/server` directory will be referred to as `SI_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/ubuntu/streaming-integrator` directory will be referred to as `SI_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
@@ -39,26 +39,26 @@ As an example, steps required to change the port offset using `deployment.yaml` 
 
 ##### 1. Stop the SI container if it's already running.
 
-In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/msf4j/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.yml` and
+In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.yaml` and
 increase the offset value under ports by 1.
 
-##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.yml`.
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`.
 
 ```
-chmod o+r <SOURCE_CONFIGS>/carbon.yml
+chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 ```
 
 ##### 3. Run the image by mounting the file to container as follows:
 
 ```
 docker run \
--p 9091:9091 \
---volume <SOURCE_CONFIGS>/carbon.yml:<TARGET_CONFIGS>/carbon.yml \
-wso2ei-msf4j:6.5.0
+-p 9443:9443 \
+--volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml \
+wso2si:1.0.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/msf4j/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-1.0.0/conf folder of the container.
 
 ## Docker command usage references
 
