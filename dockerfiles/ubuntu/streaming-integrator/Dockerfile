@@ -32,8 +32,7 @@ ARG WSO2_SERVER_NAME=wso2si
 ARG WSO2_SERVER_VERSION=1.0.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-#ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
-ARG WSO2_SERVER_DIST_URL=http://atuwa.private.wso2.com/WSO2-Products/enterprise-integrator/7.0.0/streaming-integrator-1.0.0/wso2si-1.0.0.zip
+ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # build argument for MOTD
