@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2018 WSO2, Inc. (http://wso2.com)
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,13 +28,12 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
-ARG WSO2_SERVER_NAME=wso2ei
-ARG WSO2_SERVER_VERSION=6.5.0
-ARG WSO2_SERVER_PROFILE_NAME=analytics
-ARG WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER=2
+ARG WSO2_SERVER_NAME=wso2si
+ARG WSO2_SERVER_VERSION=1.0.0
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
+#ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
+ARG WSO2_SERVER_DIST_URL=http://atuwa.private.wso2.com/WSO2-Products/enterprise-integrator/7.0.0/streaming-integrator-1.0.0/wso2si-1.0.0.zip
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # build argument for MOTD
@@ -67,13 +66,9 @@ RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
-    && echo "${WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER}" | bash ${WSO2_SERVER_HOME}/bin/profile-creator.sh \
-    && rm -rf ${WSO2_SERVER_HOME} \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip \
-    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
-    && rm -f ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip
+    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 # add MySQL JDBC connector to server home as a third party library
-ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/wso2/analytics/lib/
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
 
 # set the user and work directory
 USER ${USER_ID}
@@ -83,8 +78,8 @@ WORKDIR ${USER_HOME}
 ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
-# expose analytics ports
-EXPOSE 9091 9444 9712 9612 7712 7612 7070 7443
+# expose server ports
+EXPOSE 9711 9611 7711 7611 9090 9443
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]

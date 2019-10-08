@@ -1,7 +1,7 @@
-# Dockerfile for MSF4J profile of WSO2 Enterprise Integrator #
+# Dockerfile for Server profile of WSO2 Streaming Integrator #
 
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
-MSF4J profile for WSO2 Enterprise Integrator 6.5.0.
+MSF4J profile for WSO2 Streaming Integrator 1.0.0.
 
 ## Prerequisites
 
@@ -16,30 +16,30 @@ MSF4J profile for WSO2 Enterprise Integrator 6.5.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/msf4j` directory will be referred to as `MSF4J_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/ubuntu/streaming-integrator/server` directory will be referred to as `SI_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
-- Navigate to `<MSF4J_DOCKERFILE_HOME>` directory. <br>
+- Navigate to `<SI_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-msf4j:6.5.0 .`
+    + `docker build -t wso2si:1.0.0 .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 9090:9090 wso2ei-msf4j:6.5.0`
+- `docker run -p 9443:9443 wso2si:1.0.0`
     
 >In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
 
 ## How to update configurations
 
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
-As an example, steps required to change the port offset using `carbon.xml` is as follows:
+As an example, steps required to change the port offset using `deployment.yaml` is as follows:
 
-##### 1. Stop the MSF4J profile container if it's already running.
+##### 1. Stop the SI container if it's already running.
 
-In MSF4J profile product distribution, `carbon.yml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/msf4j/conf`.
+In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/msf4j/conf`.
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.yml` and
 increase the offset value under ports by 1.
 
