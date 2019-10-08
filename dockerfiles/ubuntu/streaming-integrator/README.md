@@ -29,8 +29,7 @@ git clone https://github.com/wso2/docker-ei.git
 ##### 3. Running the Docker image.
 
 - `docker run -p 9443:9443 wso2si:1.0.0`
-    
->In here, <DOCKER_HOST> refers to hostname or IP of the host machine on top of which containers are spawned.
+  
 
 ## How to update configurations
 
@@ -39,22 +38,22 @@ As an example, steps required to change the port offset using `deployment.yaml` 
 
 ##### 1. Stop the SI container if it's already running.
 
-In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.yaml` and
+In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/conf/server`.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/server/deployment.yaml` and
 increase the offset value under ports by 1.
 
-##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.yaml`.
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/server/deployment.yaml`.
 
 ```
-chmod o+r <SOURCE_CONFIGS>/deployment.yaml
+chmod o+r <SOURCE_CONFIGS>/server/deployment.yaml
 ```
 
 ##### 3. Run the image by mounting the file to container as follows:
 
 ```
 docker run \
--p 9443:9443 \
---volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml \
+-p 9444:9444 \
+--volume <SOURCE_CONFIGS>/server/deployment.yaml:<TARGET_CONFIGS>/server/deployment.yaml \
 wso2si:1.0.0
 ```
 
