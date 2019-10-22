@@ -1,7 +1,6 @@
-
 # Contributing to docker-ei
 
-Docker and Docker Compose resources for WSO2 Enterprise Integration platform are open source and we encourage contributions from our community.
+Docker resources for WSO2 Enterprise Integration platform are open source and we encourage contributions from our community.
 
 ## How you can Contribute
 
@@ -14,7 +13,7 @@ The recommended way to discuss anything related to WSO2 products is via our mail
 
 ### Posting Issues
 
-We encourage you to report any problems in the WSO2 product Docker and Docker Compose resources or their documentation by creating GitHub issues in the respective repositories.
+We encourage you to report any problems in the WSO2 product Docker resources or their documentation by creating GitHub issues in the respective repositories.
 The issues page on GitHub is for tracking bugs and feature requests. When posing a new issue, follow the guidelines below.
 
 * Check whether the issue has already been reported.
@@ -24,13 +23,12 @@ The issues page on GitHub is for tracking bugs and feature requests. When posing
 
 If you like to contribute with a bug fix or a new feature, start by posting an issue and discussing the best way to implement it.
 
-Unlike most projects, development for this repository is carried out on the `6.5.x` branch. This is because the `master` branch contains the latest stable release of the project.
-The code in `6.5.x` is merged to the `master` branch after a final review and a round of testing.
+Unlike most projects, development for this repository is carried out on the `7.0.x` branch.
 
 Please follow these guidelines when contributing to the code:
 
 1. Fork the current repository.
-2. Create a topic branch from the `6.5.x` branch.
+2. Create a topic branch from the `7.0.x` branch.
 3. Make commits in logical units.
 4. Before you send out the pull request, sync your forked repository with a remote repository. This makes your pull request simple and clear.
 
@@ -38,7 +36,7 @@ Please follow these guidelines when contributing to the code:
 git clone https://github.com/<user>/docker-ei.git
 git remote add upstream https://github.com/wso2/docker-ei.git
 git fetch upstream
-git checkout -b <topic-branch> upstream/6.5.x
+git checkout -b <topic-branch> upstream/7.0.x
 
 # add some work
 
