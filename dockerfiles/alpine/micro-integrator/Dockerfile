@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to latest CentOS Docker image
-FROM centos:7
+# set base Docker image to AdoptOpenJDK Alpine Docker image
+FROM adoptopenjdk/openjdk8:jdk8u222-b10-alpine
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 # set Docker image build arguments
@@ -27,8 +27,6 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set JDK configurations
-ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2mi
 ARG WSO2_SERVER_VERSION=1.1.0
@@ -38,37 +36,24 @@ ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_pa
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=8.0.17
 # build argument for MOTD
-ARG MOTD="\n\
-Welcome to WSO2 Docker resources.\n\
------------------------------------- \n\
-This Docker container comprises of a WSO2 product, running with its latest GA release \n\
-which is under the Apache License, Version 2.0. \n\
-Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
+ARG MOTD='printf "\n\
+ Welcome to WSO2 Docker Resources \n\
+ --------------------------------- \n\
+ This Docker container comprises of a WSO2 product, running with its latest GA release \n\
+ which is under the Apache License, Version 2.0. \n\
+ Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
+ENV ENV=${USER_HOME}"/.ashrc"
 
 # create the non-root user and group and set MOTD login message
 RUN \
-    groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
-    && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
-    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
+    && echo ${MOTD} > "${ENV}"
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
-RUN \
-    yum -y update \
-    && yum install -y \
-        nc \
-        unzip \
-        wget \
-    && rm -rf /var/cache/yum/*
-# install AdoptOpenJDK HotSpot
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u222b10.tar.gz \
-    && echo "37356281345b93feb4212e6267109b4409b55b06f107619dde4960e402bafa77  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
+RUN apk add --no-cache netcat-openbsd
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -83,13 +68,11 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=${JAVA_HOME}/bin:${PATH} \
-    WORKING_DIRECTORY=${USER_HOME} \
+ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose server ports
-EXPOSE 8290 8253
+EXPOSE 8253 8290
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
