@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to latest CentOS Docker image
-FROM centos:7
+# set base Docker image to AdoptOpenJDK Ubuntu Docker image
+FROM adoptopenjdk:8u222-b10-jdk-hotspot
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
 
 # set Docker image build arguments
@@ -27,8 +27,6 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set JDK configurations
-ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2mi
 ARG WSO2_SERVER_VERSION=1.1.0
@@ -55,20 +53,12 @@ RUN \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    yum -y update \
-    && yum install -y \
-        nc \
+    apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        netcat \
         unzip \
         wget \
-    && rm -rf /var/cache/yum/*
-# install AdoptOpenJDK HotSpot
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u222-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u222b10.tar.gz \
-    && echo "37356281345b93feb4212e6267109b4409b55b06f107619dde4960e402bafa77  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
+    && rm -rf /var/lib/apt/lists/*
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -76,16 +66,14 @@ RUN \
     && rm -f ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 # add MySQL JDBC connector to server home as a third party library
-ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 http://central.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/dropins/
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=${JAVA_HOME}/bin:${PATH} \
-    WORKING_DIRECTORY=${USER_HOME} \
+ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose server ports

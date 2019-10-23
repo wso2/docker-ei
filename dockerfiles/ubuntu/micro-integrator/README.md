@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 Micro Integrator #
 
-This section defines the step-by-step instructions to build an [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image for WSO2 Micro Integrator 1.1.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 Micro Integrator 1.1.0.
 
 ## Prerequisites
 
@@ -15,19 +15,19 @@ This section defines the step-by-step instructions to build an [CentOS](https://
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/centos/micro-integrator` directory will be referred to as `MI_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/ubuntu/micro-integrator` directory will be referred to as `MI_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
 - Navigate to `<MI_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2mi:1.1.0-centos .`
+    + `docker build -t wso2mi:1.1.0 .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 8253:8253 -p 8290:8290 wso2mi:1.1.0-centos`
+- `docker run -p 8253:8253 -p 8290:8290 wso2mi:1.1.0`
 
 ## How to update configurations
 
@@ -52,7 +52,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 8254:8254 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2mi:1.1.0-centos
+wso2mi:1.1.0
 ```
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-1.1.0/conf folder of the container.
