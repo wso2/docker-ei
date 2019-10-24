@@ -61,7 +61,6 @@ RUN \
         nc \
         unzip \
         wget \
-        zip \
     && rm -rf /var/cache/yum/*
 # install AdoptOpenJDK HotSpot
 RUN \
