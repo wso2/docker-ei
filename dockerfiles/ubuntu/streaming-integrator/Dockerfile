@@ -58,7 +58,6 @@ RUN \
         netcat \
         unzip \
         wget \
-        zip \
     && rm -rf /var/lib/apt/lists/*
 # add the WSO2 product distribution to user's home directory
 RUN \
