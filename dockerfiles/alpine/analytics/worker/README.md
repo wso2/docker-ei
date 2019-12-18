@@ -1,7 +1,7 @@
 # Dockerfile for Worker Profile of WSO2 Enterprise Integrator Analytics #
 
 This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker images
-for Worker Profile of WSO2 Enterprise Integrator 6.5.0.
+for Worker Profile of WSO2 Enterprise Integrator 6.6.0.
 
 ## Prerequisites
 
@@ -10,10 +10,11 @@ for Worker Profile of WSO2 Enterprise Integrator 6.5.0.
 
 ## How to build an image and run
 
-##### 1. Checkout this repository into your local machine using the following Git client command.
+##### 1. Checkout this repository into your local machine using the following Git client command and checkout branch v6.6.0.1.
 
 ```
 git clone https://github.com/wso2/docker-ei.git
+git checkout v6.6.0.1
 ```
 
 >The local copy of the `dockerfile/ubuntu/analytics/worker` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
@@ -22,13 +23,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 - Navigate to `<ANALYTICS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-analytics-worker:6.5.0-alpine .`
+    + `docker build -t wso2ei-analytics-worker:6.6.0-alpine .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
  
 ##### 3. Running the Docker image.
 
-- `docker run -p 9444:9444 ...all-port-mappings-here... wso2ei-analytics-worker:6.5.0-alpine`
+- `docker run -p 9444:9444 ...all-port-mappings-here... wso2ei-analytics-worker:6.6.0-alpine`
 
 > Here, only port 9444 has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
@@ -54,12 +55,12 @@ chmod o+r <SOURCE_CONFIGS>/deployment.yaml
 
 ```
 docker run 
--p 9445:9445
+-p 9444:9444
 --volume <SOURCE_CONFIGS>/deployment.yaml:<TARGET_CONFIGS>/deployment.yaml
-wso2ei-analytics-worker:6.5.0-alpine
+wso2ei-analytics-worker:6.6.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/analytics/conf/worker folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.6.0/wso2/analytics/conf/worker folder of the container.
 
 ## Docker command usage references
 

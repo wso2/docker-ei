@@ -1,11 +1,13 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <datasources-configuration>
-  <providers>
-    <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
-  </providers>
-  <datasources>
-    <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
-    <!--datasource>
+
+    <providers>
+        <provider>org.wso2.carbon.ndatasource.rdbms.RDBMSDataSourceReader</provider>
+    </providers>
+
+    <datasources>
+
+        <!-- For an explanation of the properties, see: http://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html -->
+        <!--datasource>
             <name>SAMPLE_DATA_SOURCE</name>
             <jndiConfig>
                 <name></name>
@@ -45,7 +47,7 @@
       </jndiConfig>
       <definition type="RDBMS">
         <configuration>
-          <url>jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <url>jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
           <username>wso2carbon</username>
           <password>wso2carbon</password>
           <driverClassName>org.h2.Driver</driverClassName>
@@ -104,10 +106,11 @@
              </definition>
          </datasource>
 -->
-    <!-- MSSQL server -->
-    <!-- Please enable any one of the following datasource based on your MSSQL driver library -->
-    <!-- JTDS datasource -->
-    <!--
+
+        <!-- MSSQL server -->
+        <!-- Please enable any one of the following datasource based on your MSSQL driver library -->
+        <!-- JTDS datasource -->
+<!--
         <datasource>
             <name>WSO2_MB_STORE_DB</name>
             <jndiConfig>
@@ -130,8 +133,9 @@
             </definition>
         </datasource>
 -->
-    <!-- SQLServerXA datasource -->
-    <!--
+
+        <!-- SQLServerXA datasource -->
+<!--
         <datasource>
             <name>WSO2_MB_STORE_DB</name>
             <jndiConfig>
@@ -151,8 +155,9 @@
             </definition>
         </datasource>
 -->
-    <!-- Oracle datasource -->
-    <!--
+
+        <!-- Oracle datasource -->
+<!--
         <datasource>
             <name>WSO2_MB_STORE_DB</name>
             <jndiConfig>
@@ -175,8 +180,9 @@
             </definition>
         </datasource>
 -->
-    <!-- Postgresql datasource -->
-    <!--
+
+        <!-- Postgresql datasource -->
+<!--
                 <datasource>
                     <name>WSO2_MB_STORE_DB</name>
                     <jndiConfig>

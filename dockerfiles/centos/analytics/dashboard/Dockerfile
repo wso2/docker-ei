@@ -31,7 +31,7 @@ ARG USER_HOME=/home/${USER}
 ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2ei
-ARG WSO2_SERVER_VERSION=6.5.0
+ARG WSO2_SERVER_VERSION=6.6.0
 ARG WSO2_SERVER_PROFILE_NAME=analytics
 ARG WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER=2
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
@@ -67,11 +67,11 @@ RUN \
 # install AdoptOpenJDK HotSpot
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK8U-jdk_x64_linux_hotspot.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_linux_hotspot_8u212b03.tar.gz \
-    && echo "dd28d6d2cde2b931caf94ac2422a2ad082ea62f0beee3bf7057317c53093de93  OpenJDK8U-jdk_x64_linux_hotspot.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK8U-jdk_x64_linux_hotspot.tar.gz -C ${JAVA_HOME} --strip-components=1 \
+    && wget -O OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.5%2B10/OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz \
+    && echo "ae050e35d7d769098c6f45a1c22f346cff883f117702e0fd7ce3661676ac0e84  OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz" | sha256sum -c - \
+    && tar -xf OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
+    && rm -f OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \

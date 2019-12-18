@@ -13,6 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 ################################################################################
+
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
@@ -23,6 +24,7 @@ wso2.carbon:
   ports:
       # port offset
     offset: 2
+
   # Configuration used for the databridge communication
 databridge.config:
     # No of worker threads to consume events
@@ -36,18 +38,19 @@ databridge.config:
   eventBufferSize: 2000
     # Keystore file path
     # THIS IS A MANDATORY FIELD
-  keyStoreLocation: ${sys:carbon.home}/resources/security/wso2carbon.jks
+  keyStoreLocation : ${sys:carbon.home}/resources/security/wso2carbon.jks
     # Keystore password
     # THIS IS A MANDATORY FIELD
-  keyStorePassword: wso2carbon
+  keyStorePassword : wso2carbon
     # Session Timeout value in mins
     # THIS IS A MANDATORY FIELD
   clientTimeoutMin: 30
     # Data receiver configurations
     # THIS IS A MANDATORY FIELD
   dataReceivers:
+  -
       # Data receiver configuration
-  - dataReceiver:
+    dataReceiver:
         # Data receiver type
         # THIS IS A MANDATORY FIELD
       type: Thrift
@@ -55,8 +58,10 @@ databridge.config:
       properties:
         tcpPort: '7611'
         sslPort: '7711'
+
+  -
       # Data receiver configuration
-  - dataReceiver:
+    dataReceiver:
         # Data receiver type
         # THIS IS A MANDATORY FIELD
       type: Binary
@@ -67,13 +72,15 @@ databridge.config:
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
         hostName: 0.0.0.0
+
   # Configuration of the Data Agents - to publish events through databridge
 data.agent.config:
     # Data agent configurations
     # THIS IS A MANDATORY FIELD
   agents:
+  -
       # Data agent configuration
-  - agentConfiguration:
+    agentConfiguration:
         # Data agent name
         # THIS IS A MANDATORY FIELD
       name: Thrift
@@ -83,9 +90,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: ${sys:carbon.home}/resources/security/client-truststore.jks
+      trustStorePath: '${sys:carbon.home}/resources/security/client-truststore.jks'
         # Trust store password
-      trustStorePassword: wso2carbon
+      trustStorePassword: 'wso2carbon'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -120,8 +127,9 @@ data.agent.config:
       sslEnabledProtocols: TLSv1.1,TLSv1.2
         # Ciphers
       ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+  -
       # Data agent configuration
-  - agentConfiguration:
+    agentConfiguration:
         # Data agent name
         # THIS IS A MANDATORY FIELD
       name: Binary
@@ -131,9 +139,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: ${sys:carbon.home}/resources/security/client-truststore.jks
+      trustStorePath: '${sys:carbon.home}/resources/security/client-truststore.jks'
         # Trust store password
-      trustStorePassword: wso2carbon
+      trustStorePassword: 'wso2carbon'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -168,10 +176,12 @@ data.agent.config:
       sslEnabledProtocols: TLSv1.1,TLSv1.2
         # Ciphers
       ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+
   # Deployment configuration parameters
 wso2.artifact.deployment:
     # Scheduler update interval
   updateInterval: 5
+
   # HA Configuration
 state.persistence:
   enabled: false
@@ -180,6 +190,7 @@ state.persistence:
   persistenceStore: org.wso2.carbon.stream.processor.core.persistence.FileSystemPersistenceStore
   config:
     location: siddhi-app-persistence
+
   # Secure Vault Configuration
 wso2.securevault:
   secretRepository:
@@ -192,6 +203,8 @@ wso2.securevault:
     type: org.wso2.carbon.secvault.reader.DefaultMasterKeyReader
     parameters:
       masterKeyReaderFile: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+
+
 # Data Sources Configuration
 wso2.datasources:
   dataSources:
@@ -204,7 +217,7 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -221,7 +234,7 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/BUSINESS_RULES_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/BUSINESS_RULES_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -230,6 +243,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
   # Dashboard data source
   - name: WSO2_STATUS_DASHBOARD_DB
     description: The datasource used for dashboard feature
@@ -239,7 +253,7 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/wso2_status_dashboard;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/wso2_status_dashboard;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -248,6 +262,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
   # carbon metrics data source
   - name: WSO2_METRICS_DB
     description: The datasource used for dashboard feature
@@ -256,7 +271,7 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -265,6 +280,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
   - name: WSO2_PERMISSIONS_DB
     description: The datasource used for dashboard feature
     jndiConfig:
@@ -273,7 +289,7 @@ wso2.datasources:
     definition:
       type: RDBMS
       configuration:
-        jdbcUrl: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
         username: wso2carbon
         password: wso2carbon
         driverClassName: org.h2.Driver
@@ -282,8 +298,9 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
   - name: EI_ANALYTICS
-    description: The datasource used for EI Analytics dashboard feature
+    description: "The datasource used for EI Analytics dashboard feature"
     jndiConfig:
       name: jdbc/EI_ANALYTICS
     definition:
@@ -298,6 +315,7 @@ wso2.datasources:
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
         isAutoCommit: false
+
 #  - name: SAMPLE_DB
 #    description: Sample datasource used for gadgets generation wizard
 #    jndiConfig:
@@ -315,59 +333,69 @@ wso2.datasources:
 #        connectionTestQuery: SELECT 1
 #        validationTimeout: 30000
 #        isAutoCommit: false
+
+
 wso2.business.rules.manager:
   datasource: BUSINESS_RULES_DB
   # rule template wise configuration for deploying business rules
   deployment_configs:
+    -
      # <IP>:<HTTPS Port> of the Worker node
-  - localhost:9443:
+     localhost:9443:
        # UUIDs of rule templates that are needed to be deployed on the node
-    - stock-data-analysis
-    - stock-exchange-input
-    - stock-exchange-output
-    - identifying-continuous-production-decrease
-    - popular-tweets-analysis
-    - http-analytics-processing
-    - message-tracing-source-template
-    - message-tracing-app-template
+       - stock-data-analysis
+       - stock-exchange-input
+       - stock-exchange-output
+       - identifying-continuous-production-decrease
+       - popular-tweets-analysis
+       - http-analytics-processing
+       - message-tracing-source-template
+       - message-tracing-app-template
   # credentials for worker nodes
   username: admin
   password: admin
+
 wso2.status.dashboard:
   pollingInterval: 5
-  metricsDatasourceName: WSO2_METRICS_DB
-  dashboardDatasourceName: WSO2_STATUS_DASHBOARD_DB
+  metricsDatasourceName: 'WSO2_METRICS_DB'
+  dashboardDatasourceName: 'WSO2_STATUS_DASHBOARD_DB'
   workerAccessCredentials:
-    username: admin
-    password: admin
+    username: 'admin'
+    password: 'admin'
+
 wso2.transport.http:
   transportProperties:
-  - name: server.bootstrap.socket.timeout
-    value: 60
-  - name: client.bootstrap.socket.timeout
-    value: 60
-  - name: latency.metrics.enabled
-    value: true
+    - name: "server.bootstrap.socket.timeout"
+      value: 60
+    - name: "client.bootstrap.socket.timeout"
+      value: 60
+    - name: "latency.metrics.enabled"
+      value: true
+
   listenerConfigurations:
-  - id: default-https
-    host: 0.0.0.0
-    port: 9643
-    scheme: https
-    keyStoreFile: ${carbon.home}/resources/security/wso2carbon.jks
-    keyStorePassword: wso2carbon
-    certPass: wso2carbon
+    - id: "default-https"
+      host: "0.0.0.0"
+      port: 9643
+      scheme: https
+      keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
+      keyStorePassword: wso2carbon
+      certPass: wso2carbon
+
 # Authentication configuration
 auth.configs:
-  type: local          # Type of the IdP client used
+  type: 'local'        # Type of the IdP client used
   userManager:
     adminRole: admin   # Admin role which is granted all permissions
     userStore:         # User store
       users:
-      - user:
-          username: admin
-          password: YWRtaW4=
-          roles: 1
+       -
+         user:
+           username: admin
+           password: YWRtaW4=
+           roles: 1
       roles:
-      - role:
-          id: 1
-          displayName: admin
+       -
+         role:
+           id: 1
+           displayName: admin
+           
