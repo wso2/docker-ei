@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='UTF-8'?>
 <!--
   ~ Copyright WSO2, Inc. (http://wso2.com)
   ~
@@ -14,15 +13,24 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <UserManager>
-  <Realm>
-    <Configuration><AddAdmin>true</AddAdmin><AdminRole>admin</AdminRole><AdminUser><UserName>admin</UserName><Password>admin</Password></AdminUser><EveryOneRoleName>everyone</EveryOneRoleName><!-- By default users in this role sees the registry root -->
-            !-- Enable username claim retrieve from the UM_USER_NAME in JDBC datasources --&gt;
+    <Realm>
+        <Configuration>
+		    <AddAdmin>true</AddAdmin>
+            <AdminRole>admin</AdminRole>
+            <AdminUser>
+                <UserName>admin</UserName>
+                <Password>admin</Password>
+            </AdminUser>
+            <EveryOneRoleName>everyone</EveryOneRoleName> <!-- By default users in this role sees the registry root -->
+             <!--Enable username claim retrieve from the UM_USER_NAME in JDBC datasources-->
             <OverrideUsernameClaimFromInternalUsername>true</OverrideUsernameClaimFromInternalUsername>
             <Property name="isCascadeDeleteEnabled">true</Property>
             <Property name="dataSource">jdbc/WSO2_USER_DB</Property>
         </Configuration>
-    <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
+
+	    <!-- Following is the configuration for internal JDBC user store. This user store manager is based on JDBC.
 	         In case if application needs to manage passwords externally set property
 	         <Property name="PasswordsExternallyManaged">true</Property>.
 	         In case if user core cache domain is needed to identify uniquely set property
@@ -31,36 +39,37 @@
 	         Note: Do not comment within UserStoreManager tags. Cause, specific tag names are used as tokens
 	         when building configurations for products.
 	    -->
-    <UserStoreManager class="org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager">
-      <Property name="TenantManager">org.wso2.carbon.user.core.tenant.JDBCTenantManager</Property>
-      <Property name="ReadOnly">false</Property>
-      <Property name="ReadGroups">true</Property>
-      <Property name="WriteGroups">true</Property>
-      <Property name="UsernameJavaRegEx">^[\S]{3,30}$</Property>
-      <Property name="UsernameJavaScriptRegEx">^[\S]{3,30}$</Property>
-      <Property name="UsernameJavaRegExViolationErrorMsg">Username pattern policy violated</Property>
-      <Property name="PasswordJavaRegEx">^[\S]{5,30}$</Property>
-      <Property name="PasswordJavaScriptRegEx">^[\S]{5,30}$</Property>
-      <Property name="PasswordJavaRegExViolationErrorMsg">Password length should be within 5 to 30 characters</Property>
-      <Property name="RolenameJavaRegEx">^[\S]{3,30}$</Property>
-      <Property name="RolenameJavaScriptRegEx">^[\S]{3,30}$</Property>
-      <Property name="CaseInsensitiveUsername">true</Property>
-      <Property name="SCIMEnabled">false</Property>
-      <Property name="IsBulkImportSupported">true</Property>
-      <Property name="PasswordDigest">SHA-256</Property>
-      <Property name="StoreSaltedPassword">true</Property>
-      <Property name="MultiAttributeSeparator">,</Property>
-      <Property name="MaxUserNameListLength">100</Property>
-      <Property name="MaxRoleNameListLength">100</Property>
-      <Property name="UserRolesCacheEnabled">true</Property>
-      <Property name="UserNameUniqueAcrossTenants">false</Property>
-      <Property name="LeadingOrTrailingSpaceAllowedInUserName">false</Property>
-    </UserStoreManager>
-    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
+        <UserStoreManager class="org.wso2.carbon.user.core.jdbc.JDBCUserStoreManager">
+            <Property name="TenantManager">org.wso2.carbon.user.core.tenant.JDBCTenantManager</Property>
+            <Property name="ReadOnly">false</Property>
+            <Property name="ReadGroups">true</Property>
+            <Property name="WriteGroups">true</Property>
+            <Property name="UsernameJavaRegEx">^[\S]{3,30}$</Property>
+            <Property name="UsernameJavaScriptRegEx">^[\S]{3,30}$</Property>
+            <Property name="UsernameJavaRegExViolationErrorMsg">Username pattern policy violated</Property>
+            <Property name="PasswordJavaRegEx">^[\S]{5,30}$</Property>
+            <Property name="PasswordJavaScriptRegEx">^[\S]{5,30}$</Property>
+            <Property name="PasswordJavaRegExViolationErrorMsg">Password length should be within 5 to 30 characters</Property>
+            <Property name="RolenameJavaRegEx">^[\S]{3,30}$</Property>
+            <Property name="RolenameJavaScriptRegEx">^[\S]{3,30}$</Property>
+            <Property name="CaseInsensitiveUsername">true</Property>
+            <Property name="SCIMEnabled">false</Property>
+            <Property name="IsBulkImportSupported">true</Property>
+            <Property name="PasswordDigest">SHA-256</Property>
+            <Property name="StoreSaltedPassword">true</Property>
+            <Property name="MultiAttributeSeparator">,</Property>
+            <Property name="MaxUserNameListLength">100</Property>
+            <Property name="MaxRoleNameListLength">100</Property>
+            <Property name="UserRolesCacheEnabled">true</Property>
+            <Property name="UserNameUniqueAcrossTenants">false</Property>
+            <Property name="LeadingOrTrailingSpaceAllowedInUserName">false</Property>
+        </UserStoreManager>
+
+	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
 		     In case if user core cache domain is needed to identify uniquely set property
 		     <Property name="UserCoreCacheIdentifier">domain</Property>
  	    -->
-    <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager">
+        <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ReadOnlyLDAPUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
             <Property name="ConnectionURL">ldap://localhost:10389</Property>
             <Property name="ConnectionName">uid=admin,ou=system</Property>
@@ -92,8 +101,10 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </UserStoreManager-->
-    <!-- Active directory configuration is as follows.
+
+	    <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property
 	         <Property name="UserCoreCacheIdentifier">domain</Property>
 	         There are few special properties for "Active Directory".
@@ -103,7 +114,7 @@
 	         In which role is stored at user level. Depending on this value we need to change the Search Base within code.
 	         isADLDSRole - (Do not comment) Set to true if connecting to an AD LDS instance else set to false.
 	    -->
-    <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
+        <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
             <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property> 
             <Property name="ConnectionName">CN=admin,CN=Users,DC=WSO2,DC=Com</Property>
@@ -152,15 +163,17 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="StartTLSEnabled">false</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </UserStoreManager-->
-    <!-- Following user manager is used by Identity Server (IS) as its default user manager.
+
+        <!-- Following user manager is used by Identity Server (IS) as its default user manager.
              IS will do token replacement when building the product. Therefore do not change the syntax.
              If "kdcEnabled" parameter is true, IS will allow service principle management.
              Thus "ServicePasswordJavaRegEx", "ServiceNameJavaRegEx" properties control the service name format and
              service password formats. In case if user core cache domain is needed to identify uniquely set property
              <Property name="UserCoreCacheIdentifier">domain</Property>
         -->
-    <!--ISUserStoreManager class="org.wso2.carbon.user.core.ldap.ReadWriteLDAPUserStoreManager">
+        <!--ISUserStoreManager class="org.wso2.carbon.user.core.ldap.ReadWriteLDAPUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
             <Property name="ConnectionURL">ldap://localhost:${Ports.EmbeddedLDAP.LDAPServerPort}</Property>
             <Property name="ConnectionName">uid=admin,ou=system</Property>
@@ -204,14 +217,17 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="StartTLSEnabled">false</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </ISUserStoreManager-->
-    <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
-      <Property name="AdminRoleManagementPermissions">/permission</Property>
-      <Property name="AuthorizationCacheEnabled">true</Property>
-      <Property name="GetAllRolesOfUserEnabled">false</Property>
-    </AuthorizationManager>
-  </Realm>
+
+        <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
+            <Property name="AdminRoleManagementPermissions">/permission</Property>
+            <Property name="AuthorizationCacheEnabled">true</Property>
+            <Property name="GetAllRolesOfUserEnabled">false</Property>
+        </AuthorizationManager>
+    </Realm>
 </UserManager>
+
 <!--
 
 ************* Description of some of the configuration properties used in user-mgt.xml *********************************

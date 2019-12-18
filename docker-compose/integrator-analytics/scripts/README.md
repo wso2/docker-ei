@@ -10,7 +10,7 @@
    Otherwise, you can proceed with Docker images which are created using GA releases.<br><br>
  * If you wish to run the Docker Compose configuration using Docker images built locally, build the Enterprise Integrator's Integrator, Analytics Dashboard and Analytics Worker
    images using [EI Dockerfiles](../../../dockerfiles) and remove the `docker.wso2.com/` prefix from the `image` name in the `docker-compose.yml`.
-   For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.5.0` to <br> `image: wso2ei-integrator:6.5.0`. <br><br>
+   For example, change the line `image: docker.wso2.com/wso2ei-integrator:6.6.0` to <br> `image: wso2ei-integrator:6.6.0`. <br><br>
        
 ## How to Run
 
@@ -29,7 +29,7 @@
      Instead, extract the zip file and directly browse to `docker-ei-<released-version>/docker-compose/integrator-analytics` folder. 
      
      > If you are to try out an already released tag, after executing 2nd step, checkout the relevant tag, 
-     i.e. for example: <br> git checkout tags/v6.5.0.1 and continue below steps.
+     i.e. for example: <br> git checkout tags/v6.6.0.1 and continue below steps.
 
   3. Execute the `deploy.sh` script to start the deployment.
      ```

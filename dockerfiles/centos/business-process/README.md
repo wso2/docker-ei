@@ -1,7 +1,7 @@
 # Dockerfile for Business Process Server profile of WSO2 Enterprise Integrator #
 
 This section defines the step-by-step instructions to build a [CentOS](https://hub.docker.com/_/centos/) Linux based Docker image
-Business Process Server profile for WSO2 Enterprise Integrator 6.5.0.
+Business Process Server profile for WSO2 Enterprise Integrator 6.6.0.
 
 ## Prerequisites
 
@@ -10,10 +10,11 @@ Business Process Server profile for WSO2 Enterprise Integrator 6.5.0.
 
 ## How to build an image and run
 
-##### 1. Checkout this repository into your local machine using the following Git client command.
+##### 1. Checkout this repository into your local machine using the following Git client command and checkout branch v6.6.0.1.
 
 ```
 git clone https://github.com/wso2/docker-ei.git
+git checkout v6.6.0.1
 ```
 
 >The local copy of the `dockerfiles/ubuntu/business-process` directory will be referred to as `BPS_DOCKERFILE_HOME` from this point onwards.
@@ -22,13 +23,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 - Navigate to `<BPS_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-business-process:6.5.0-centos .`
+    + `docker build -t wso2ei-business-process:6.6.0-centos .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 9445:9445 ...all-port-mappings-here... wso2ei-business-process:6.5.0-centos`
+- `docker run -p 9445:9445 ...all-port-mappings-here... wso2ei-business-process:6.6.0-centos`
 
 >Here, only port 9445 (HTTPS servlet transport) has been mapped to a Docker host port.
 You may map other container service ports, which have been exposed to Docker host ports, as desired.
@@ -61,12 +62,12 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 
 ```
 docker run \
--p 9446:9446 \
+-p 9445:9445 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
-wso2ei-business-process:6.5.0-centos
+wso2ei-business-process:6.6.0-centos
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.5.0/wso2/business-process/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2ei-6.6.0/wso2/business-process/conf folder of the container.
 
 ## Docker command usage references
 

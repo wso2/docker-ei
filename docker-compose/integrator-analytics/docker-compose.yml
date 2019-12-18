@@ -14,7 +14,7 @@ services:
       timeout: 60s
       retries: 5
   wso2ei-analytics-worker:
-    image: wso2/wso2ei-analytics-worker:6.5.0
+    image: wso2/wso2ei-analytics-worker:6.6.0
     container_name: wso2ei-analytics-worker
     ports:
       - 9091:9091
@@ -32,7 +32,7 @@ services:
       mysql:
         condition: service_healthy
   wso2ei-analytics-dashboard:
-    image: wso2/wso2ei-analytics-dashboard:6.5.0
+    image: wso2/wso2ei-analytics-dashboard:6.6.0
     container_name: wso2ei-analytics-dashboard
     ports:
       - 9643:9643
@@ -48,7 +48,7 @@ services:
     volumes:
       - ./dashboard:/home/wso2carbon/wso2-config-volume
   wso2ei-integrator:
-    image: wso2/wso2ei-integrator:6.5.0
+    image: wso2/wso2ei-integrator:6.6.0
     container_name: wso2ei-integrator
     ports:
       - 9443:9443
