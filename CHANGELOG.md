@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Fix MySQL connector jar download URL
 
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v6.5.0.4](https://github.com/wso2/docker-ei/milestone/6)
+
 ## [v6.5.0.3] - 2018-08-28
 
 ### Added
@@ -47,5 +50,4 @@ For detailed information on the tasks carried out during this release, please se
 - Use AdoptOpenJDK version `jdk8u212-b03` in Alpine, CentOS, Ubuntu based Docker resources
 
 [v6.5.0.3]: https://github.com/wso2/docker-ei/compare/v6.5.0.2...v6.5.0.3
-
-[v6.5.0.4](https://github.com/wso2/docker-ei/milestone/8)
+[v6.5.0.4]: https://github.com/wso2/docker-ei/compare/v6.5.0.3...v6.5.0.4
