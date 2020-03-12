@@ -14,4 +14,4 @@ Docker Compose files have been created according to the most common Integration 
 to quickly evaluate product features along side their co-operate Integration requirements. The Compose files make use of per profile
 Docker images of WSO2 Enterprise Integrator and MySQL.
 
-**Change log** from previous v6.6.0.1 release: [View Here](CHANGELOG.md)
+**Change log** from previous v6.6.0.2 release: [View Here](CHANGELOG.md)
