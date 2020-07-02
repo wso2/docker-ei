@@ -9,4 +9,4 @@ Per profile Docker resources for WSO2 Integration help you build generic Docker 
 corresponding product servers in containerized environments. Each Docker image includes the JDK, the relevant product distribution
 and a collection of utility libraries.
 
-**Change log** from previous v6.5.0.3 release: [View Here](CHANGELOG.md)
+**Change log** from previous v7.0.0.2 release: [View Here](CHANGELOG.md)
