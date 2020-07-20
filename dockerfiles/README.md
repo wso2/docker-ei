@@ -9,6 +9,11 @@ provided by WSO2 Enterprise Integrator 6.2.0, namely : <br>
 
 ## Prerequisites
 * [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
+* WSO2 Enterprise Integrator pack downloaded through [WUM](https://wso2.com/wum/download)
+* Download JDK 8 through [Oracle](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
+  - Host the downloaded pack and JDK locally or on a remote location.
+>The hosted product pack location and JDK location will be passed as the build arguments WSO2_SERVER_DIST_URL and JDK_URL when building the Docker image.
 
 ## How to build an image and run
 ##### 1. Checkout this repository into your local machine using the following git command.
@@ -18,41 +23,25 @@ git clone https://github.com/wso2/docker-ei.git
 
 >The local copy of the `dockerfiles` directory will be referred to as `DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add JDK, WSO2 Enterprise Integrator distribution and required libraries
-- Download [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and
-extract into `<DOCKERFILE_HOME>/base/files`.
-- Download [WSO2 Enterprise Integrator 6.2.0 distribution](https://wso2.com/integration) and 
-extract into `<DOCKERFILE_HOME>/base/files`.
-- Once both JDK and WSO2 Enterprise Integrator distribution is extracted, it should be as follows:
-```
-<DOCKERFILE_HOME>/base/files/jdk<version>
-<DOCKERFILE_HOME>/base/files/wso2ei-6.2.0
-```
-- Download [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/) v5.1.45 and then copy that to `<DOCKERFILE_HOME>/base/files` folder
-- Download [Andes Client](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.45/) JAR v3.2.19,
-[Geronimo JMS Spec](http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/) JAR v1.1.0.wso2v1 and
-[Secure-vault](http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/) JAR v.1.0.0-wso2v2 <br> to 
-`[docker-ei]/dockerfiles/integrator/files`. These libraries are needed for the communication between Integrator <br> and Message Broker.
-- If you intend to use the Docker images with Kubernetes clustered product deployments, download the
-[Kubernetes membership scheme](http://central.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar)
-and [dnsjava for DNS lookups](http://central.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar) JAR artifacts and copy them to
-`<DOCKERFILE_HOME>/base/files` folder.
 - If you **DO NOT** intend to use the Docker images with Kubernetes clustered product deployments, comment out
 the following lines from `<DOCKERFILE_HOME>/base/Dockerfile` file.
 ```
 # artifacts for Kubernetes membership scheme based clustering
-COPY --chown=wso2carbon:wso2 ${FILES}/dnsjava-*.jar ${WSO2_SERVER_HOME}/lib
-COPY --chown=wso2carbon:wso2 ${FILES}/kubernetes-membership-scheme-*.jar ${WSO2_SERVER_HOME}/dropins
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins/
+
 ```
 >Please refer to [WSO2 Update Manager documentation](https://docs.wso2.com/display/ADMIN44x/Updating+WSO2+Products)
 in order to obtain latest bug fixes and updates for the product.
 
-##### 3. Build the base docker image.
+##### 2. Build the base docker image.
 - For base, navigate to `<DOCKERFILE_HOME>/base` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2ei-base:6.2.0 .`
+    + `docker build --build-arg WSO2_SERVER_DIST_URL=<URL_OF_THE_HOSTED_LOCATION/FILENAME> JDK_URL=<URL_OF_THE_HOSTED_JDK_LOCATION/FILENAME> -t wso2ei-<PROFILE>:6.2.0 .`
+    - eg:- Hosted locally: docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2ei-6.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2ei-<PROFILE>:6.2.0 . 
+    - eg:- Hosted remotely: docker build --build-arg WSO2_SERVER_DIST_URL=http://<public_ip:port>/wso2ei-6.2.0.zip JDK_URL=http://172.17.0.1:8000/jdk-8u261-linux-x64.tar.gz -t wso2ei-<PROFILE>:6.2.0 .
         
-##### 4. Build docker images specific to each profile.
+##### 3. Build docker images specific to each profile.
 - For integrator, navigate to `<DOCKERFILE_HOME>/integrator` directory. <br>
   Execute `docker build` command as shown below. 
     + `docker build -t wso2ei-integrator:6.2.0 .`
@@ -69,7 +58,7 @@ in order to obtain latest bug fixes and updates for the product.
   Execute `docker build` command as shown below. 
     + `docker build -t wso2ei-analytics:6.2.0 .`
     
-##### 5. Running docker images specific to each profile.
+##### 4. Running docker images specific to each profile.
 - For integrator,
     + `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.2.0`
 - For business process,
@@ -81,7 +70,7 @@ in order to obtain latest bug fixes and updates for the product.
 - For analytics,
     + `docker run -p 9444:9444 -p 9612:9612 -p 9712:9712 wso2ei-analytics:6.2.0`
 
-##### 6. Accessing management console per each profile.
+##### 5. Accessing management console per each profile.
 - For integrator,
     + `https:<DOCKER_HOST>:9443/carbon`
 - For business process,
