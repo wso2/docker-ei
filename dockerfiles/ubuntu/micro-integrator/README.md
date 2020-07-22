@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 Micro Integrator #
 
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 Micro Integrator 1.1.0.
+This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 Micro Integrator 1.2.0.
 
 ## Prerequisites
 
@@ -21,13 +21,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 - Navigate to `<MI_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2mi:1.1.0 .`
+    + `docker build -t wso2mi:1.2.0 .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 8253:8253 -p 8290:8290 wso2mi:1.1.0`
+- `docker run -p 8253:8253 -p 8290:8290 wso2mi:1.2.0`
 
 ## How to update configurations
 
@@ -36,7 +36,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the MI container if it's already running.
 
-In WSO2 MI 1.1.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.<br>
+In WSO2 MI 1.2.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.<br>
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
 offset value (`[server]->offset`) to 11.
 
@@ -52,10 +52,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 8254:8254 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2mi:1.1.0
+wso2mi:1.2.0
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-1.1.0/conf folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-1.2.0/conf folder of the container.
 
 ## Docker command usage references
 
