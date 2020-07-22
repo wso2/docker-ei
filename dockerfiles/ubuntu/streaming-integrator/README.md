@@ -1,7 +1,7 @@
 # Dockerfile for WSO2 Streaming Integrator #
 
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
-for WSO2 Streaming Integrator 1.0.0.
+for WSO2 Streaming Integrator 1.1.0.
 
 ## Prerequisites
 
@@ -22,13 +22,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 - Navigate to `<SI_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2si:1.0.0 .`
+    + `docker build -t wso2si:1.1.0 .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 9443:9443 wso2si:1.0.0`
+- `docker run -p 9443:9443 wso2si:1.1.0`
   
 
 ## How to update configurations
@@ -54,10 +54,10 @@ chmod o+r <SOURCE_CONFIGS>/server/deployment.yaml
 docker run \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/server/deployment.yaml:<TARGET_CONFIGS>/server/deployment.yaml \
-wso2si:1.0.0
+wso2si:1.1.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-1.0.0/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-1.1.0/conf folder of the container.
 
 ## Docker command usage references
 
