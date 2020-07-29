@@ -126,3 +126,6 @@ docker-compose/integrator-broker-bps-analytics/integrator/repository/deployment/
 
 docker-compose/integrator-broker-bps-analytics/mysql/data/*
 !docker-compose/integrator-broker-bps-analytics/mysql/data/.gitkeep
+
+# Ignore Mac DS_Store files
+.DS_Store
