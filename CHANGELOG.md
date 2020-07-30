@@ -4,11 +4,11 @@ All notable changes to this project `7.1.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v7.1.0.1] - 2020-07-24
+## [v7.1.0.1] - 2020-07-31
 
 ### Added
-- Alpine, CentOS and Ubuntu based Docker resources WSO2 Integration v7.1.x product profiles (Micro Integrator, Streaming Integrator
-and Analytics Dashboard)
+- Alpine, CentOS and Ubuntu based Docker resources WSO2 Integration v7.1.x product profiles (Micro Integrator,
+ Streaming Integrator, Micro Integrator Monitoring Dashboard and Analytics Dashboard)
 ### Changed
 - Upgrade AdoptOpenJDK 11 version to the latest version - 11.0.8_10-jdk
 ### Removed
