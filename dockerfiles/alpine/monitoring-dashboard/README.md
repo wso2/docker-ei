@@ -1,0 +1,66 @@
+# Dockerfile for WSO2 Micro Integrator Monitoring Dashboard #
+
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based
+ Docker image for WSO2 Micro Integrator Monitoring Dashboard 1.2.0.
+
+## Prerequisites
+
+* [Docker](https://www.docker.com/get-docker) v17.09.0 or above
+* [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) client
+
+## How to build an image and run
+
+##### 1. Checkout this repository into your local machine using the following Git client command.
+
+```
+git clone https://github.com/wso2/docker-ei.git
+```
+
+>The local copy of the `dockerfiles/alpine/monitoring-dashboard` directory will be referred to as `MONITORING_DASHBOARD_DOCKERFILE_HOME` from this point onwards.
+
+##### 2. Build the Docker image.
+
+- Navigate to `<MONITORING_DASHBOARD_DOCKERFILE_HOME>` directory. <br>
+  Execute `docker build` command as shown below.
+    + `docker build -t wso2mi-dashboard:1.2.0-alpine .`
+
+> By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
+
+##### 3. Running the Docker image.
+
+- `docker run -p 9743:9743 wso2mi-dashboard:1.2.0-alpine`
+
+## How to update configurations
+
+Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
+As an example, steps required to change the port offset using `deployment.toml` is as follows:
+
+##### 1. Stop the WSO2 Micro Integrator Monitoring Dashboard container if it's already running.
+
+In WSO2 Micro Integrator Monitoring Dashboard 1.2.0 product distribution, `deployment.yaml` configuration file can be
+ found at `<DISTRIBUTION_HOME>/conf/server/`.<br>
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
+offset value (`[server]->offset`) to 1.
+
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.toml`.
+
+```
+chmod o+r <SOURCE_CONFIGS>/deployment.toml
+```
+
+##### 3. Run the image by mounting the file to container as follows:
+
+```
+docker run \
+-p 9744:9744 \
+--volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
+wso2mi-dashboard:1.2.0-alpine
+```
+
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-monitoring-dashboard-1.2.0/conf/server folder of the container.
+
+## Docker command usage references
+
+* [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
+* [Docker run command reference](https://docs.docker.com/engine/reference/run/)
+* [Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
