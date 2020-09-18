@@ -67,7 +67,7 @@ RUN \
     && rm -rf /var/lib/apt/lists/*
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
     && echo "${WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER}" | bash ${WSO2_SERVER_HOME}/bin/profile-creator.sh \
