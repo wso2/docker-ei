@@ -55,6 +55,7 @@ RUN apt-get update && \
     curl \
     unzip \
     wget \
+    ca-certificates \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
