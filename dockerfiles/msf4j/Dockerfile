@@ -37,6 +37,7 @@ ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.3.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # set WSO2 EULA
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
@@ -64,8 +65,8 @@ COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
-# copy mysql connector jar to the server as a third party library
-COPY --chown=wso2carbon:wso2 ${FILES}/mysql-connector-java-*-bin.jar ${WSO2_SERVER_HOME}/lib/
+# add MySQL JDBC connector to server home as a third party library
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/dropins/
 
 # set the user and work directory
 USER ${USER_ID}
