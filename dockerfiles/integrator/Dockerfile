@@ -53,6 +53,8 @@ Read more about Apache License, Version 2.0 here @ http://www.apache.org/license
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     curl \
+    unzip \
+    wget \
     netcat && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
