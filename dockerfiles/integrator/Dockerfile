@@ -82,7 +82,9 @@ COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy relevant libraries (mysql connector jar and integrator libraries) to product distribution
 # add MySQL JDBC connector to server home as a third party library
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/mysql/mysql-connector-java/${MYSQL_CONNECTOR_VERSION}/mysql-connector-java-${MYSQL_CONNECTOR_VERSION}.jar ${WSO2_SERVER_HOME}/dropins/
-COPY --chown=wso2carbon:wso2 ${FILES}/lib ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/andes/wso2/andes-client/3.2.64/andes-client-3.2.64.jar ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar ${WSO2_SERVER_HOME}/lib/
+ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/org.wso2.securevault-1.0.0-wso2v2-sources.jar ${WSO2_SERVER_HOME}/lib/
 # add libraries for Kubernetes membership scheme based clustering
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
 ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
