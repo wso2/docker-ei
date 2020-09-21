@@ -30,8 +30,9 @@ ARG USER_HOME=/home/${USER}
 # set dependant files directory
 ARG FILES=./files
 # set jdk configurations
-ARG JDK_DIST=jdk1.8.0*
 ARG JAVA_HOME=${USER_HOME}/java
+ARG JDK_NAME=jdk-8u251-linux-x64.tar.gz
+ARG JDK_URL
 # set wso2 product configurations
 ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.3.0
@@ -60,8 +61,13 @@ RUN apt-get update && \
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
 
-# copy jdk and wso2 product distributions to user's home directory
-COPY --chown=wso2carbon:wso2 ${FILES}/${JDK_DIST} ${JAVA_HOME}
+# installe Oracle JDK
+RUN \
+    mkdir -p ${JAVA_HOME} \
+    && wget -O ${JDK_NAME} ${JDK_URL} \
+    && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
+    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
+    && rm -f ${JDK_NAME}
 COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
