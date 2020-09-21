@@ -38,6 +38,8 @@ ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.3.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v6.3.0/wso2ei-6.3.0.zip
+
 ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # set WSO2 EULA
 ARG MOTD="\n\
@@ -68,9 +70,13 @@ RUN \
     && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f ${JDK_NAME}
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
-# copy shared artifacts to a temporary location
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK}/repository/deployment/server/ ${USER_HOME}/wso2-tmp/server/
+# add the WSO2 product distribution to user's home directory
+RUN \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
+    && mkdir -p ${WORKING_DIRECTORY}/wso2-tmp \
+    && cp -r ${WSO2_SERVER_HOME}/repository/deployment/server/ ${WORKING_DIRECTORY}/wso2-tmp
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # copy relevant libraries (mysql connector jar and integrator libraries) to product distribution
