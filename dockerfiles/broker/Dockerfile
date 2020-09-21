@@ -54,6 +54,7 @@ RUN \
         curl \
         wget \
         unzip \
+        ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # create the non-root user and group and set MOTD login message
