@@ -38,6 +38,8 @@ ARG WSO2_SERVER=wso2ei
 ARG WSO2_SERVER_VERSION=6.3.0
 ARG WSO2_SERVER_PACK=${WSO2_SERVER}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
+ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v6.3.0/wso2ei-6.3.0.zip
+
 ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # set WSO2 EULA
 ARG MOTD="\n\
@@ -68,7 +70,11 @@ RUN \
     && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f ${JDK_NAME}
-COPY --chown=wso2carbon:wso2 ${FILES}/${WSO2_SERVER_PACK} ${WSO2_SERVER_HOME}
+# add the WSO2 product distribution to user's home directory
+RUN \
+    wget -O ${WSO2_SERVER_PACK}.zip "${WSO2_SERVER_DIST_URL}" \
+    && unzip -d ${USER_HOME} ${WSO2_SERVER_PACK}.zip \
+    && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 # copy entrypoint bash script to user home
 COPY --chown=wso2carbon:wso2 init.sh ${USER_HOME}/
 # add MySQL JDBC connector to server home as a third party library
