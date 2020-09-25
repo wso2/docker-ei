@@ -36,7 +36,7 @@ ARG WSO2_SERVER_VERSION=6.2.0
 ARG WSO2_SERVER_REPOSITORY=product-ei
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v6.2.0/wso2ei-6.2.0.zip
+ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG MYSQL_CONNECTOR_VERSION=5.1.49
 # build argument for MOTD
