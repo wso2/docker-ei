@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Enable SSL verification for wget. (refer to [issue](https://github.com/wso2/docker-ei/issues/206)) 
 - Unable to pass parameters for server startup script. (refer to [issue](https://github.com/wso2/docker-ei/issues/229)) 
 
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v7.1.0.2](https://github.com/wso2/docker-ei/milestone/15).
+
 ## [v7.1.0.1] - 2020-08-18
 
 ### Added
