@@ -30,6 +30,4 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 server
-sh ${WSO2_SERVER_HOME}/bin/micro-integrator.sh 
-
-exec "$@"
+sh ${WSO2_SERVER_HOME}/bin/micro-integrator.sh "$@"
