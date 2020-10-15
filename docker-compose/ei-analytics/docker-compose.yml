@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:5.7.31
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./resources/mysql/scripts:/docker-entrypoint-initdb.d
+      - ./resources/mysql/conf/my.cnf:/etc/mysql/my.cnf
+    ulimits:
+      nofile:
+        soft: 20000
+        hard: 40000
+    command: [--ssl=0]
+    expose:
+      - 3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-uroot", "-proot"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+
+  server:
+    build: ./dockerfiles/server
+    depends_on:
+      mysql:
+        condition: service_healthy
+    expose:
+      - 7712
+      - 7612
+    volumes:
+      # mounting configurations
+      - ./resources/server:/home/wso2carbon/wso2-config-volume
+    ports:
+      - 7712:7712
+      - 7612:7612
+
+  portal:
+    build: ./dockerfiles/portal
+    depends_on:
+      mysql:
+        condition: service_healthy
+    expose:
+      - 9645
+    volumes:
+      # mounting configurations
+      - ./resources/portal:/home/wso2carbon/wso2-config-volume
+    ports:
+      - 9645:9645
