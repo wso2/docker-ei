@@ -41,6 +41,8 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER_PACK}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v6.3.0/wso2ei-6.3.0.zip
 
 ARG MYSQL_CONNECTOR_VERSION=5.1.47
+ARG DNS_JAVA_JAR_VERSION=2.1.8
+ARG KUBERNETES_MEMBER_SCHEME_VERSION=1.0.5
 # set WSO2 EULA
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
@@ -89,8 +91,8 @@ ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-publ
 ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-public/org/apache/geronimo/specs/wso2/geronimo-jms_1.1_spec/1.1.0.wso2v1/geronimo-jms_1.1_spec-1.1.0.wso2v1.jar ${WSO2_SERVER_HOME}/lib/
 ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/groups/wso2-public/org/wso2/securevault/org.wso2.securevault/1.0.0-wso2v2/org.wso2.securevault-1.0.0-wso2v2-sources.jar ${WSO2_SERVER_HOME}/lib/
 # add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/2.1.8/dnsjava-2.1.8.jar ${WSO2_SERVER_HOME}/lib
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/1.0.5/kubernetes-membership-scheme-1.0.5.jar ${WSO2_SERVER_HOME}/dropins
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/${DNS_JAVA_JAR_VERSION}/dnsjava-${DNS_JAVA_JAR_VERSION}.jar ${WSO2_SERVER_HOME}/lib
+ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/${KUBERNETES_MEMBER_SCHEME_VERSION}/kubernetes-membership-scheme-${KUBERNETES_MEMBER_SCHEME_VERSION}.jar ${WSO2_SERVER_HOME}/dropins
 
 # set the user and work directory
 USER ${USER_ID}
