@@ -52,11 +52,11 @@ Read more about Apache License, Version 2.0 here @ http://www.apache.org/license
 # install required packages
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    curl \
-    unzip \
-    wget \
     ca-certificates \
-    netcat && \
+    curl \
+    netcat \
+    unzip \
+    wget && \
     rm -rf /var/lib/apt/lists/* && \
     echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/motd' \
     >> /etc/bash.bashrc \
