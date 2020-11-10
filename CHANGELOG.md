@@ -3,6 +3,17 @@ All notable changes to this project 6.5.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v6.5.0.5] - 2020-11-10
+
+### Added
+- Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-ei/issues/216))
+
+### Changed
+- Enable SSL verification when retrieving remote resources using wget (refer to [issue](https://github.com/wso2/docker-ei/issues/220))
+
+For detailed information on the tasks carried out during this release, please see the GitHub milestone
+[v6.5.0.5](https://github.com/wso2/docker-ei/milestone/10)
+
 ## [v6.5.0.4] - 2020-01-21
 
 ### Fixed
@@ -51,3 +62,4 @@ For detailed information on the tasks carried out during this release, please se
 
 [v6.5.0.3]: https://github.com/wso2/docker-ei/compare/v6.5.0.2...v6.5.0.3
 [v6.5.0.4]: https://github.com/wso2/docker-ei/compare/v6.5.0.3...v6.5.0.4
+[v6.5.0.5]: https://github.com/wso2/docker-ei/compare/v6.5.0.4...v6.5.0.5
