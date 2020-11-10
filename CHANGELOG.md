@@ -8,8 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Added
 - Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-ei/issues/218))
-- Add ca-certificates
-- Create wso2 user and group
+- Add ca-certificates (refer to [issue](https://github.com/wso2/docker-ei/issues/244))
+- Create wso2 user and group (refer to [issue](https://github.com/wso2/docker-ei/issues/245))
 - Add GA product pack download URL
 
 ### Changed
