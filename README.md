@@ -14,4 +14,4 @@ Configurations and non-configuration resources (e.g. binaries such as, third-par
 Carbon Applications and security related artifacts such as, Java Keystore files) are designed to be provided via
 volume mounts to the containers spawned.
 
-**Change log** from previous v7.1.0.1 release: [View Here](CHANGELOG.md)
+**Change log** from previous v7.1.0.2 release: [View Here](CHANGELOG.md)
