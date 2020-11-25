@@ -4,7 +4,7 @@ All notable changes to this project `6.2.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [v6.2.0.8] - 2020-11-10
+## [v6.2.0.8] - 2020-11-25
 
 ### Added
 - Add git release tag as a label (refer to [issue](https://github.com/wso2/docker-ei/issues/218))
