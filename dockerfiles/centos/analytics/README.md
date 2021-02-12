@@ -19,39 +19,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 >The local copy of the `dockerfile/centos/analytics` directory will be referred to as `ANALYTICS_DOCKERFILE_HOME` from this point onwards.
 
-
-##### 2. Add Analytics profile distribution and MySQL connector to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-
-- Download [AdoptOpenJDK 8](https://adoptopenjdk.net/) and extract it to `<ANALYTICS_DOCKERFILE_HOME>/files`.
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
-Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the Micro Integrator
-profile distribution.
-
-```
-./<EI_HOME>/bin/profile-creator.sh
-``` 
-
-Extract the generated profile distribution to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-
-- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
-and copy that to `<ANALYTICS_DOCKERFILE_HOME>/base/files`.
-- Once all of these are in place, it should look as follows:
-
-  ```bash
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/wso2ei-6.4.0/
-  <ANALYTICS_DOCKERFILE_HOME>/base/files/mysql-connector-java-<version>-bin.jar
-  ```
-
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
-in order to obtain latest bug fixes and updates for the product.
-
-##### 3. Build the base Docker image.
+##### 2. Build the base Docker image.
 
 - For base, navigate to `<ANALYTICS_DOCKERFILE_HOME>/base` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2ei-analytics-base:6.4.0-centos .`
     
-##### 4. Build Docker images specific to each profile.
+##### 3. Build Docker images specific to each profile.
 
 - For dashboard, navigate to `<ANALYTICS_DOCKERFILE_HOME>/dashboard` directory. <br>
   Execute `docker build` command as shown below.
@@ -59,15 +33,17 @@ in order to obtain latest bug fixes and updates for the product.
 - For worker, navigate to `<ANALYTICS_DOCKERFILE_HOME>/worker` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2ei-analytics-worker:6.4.0-centos .`
+- If you want to use your own distribution, you may build the image by executing the following command,
+    + eg:- Hosted locally:` docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2ei-6.4.0.zip -t wso2ei-<PROFILE>:6.4.0-centos .`
     
-##### 5. Running Docker images specific to each profile.
+##### 4. Running Docker images specific to each profile.
 
 - For dashboard,
     + `docker run -p 9713:9713 -p 9643:9643 ...all-port-mappings-here... wso2ei-analytics-dashboard:6.4.0-centos`
 - For worker,
     + `docker run -p 9444:9444 ...all-port-mappings-here... wso2ei-analytics-worker:6.4.0-centos`
     
-##### 6. Accessing the Dashboard portal.
+##### 5. Accessing the Dashboard portal.
 
 - For Analytics Dashboard,
     + Business Rules:<br>

@@ -15,39 +15,17 @@ git clone https://github.com/wso2/docker-ei.git
 
 >The local copy of the `dockerfiles/ubuntu/integrator` directory will be referred to as `INTEGRATOR_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add Integrator profile distribution and MySQL connector to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
-
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
-Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the Integrator
-profile distribution.
-
-```
-./<EI_HOME>/bin/profile-creator.sh
-``` 
-
-Extract the generated profile distribution to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
-
-- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
-and copy that to `<INTEGRATOR_DOCKERFILE_HOME>/files`.
-- Once all of these are in place, it should look as follows:
-
-  ```bash
-  <INTEGRATOR_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
-  <INTEGRATOR_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
-  ```
-  
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
-in order to obtain latest bug fixes and updates for the product.
-
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<INTEGRATOR_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2ei-integrator:6.4.0 .`
+- If you want to use your own distribution, you may build the image by executing the following command,
+    + eg:- Hosted locally:` docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2ei-6.4.0.zip -t wso2ei-integrator:6.4.0 .`
     
-##### 4. Running the Docker image.
+##### 3. Running the Docker image.
 - `docker run -p 8280:8280 -p 8243:8243 -p 9443:9443 wso2ei-integrator:6.4.0`
 
-##### 5. Accessing management console.
+##### 4. Accessing management console.
 - To access the management console, use the docker host IP and port 9443.
     + `https:<DOCKER_HOST>:9443/carbon`
     
