@@ -40,8 +40,8 @@ As an example, steps required to change the port offset using `carbon.xml` is as
 
 ##### 1. Stop the Broker profile container if it's already running.
 In Broker profile product distribution, `carbon.xml` configuration file can be found at `<DISTRIBUTION_HOME>/wso2/broker/conf`.
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and change
-the offset value under ports to 1.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/carbon.xml` and increase
+the offset value under ports by 1.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/carbon.xml`
 ```
@@ -51,7 +51,7 @@ chmod o+r <SOURCE_CONFIGS>/carbon.xml
 ##### 3. Run the image by mounting the file to container as follows.
 ```
 docker run \
--p 9446:9446 \
+-p 9447:9447 \
 --volume <SOURCE_CONFIGS>/carbon.xml:<TARGET_CONFIGS>/carbon.xml \
 wso2ei-broker:6.4.0-centos
 ```
