@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 [v6.4.0.2]: https://github.com/wso2/docker-ei/compare/v6.4.0.1...v6.4.0.2
 
+## v6.4.0.4 - 2021-02-15
+- Update source URL of K8s Membership scheme jar 
+
 ## v6.4.0.3 - 2021-02-15
 
 ### Added
@@ -14,7 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 - Update AdoptOpenJDK version to adoptopenjdk:8u282-b08-jdk-hotspot-focal in all Ubuntu based images
 - Update AdoptOpenJDK version to adoptopenjdk/openjdk8:jdk8u282-b08-alpine in all Alpine based images
-- Update K8S Membership scheme version to 1.0.7
+- Update K8s Membership scheme version to 1.0.7
 - Improve the Docker resources of Analytics profile (worker and dashboard) to use the optimized WSO2 Enterprise Integrator product profile packs to build the corresponding profile Docker images  
 
 ## v6.4.0.2 - 2019-01-11
