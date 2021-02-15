@@ -15,33 +15,12 @@ git clone https://github.com/wso2/docker-ei.git
 
 >The local copy of the `dockerfiles/alpine/msf4j` directory will be referred to as `MSF4J_DOCKERFILE_HOME` from this point onwards.
 
-##### 2. Add MSF4J profile distribution and MySQL connector to `<MSF4J_DOCKERFILE_HOME>/files`.
-
-- Download [WSO2 Enterprise Integrator 6.4.0 distribution](https://wso2.com/integration/) distribution.
-Extract the product distribution and execute the `<EI_HOME>/bin/profile-creator.sh` to generate the MSF4J
-profile distribution.
-
-```
-./<EI_HOME>/bin/profile-creator.sh
-``` 
-
-Extract the generated profile distribution to `<MSF4J_DOCKERFILE_HOME>/files`.
-- Download [MySQL Connector/J](https://downloads.mysql.com/archives/c-j)
-and copy that to `<MSF4J_DOCKERFILE_HOME>/files`.
-- Once all of these are in place, it should look as follows:
-
-  ```bash
-  <MSF4J_DOCKERFILE_HOME>/files/wso2ei-6.4.0/
-  <MSF4J_DOCKERFILE_HOME>/files/mysql-connector-java-<version>-bin.jar
-  ```
-
->Please refer to [WSO2 Update Manager documentation]( https://docs.wso2.com/display/WUM300/WSO2+Update+Manager)
-in order to obtain latest bug fixes and updates for the product.
-
-##### 3. Build the Docker image.
+##### 2. Build the Docker image.
 - Navigate to `<MSF4J_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
     + `docker build -t wso2ei-msf4j:6.4.0-alpine .`
+- If you want to use your own distribution, you may build the image by executing the following command,
+    + eg:- Hosted locally:` docker build --build-arg WSO2_SERVER_DIST_URL=http://172.17.0.1:8000/wso2ei-6.4.0.zip -t wso2ei-msf4j:6.4.0-alpine .`
     
 ##### 4. Running the Docker image.
 - `docker run -p 9090:9090 wso2ei-msf4j:6.4.0-alpine`

@@ -24,39 +24,6 @@ deployment_volume=${WSO2_SERVER_HOME}/repository/deployment/server
 # original deployment artifacts
 original_deployment_artifacts=${WORKING_DIRECTORY}/wso2-tmp/server
 
-# a grace period for mounts to be setup
-echo "Waiting for all volumes to be mounted..."
-sleep 5
-
-verification_count=0
-verifyMountBeforeStart()
-{
-  if [ ${verification_count} -eq 5 ]
-  then
-    echo "Mount verification timed out"
-    return
-  fi
-
-  # increment the number of times the verification had occurred
-  verification_count=$((verification_count+1))
-
-  if [ ! -e $1 ]
-  then
-    echo "Directory $1 does not exist"
-    echo "Waiting for the volume to be mounted..."
-    sleep 5
-
-    echo "Retrying..."
-    verifyMountBeforeStart $1
-  else
-    echo "Directory $1 exists"
-  fi
-}
-
-verifyMountBeforeStart ${config_volume}
-verification_count=0
-verifyMountBeforeStart ${artifact_volume}
-
 # capture Docker container IP from the container's /etc/hosts file
 docker_container_ip=$(awk 'END{print $1}' /etc/hosts)
 
@@ -78,9 +45,9 @@ if test -d ${original_deployment_artifacts}; then
 fi
 
 # copy any configuration changes mounted to config_volume
-test -d ${config_volume}/ && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
+test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 # copy any artifact changes mounted to artifact_volume
-test -d ${artifact_volume}/ && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
+test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # make any node specific configuration changes
 # for example, set the Docker container IP as the `localMemberHost` under axis2.xml clustering configurations (effective only when clustering is enabled)
