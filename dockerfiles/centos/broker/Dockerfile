@@ -19,7 +19,7 @@
 # set to latest Centos
 FROM centos:7
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.4.0.2"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.4.0.3"
 # set user configurations
 ARG USER=wso2carbon
 ARG USER_ID=802
@@ -40,7 +40,7 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG DNS_JAVA_VERSION=2.1.8
-ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.5
+ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.7
 ARG MYSQL_CONNECTOR_VERSION=5.1.49
 # build argument for MOTD
 ARG MOTD='printf "\n\

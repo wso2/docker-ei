@@ -16,9 +16,9 @@
 #
 # ------------------------------------------------------------------------
 
-FROM adoptopenjdk/openjdk8:jdk8u212-b03-alpine
+FROM adoptopenjdk/openjdk8:jdk8u282-b08-alpine
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.4.0.2"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.4.0.3"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -37,7 +37,7 @@ ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/product-ei/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
 # build arguments for external artifacts
 ARG DNS_JAVA_VERSION=2.1.8
-ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.5
+ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.7
 # build argument for MOTD
 ARG MOTD='printf "\n\
  Welcome to WSO2 Docker Resources \n\
@@ -69,8 +69,6 @@ RUN mkdir -p ${USER_HOME}/.java/.systemPrefs && \
     mkdir -p ${USER_HOME}/.java/.userPrefs  && \
     chmod -R 755 ${USER_HOME}/.java && \
     chown -R ${USER}:${USER_GROUP} ${USER_HOME}/.java
-
-COPY --chown=wso2carbon:wso2 ${WSO2_SERVER}.zip ${WSO2_SERVER_HOME}
 
 RUN \
     wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
