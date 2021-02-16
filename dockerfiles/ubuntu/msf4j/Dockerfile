@@ -59,14 +59,6 @@ RUN apt-get update && \
     >> /etc/bash.bashrc \
     ; echo "$MOTD" > /etc/motd
 
-# install JDK
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget --no-check-certificate -O ${JDK_NAME} ${JDK_URL} \
-    && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f ${JDK_NAME}
-
 # create a user group and a user
 RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
     useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER}
