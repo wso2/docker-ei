@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 [v6.4.0.2]: https://github.com/wso2/docker-ei/compare/v6.4.0.1...v6.4.0.2
 
+## v6.4.0.5 - 2021-02-16
+- Fix build issue in msf4j profile
+
 ## v6.4.0.4 - 2021-02-15
 - Update source URL of K8s Membership scheme jar 
 
