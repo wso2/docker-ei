@@ -4,6 +4,10 @@ All notable changes to this project `7.1.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v7.1.0.4] - 2021-02-19
+### Changed
+- Upgrade the base version of images to adoptopenjdk/openjdk11:jdk-11.0.10_9
+
 ## [v7.1.0.3] - 2020-11-23
 ### Changed
 - Upgrade base Docker images to jdk-11.0.9_11
