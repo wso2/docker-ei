@@ -19,7 +19,7 @@
 # set base Docker image to AdoptOpenJDK CentOS Docker image
 FROM adoptopenjdk/openjdk11:x86_64-centos-jdk-11.0.10_9
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v7.1.0.4"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.0.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -30,7 +30,7 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2mi
-ARG WSO2_SERVER_VERSION=1.2.0
+ARG WSO2_SERVER_VERSION=4.0.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}

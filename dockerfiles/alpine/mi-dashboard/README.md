@@ -1,7 +1,7 @@
-# Dockerfile for WSO2 Micro Integrator Monitoring Dashboard #
+# Dockerfile for WSO2 Micro Integrator Dashboard
 
 This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based
- Docker image for WSO2 Micro Integrator Monitoring Dashboard 1.2.0.
+ Docker image for WSO2 Micro Integrator Dashboard 4.0.0.
 
 ## Prerequisites
 
@@ -22,13 +22,13 @@ git clone https://github.com/wso2/docker-ei.git
 
 - Navigate to `<MONITORING_DASHBOARD_DOCKERFILE_HOME>` directory. <br>
   Execute `docker build` command as shown below.
-    + `docker build -t wso2mi-dashboard:1.2.0-alpine .`
+    + `docker build -t wso2mi-dashboard:4.0.0-alpine .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -p 9743:9743 wso2mi-dashboard:1.2.0-alpine`
+- `docker run -p 9743:9743 wso2mi-dashboard:4.0.0-alpine`
 
 ## How to update configurations
 
@@ -37,7 +37,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the WSO2 Micro Integrator Monitoring Dashboard container if it's already running.
 
-In WSO2 Micro Integrator Monitoring Dashboard 1.2.0 product distribution, `deployment.yaml` configuration file can be
+In WSO2 Micro Integrator Monitoring Dashboard 4.0.0 product distribution, `deployment.yaml` configuration file can be
  found at `<DISTRIBUTION_HOME>/conf/server/`.<br>
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
 offset value (`[server]->offset`) to 1.
@@ -54,10 +54,10 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 docker run \
 -p 9744:9744 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2mi-dashboard:1.2.0-alpine
+wso2mi-dashboard:4.0.0-alpine
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-monitoring-dashboard-1.2.0/conf/server folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-dashboard-4.0.0/conf/server folder of the container.
 
 ## Docker command usage references
 
