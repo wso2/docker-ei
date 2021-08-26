@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ### Changed
 - Update AdoptOpenJDK version to adoptopenjdk/openjdk8:jdk8u292-b10-alpine in all Alpine based images
+- Update AdoptOpenJDK version to adoptopenjdk:8u292-b10-jdk-hotspot-focal in all Ubuntu based images
+- Update AdoptOpenJDK version to jdk8u292-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u292b10 in all Centos based images
 - Update K8s Membership scheme version to 1.0.7
 
 ## [v6.2.0.8] - 2020-11-25

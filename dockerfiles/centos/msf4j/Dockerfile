@@ -29,7 +29,7 @@ ARG USER_HOME=/home/${USER}
 # set jdk configurations
 ARG JDK_NAME=OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
 ARG JAVA_HOME=${USER_HOME}/java
-ARG JDK_URL=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u212-b03/OpenJDK8U-jdk_x64_linux_hotspot_8u212b03.tar.gz
+ARG JDK_URL=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u292b10.tar.gz
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2ei
 ARG WSO2_SERVER_VERSION=6.2.0
@@ -67,7 +67,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 
 # add the WSO2 product distribution to user's home directory
 RUN \
-    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
     && echo "${WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER}" | bash ${WSO2_SERVER_HOME}/bin/profile-creator.sh \
@@ -79,7 +79,7 @@ RUN \
 # install JDK
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget --no-check-certificate -O ${JDK_NAME} ${JDK_URL} \
+    && wget -O ${JDK_NAME} ${JDK_URL} \
     && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
     && rm -f ${JDK_NAME}
