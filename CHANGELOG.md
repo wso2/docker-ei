@@ -4,6 +4,15 @@ All notable changes to this project `6.2.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v6.2.0.9] - 2021-08-26
+
+### Added
+- Add per profile Docker resources of WSO2 Enterprise Integrator v6.2.x for Alpine, CentOS, Ubuntu
+
+### Changed
+- Update AdoptOpenJDK version to adoptopenjdk/openjdk8:jdk8u292-b10-alpine in all Alpine based images
+- Update K8s Membership scheme version to 1.0.7
+
 ## [v6.2.0.8] - 2020-11-25
 
 ### Added
