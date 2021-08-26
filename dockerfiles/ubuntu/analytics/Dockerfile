@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to AdoptOpenJDK Ubuntu Docker image
-FROM adoptopenjdk:8u282-b08-jdk-hotspot-focal
+FROM adoptopenjdk:8u292-b10-jdk-hotspot-focal
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.2.0.9"
 
@@ -69,7 +69,7 @@ RUN groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} && \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 
 RUN \
-    wget --no-check-certificate -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
     && echo "${WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER}" | bash ${WSO2_SERVER_HOME}/bin/profile-creator.sh \
