@@ -2,7 +2,7 @@
 
 This repository contains following Docker resources:
 
-- Per profile Docker resources of WSO2 Integration v4.0.x product profiles (Micro Integrator, Streaming Integrator and MI Dashboard)
+- Per profile Docker resources of WSO2 Integration v4.0.1.x product profile MI Dashboard
   for Alpine, CentOS and Ubuntu
 
 Per profile Docker resources for WSO2 Integration help you build generic Docker images for deploying the

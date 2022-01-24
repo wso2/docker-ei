@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2020 WSO2, Inc. (http://wso2.com)
+# Copyright 2022 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # set base Docker image to AdoptOpenJDK Alpine Docker image
 FROM adoptopenjdk/openjdk11:jdk-11.0.12_7-alpine
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.0.0.1"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.0.1.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -30,8 +30,8 @@ ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2mi-dashboard
-ARG WSO2_SERVER_VERSION=4.0.0
-ARG WSO2_SERVER_REPOSITORY=micro-integrator
+ARG WSO2_SERVER_VERSION=4.0.1
+ARG WSO2_SERVER_REPOSITORY=product-mi-tooling
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://github.com/wso2/${WSO2_SERVER_REPOSITORY}/releases/download/v${WSO2_SERVER_VERSION}/${WSO2_SERVER}.zip
