@@ -47,8 +47,9 @@ Welcome to WSO2 Docker resources.\n\
 This Docker container comprises of a WSO2 product, running with its latest GA release \n\
 which is under the Apache License, Version 2.0. \n\
 Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n\n"'
-
 ENV ENV=${USER_HOME}"/.ashrc"
+
+ENV JAVA_VERSION jdk8u322-b06
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # create the non-root user and group and set MOTD login message
