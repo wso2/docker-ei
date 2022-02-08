@@ -47,7 +47,7 @@ ARG MOTD='printf "\n\
  Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
 ENV ENV=${USER_HOME}"/.ashrc"
 
-ENV ENV=${USER_HOME}"/.ashrc"
+ENV JAVA_VERSION jdk8u322-b06
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install required packages
