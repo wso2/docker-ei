@@ -75,6 +75,9 @@ RUN echo Verifying install ... \
     && echo java --version && java --version \
     && echo Complete.
 
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v7.1.0.4"
+      
 # set Docker image build arguments
 # build arguments for user/group configurations
 ARG USER=wso2carbon
