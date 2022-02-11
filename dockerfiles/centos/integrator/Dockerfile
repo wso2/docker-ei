@@ -104,6 +104,8 @@ RUN set -eux; \
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
+RUN chown wso2carbon:wso2 -R ${JAVA_HOME}
+
 # Verify Java installation
 RUN echo Verifying install ... \
     && echo javac --version && javac --version \
