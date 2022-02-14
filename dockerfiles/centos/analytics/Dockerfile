@@ -26,10 +26,6 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set jdk configurations
-ARG JDK_NAME=OpenJDK8U-jdk_x64_linux_hotspot.tar.gz
-ARG JAVA_HOME=${USER_HOME}/java
-ARG JDK_URL=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_linux_hotspot_8u292b10.tar.gz
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2ei
 ARG WSO2_SERVER_VERSION=6.2.0
@@ -51,13 +47,18 @@ ARG MOTD='printf "\n\
  Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
 ENV ENV=${USER_HOME}"/.ashrc"
 
+ENV JAVA_VERSION jdk8u322-b06
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 # install required packages
 RUN yum -y update && \
     yum install -y \
+    tzdata openssl curl ca-certificates fontconfig gzip tar \
     nc \
     unzip \
     zip \
     wget \
+    && yum clean all \
     && rm -rf /var/cache/yum/* && \
     echo $MOTD > /etc/profile.d/motd.sh
 
@@ -76,13 +77,44 @@ RUN \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && rm -f ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip
 
-# install JDK
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget -O ${JDK_NAME} ${JDK_URL} \
-    && tar -xf ${JDK_NAME} -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f ${JDK_NAME}
+# install OpenJDK
+RUN set -eux; \
+    ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
+    case "${ARCH}" in \
+       aarch64|arm64) \
+         ESUM='42ed3ff5a859f9015a1362fb7e650026b913d688eab471714f795651120be173'; \
+         BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_aarch64_linux_hotspot_8u322b06.tar.gz'; \
+         ;; \
+       ppc64el|powerpc:common64) \
+         ESUM='c7cc9c5b237e9e1f1e3296593aba427375823592e4604fadf89a8c234c2574e1'; \
+         BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_ppc64le_linux_hotspot_8u322b06.tar.gz'; \
+         ;; \
+       amd64|i386:x86-64) \
+         ESUM='3d62362a78c9412766471b05253507a4cfc212daea5cdf122860173ce902400e'; \
+         BINARY_URL='https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u322-b06/OpenJDK8U-jdk_x64_linux_hotspot_8u322b06.tar.gz'; \
+         ;; \
+       *) \
+         echo "Unsupported arch: ${ARCH}"; \
+         exit 1; \
+         ;; \
+    esac; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    mkdir -p /opt/java/openjdk; \
+    cd /opt/java/openjdk; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    rm -rf /tmp/openjdk.tar.gz;
+
+ENV JAVA_HOME=/opt/java/openjdk \
+    PATH="/opt/java/openjdk/bin:$PATH"
+
+RUN chown wso2carbon:wso2 -R ${JAVA_HOME} 
+
+# Verify Java installation
+RUN echo Verifying install ... \
+    && echo javac -version && javac -version \
+    && echo java -version && java -version \
+    && echo Complete.
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
@@ -98,9 +130,7 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=$JAVA_HOME/bin:$PATH \
-    WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
+ENV WSO2_SERVER_HOME=${WSO2_SERVER_HOME} \
     WORKING_DIRECTORY=${USER_HOME}
 
 # expose analytics ports
