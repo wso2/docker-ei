@@ -28,8 +28,6 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
-# set JDK configurations
-ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2ei
 ARG WSO2_SERVER_VERSION=6.6.0
@@ -48,6 +46,9 @@ This Docker container comprises of a WSO2 product, running with its latest GA re
 which is under the Apache License, Version 2.0. \n\
 Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n\n"'
 
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+ENV JAVA_VERSION jdk-11.0.14+9
+
 # create the non-root user and group and set MOTD login message
 RUN \
     groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
@@ -56,23 +57,56 @@ RUN \
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
+
 # install required packages
 RUN \
     yum -y update \
     && yum install -y \
+        tzdata openssl curl ca-certificates fontconfig gzip tar \
         nc \
         unzip \
         wget \
         zip \
-    && rm -rf /var/cache/yum/*
-# install AdoptOpenJDK HotSpot
-RUN \
-    mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.5%2B10/OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz \
-    && echo "ae050e35d7d769098c6f45a1c22f346cff883f117702e0fd7ce3661676ac0e84  OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz -C ${JAVA_HOME} --strip-components=1 \
-    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz
+        && yum clean all \
+        && rm -rf /var/cache/yum/*
+
+# install OpenJDK
+RUN set -eux; \
+    ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
+    case "${ARCH}" in \
+       aarch64|arm64) \
+         ESUM='0ba188a2a739733163cd0049344429d2284867e04ca452879be24f3b54320c9a'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.14_9.tar.gz'; \
+         ;; \
+       ppc64el|powerpc:common64) \
+         ESUM='91c63331faba8c842aef312d415b3e67aecf4f662a36c275f5cb278f7bce1410'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.14_9.tar.gz'; \
+         ;; \
+       amd64|i386:x86-64) \
+         ESUM='1189bee178d11402a690edf3fbba0c9f2ada1d3a36ff78929d81935842ef24a9'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz'; \
+         ;; \
+       *) \
+         echo "Unsupported arch: ${ARCH}"; \
+         exit 1; \
+         ;; \
+    esac; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    mkdir -p /opt/java/openjdk; \
+    cd /opt/java/openjdk; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    rm -rf /tmp/openjdk.tar.gz;
+
+ENV JAVA_HOME=/opt/java/openjdk \
+    PATH="/opt/java/openjdk/bin:$PATH"
+
+# Verify Java installation
+RUN echo Verifying install ... \
+    && echo javac --version && javac --version \
+    && echo java --version && java --version \
+    && echo Complete.
+
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -91,9 +125,7 @@ USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV JAVA_HOME=${JAVA_HOME} \
-    PATH=${JAVA_HOME}/bin:${PATH} \
-    WORKING_DIRECTORY=${USER_HOME} \
+ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose analytics ports
