@@ -3,6 +3,14 @@ All notable changes to this project 6.3.x per each release will be documented in
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v6.3.0.3] - 2022-03-04
+
+### Changed
+#### Integrator, Micro Integrator, Analytics
+- Use base OS images as opposed to AdoptOpenJDK images.
+- Use Temurin OpenJDK binaries to build OpenJDK on top of the base OS image.
+- Upgrade OpenJDK versions to the latest available versions of Temurin OpenJDK from Adoptium. 
+
 ## v6.3.0.2 - 2020-11-25
 
 ### Added
