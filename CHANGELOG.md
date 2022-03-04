@@ -4,6 +4,13 @@ All notable changes to this project `7.1.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v7.1.0.9] - 2022-03-04
+
+### Changed
+- Use base OS images as opposed to AdoptOpenJDK images for each corresponding OS flavour (Alpine, CentOS, Ubuntu).
+- Use Temurin OpenJDK binaries to build OpenJDK on top of the base OS image.
+- Upgrade OpenJDK versions to the latest available versions of Temurin OpenJDK from Adoptium. 
+
 ## [v7.1.0.4] - 2021-02-19
 ### Changed
 - Upgrade the base version of images to adoptopenjdk/openjdk11:jdk-11.0.10_9
