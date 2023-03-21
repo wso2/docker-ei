@@ -13,4 +13,4 @@ Configurations and non-configuration resources (e.g. binaries such as, third-par
 Carbon Applications and security related artifacts such as, Java Keystore files) are designed to be provided via
 volume mounts to the containers spawned.
 
-**Change log** from previous v4.0.x release: [View Here](https://github.com/wso2/docker-ei/blob/4.0.x/CHANGELOG.md)
+**Change log** from previous v4.1.x release: [View Here](https://github.com/wso2/docker-ei/blob/4.1.x/CHANGELOG.md)
