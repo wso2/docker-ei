@@ -19,8 +19,10 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Build the Docker image.
 
+- Download wso2si-4.2.0.zip from [here](https://wso2.com/integration/streaming-integrator/)
+- Host the product pack using a webserver.
 - Navigate to `<SI_DOCKERFILE_HOME>` directory. <br>
-- Change <APIM_DIST_URL> in Dockerfile to the location of the product pack.
+- Change <SI_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
     + `docker build -t wso2si:4.2.0-alpine .`
 
@@ -58,6 +60,10 @@ wso2si:4.2.0-alpine
 ```
 
 >In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-4.2.0/conf folder of the container.
+
+## WSO2 Private Docker images
+
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
 
 ## Docker command usage references
 
