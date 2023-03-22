@@ -20,8 +20,10 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Build the Docker image.
 
+- Download wso2mi-dashboard-4.2.0.zip from [here](https://wso2.com/micro-integrator)
+- Host the product pack using a webserver.
 - Navigate to `<MONITORING_DASHBOARD_DOCKERFILE_HOME>` directory. <br>
-- Change <APIM_DIST_URL> in Dockerfile to the location of the product pack.
+- Change <MI_DASHBOARD_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
     + `docker build -t wso2mi-dashboard:4.2.0-alpine .`
 
