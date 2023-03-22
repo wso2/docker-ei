@@ -60,6 +60,10 @@ wso2mi:4.2.0
 
 > In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-4.2.0/conf folder of the container.
 
+## WSO2 Private Docker images
+
+If you have a valid WSO2 subscription you can have access to WSO2 private Docker images. These images will get updated frequently with bug fixes, security fixes and new improvements. To view available images visit [WSO2 Docker Repositories](https://docker.wso2.com/)
+
 ## Docker command usage references
 
 * [Docker build command reference](https://docs.docker.com/engine/reference/commandline/build/)
