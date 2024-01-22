@@ -110,7 +110,7 @@ RUN \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    apt-get update \
+    apt-get update && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         netcat \
         unzip \
