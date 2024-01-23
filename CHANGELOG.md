@@ -3,6 +3,11 @@ All notable changes to this project `7.0.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v7.0.0.6] - 2024-01-23
+
+### Changed
+- Update Ubuntu Dockerfiles to get continuous upgrades.
+
 ## [v7.0.0.5] - 2022-03-04
 
 ### Changed
