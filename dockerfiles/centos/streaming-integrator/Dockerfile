@@ -22,7 +22,7 @@ FROM centos:7
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install JDK Dependencies
-RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar nc unzip wget \
+RUN yum -y update && yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
 ENV JAVA_VERSION jdk-17.0.6+10
@@ -59,7 +59,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.1"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.6"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
