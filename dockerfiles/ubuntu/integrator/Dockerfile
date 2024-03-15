@@ -96,7 +96,6 @@ ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_pa
 # build arguments for external artifacts
 ARG DNS_JAVA_VERSION=2.1.8
 ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.7
-ARG MYSQL_CONNECTOR_VERSION=5.1.47
 # build argument for MOTD
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
