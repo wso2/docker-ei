@@ -27,7 +27,7 @@ RUN yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar \
 
 ENV JAVA_VERSION jdk-11.0.14+9
 
-# install OpenJDK 11
+# install Temurin OpenJDK 11
 RUN set -eux; \
     ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
     case "${ARCH}" in \

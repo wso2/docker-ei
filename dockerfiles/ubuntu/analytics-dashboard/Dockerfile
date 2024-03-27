@@ -30,7 +30,7 @@ RUN apt-get update \
 
 ENV JAVA_VERSION jdk-11.0.14+9
 
-# install OpenJDK 11
+# install Temurin OpenJDK 11
 RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \
     case "${ARCH}" in \
