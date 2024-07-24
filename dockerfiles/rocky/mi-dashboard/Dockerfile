@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Rocky Linux Docker image
-FROM rockylinux:9.3
+FROM rockylinux:8.10
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -59,7 +59,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.9"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
