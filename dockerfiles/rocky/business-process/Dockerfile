@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2017 WSO2, Inc. (http://wso2.com)
+# Copyright 2024 WSO2, LLC. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to AdoptOpenJDK Ubuntu Docker image
-FROM adoptopenjdk:11.0.5_10-jdk-hotspot-bionic
+# set base Docker image to RockyLinux Docker image
+FROM rockylinux/rockylinux:8.10
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.8"
 
@@ -28,42 +28,49 @@ ARG USER_ID=802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=802
 ARG USER_HOME=/home/${USER}
+# set JDK configurations
+ARG JAVA_HOME=${USER_HOME}/java
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2ei
 ARG WSO2_SERVER_VERSION=6.6.0
-ARG WSO2_SERVER_PROFILE_NAME=broker
-ARG WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER=4
+ARG WSO2_SERVER_PROFILE_NAME=businessprocess
+ARG WSO2_SERVER_PROFILE_OPTIMIZER_NUMBER=3
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
 ARG WSO2_SERVER_DIST_URL=https://bintray.com/wso2/binaryGA/download_file?file_path=${WSO2_SERVER}.zip
-# build arguments for external artifacts
-ARG DNS_JAVA_VERSION=2.1.8
-ARG K8S_MEMBERSHIP_SCHEME_VERSION=1.0.11
 # build argument for MOTD
-ARG MOTD="\n\
+ARG MOTD='printf "\n\
 Welcome to WSO2 Docker resources.\n\
 ------------------------------------ \n\
 This Docker container comprises of a WSO2 product, running with its latest GA release \n\
 which is under the Apache License, Version 2.0. \n\
-Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"
+Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n\n"'
 
 # create the non-root user and group and set MOTD login message
 RUN \
     groupadd --system -g ${USER_GROUP_ID} ${USER_GROUP} \
     && useradd --system --create-home --home-dir ${USER_HOME} --no-log-init -g ${USER_GROUP_ID} -u ${USER_ID} ${USER} \
-    && echo '[ ! -z "${TERM}" -a -r /etc/motd ] && cat /etc/motd' >> /etc/bash.bashrc; echo "${MOTD}" > /etc/motd
+    && echo ${MOTD} > /etc/profile.d/motd.sh
 
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        netcat \
+    yum -y update \
+    && yum install -y \
+        nc \
         unzip \
         wget \
         zip \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/cache/yum/*
+# install AdoptOpenJDK HotSpot
+RUN \
+    mkdir -p ${JAVA_HOME} \
+    && wget -O OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.5%2B10/OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz \
+    && echo "ae050e35d7d769098c6f45a1c22f346cff883f117702e0fd7ce3661676ac0e84  OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz" | sha256sum -c - \
+    && tar -xf OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz -C ${JAVA_HOME} --strip-components=1 \
+    && chown wso2carbon:wso2 -R ${JAVA_HOME} \
+    && rm -f OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
@@ -74,20 +81,19 @@ RUN \
     && unzip -d ${USER_HOME} ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && rm -f ${WSO2_SERVER_HOME}_${WSO2_SERVER_PROFILE_NAME}.zip
-# add libraries for Kubernetes membership scheme based clustering
-ADD --chown=wso2carbon:wso2 https://repo1.maven.org/maven2/dnsjava/dnsjava/${DNS_JAVA_VERSION}/dnsjava-${DNS_JAVA_VERSION}.jar ${WSO2_SERVER_HOME}/lib
-ADD --chown=wso2carbon:wso2 http://maven.wso2.org/nexus/content/repositories/releases/org/wso2/carbon/kubernetes/artifacts/kubernetes-membership-scheme/${K8S_MEMBERSHIP_SCHEME_VERSION}/kubernetes-membership-scheme-${K8S_MEMBERSHIP_SCHEME_VERSION}.jar ${WSO2_SERVER_HOME}/lib
 
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
 # set environment variables
-ENV WORKING_DIRECTORY=${USER_HOME} \
+ENV JAVA_HOME=${JAVA_HOME} \
+    PATH=${JAVA_HOME}/bin:${PATH} \
+    WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
-# expose broker ports
-EXPOSE 9446 9766 5675 8675 1886 8836 7614 4000
+# expose business-process ports
+EXPOSE 9445 9765 4000
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
