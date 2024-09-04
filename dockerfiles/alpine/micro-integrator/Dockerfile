@@ -21,8 +21,9 @@ FROM alpine:3.18.5
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# install JDK Dependencies
-RUN apk add --no-cache tzdata musl-locales musl-locales-lang \
+# Update the package list and upgrade installed packages and install JDK Dependencies
+RUN apk update && apk upgrade --no-cache \
+    && apk add --no-cache tzdata musl-locales musl-locales-lang \
     && rm -rf /var/cache/apk/*
 
 ENV JAVA_VERSION jdk-11.0.21+9
@@ -61,7 +62,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.0.0.7"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.0.0.8"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
