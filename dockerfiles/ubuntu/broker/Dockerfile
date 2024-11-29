@@ -19,7 +19,7 @@
 # set base Docker image to AdoptOpenJDK Ubuntu Docker image
 FROM adoptopenjdk:11.0.5_10-jdk-hotspot-bionic
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.9"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -57,7 +57,7 @@ RUN \
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
 RUN \
-    apt-get update \
+    apt-get update && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         netcat \
         unzip \
