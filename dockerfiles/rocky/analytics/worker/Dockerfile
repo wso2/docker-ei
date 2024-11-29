@@ -19,7 +19,7 @@
 # set base Docker image to RockyLinux Docker image
 FROM rockylinux/rockylinux:8.10
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.9"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
