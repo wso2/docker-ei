@@ -28,7 +28,7 @@ RUN apk update && apk upgrade --no-cache \
 
 ENV JAVA_VERSION jdk-11.0.21+9
 
-# install OpenJDK 11
+# install Temurin OpenJDK 11
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \

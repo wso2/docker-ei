@@ -27,7 +27,7 @@ RUN apk add --no-cache tzdata musl-locales musl-locales-lang \
 
 ENV JAVA_VERSION jdk-11.0.14+9
 
-# install OpenJDK 11
+# install Temurin OpenJDK 11
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
