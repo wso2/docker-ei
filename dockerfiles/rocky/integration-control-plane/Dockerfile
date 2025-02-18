@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2019 WSO2, Inc. (http://wso2.com)
+# Copyright 2024 WSO2, LLC. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to CentOS Docker image
-FROM centos:7
+# set base Docker image to Rocky Linux Docker image
+FROM rockylinux/rockylinux:8.10
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install JDK Dependencies
-RUN yum -y update && yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar nc unzip wget \
+RUN yum -y update && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
 ENV JAVA_VERSION jdk-17.0.6+10
@@ -59,7 +59,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v1.0.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -69,12 +69,12 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
-ARG WSO2_SERVER_NAME=wso2mi
-ARG WSO2_SERVER_VERSION=4.2.0
+ARG WSO2_SERVER_NAME=wso2-integration-control-plane
+ARG WSO2_SERVER_VERSION=1.0.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
-ARG WSO2_SERVER_DIST_URL=<MI_DIST_URL>
+ARG WSO2_SERVER_DIST_URL=<INTEGRATION_CONTROL_PLANE_DIST_URL>
 # build argument for MOTD
 ARG MOTD="\n\
 Welcome to WSO2 Docker resources.\n\
@@ -111,7 +111,7 @@ ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose server ports
-EXPOSE 8290 8253
+EXPOSE 9743
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]

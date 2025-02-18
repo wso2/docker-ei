@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------
-# Copyright 2019 WSO2, Inc. (http://wso2.com)
+# Copyright 2024 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,8 @@
 
 set -e
 
-# volume mounts
+# volume mount
 config_volume=${WORKING_DIRECTORY}/wso2-config-volume
-artifact_volume=${WORKING_DIRECTORY}/wso2-artifact-volume
 
 # check if the WSO2 non-root user home exists
 test ! -d ${WORKING_DIRECTORY} && echo "WSO2 Docker non-root user home does not exist" && exit 1
@@ -29,8 +28,6 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 
 # copy any configuration changes mounted to config_volume
 test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
-# copy any artifact changes mounted to artifact_volume
-test -d ${artifact_volume} && [[ "$(ls -A ${artifact_volume})" ]] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 server
-sh ${WSO2_SERVER_HOME}/bin/server.sh "$@"
+sh ${WSO2_SERVER_HOME}/bin/dashboard.sh "$@"

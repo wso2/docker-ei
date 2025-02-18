@@ -1,6 +1,6 @@
 #!/bin/bash
 # ------------------------------------------------------------------------
-# Copyright 2020 WSO2, Inc. (http://wso2.com)
+# Copyright 2024 WSO2, LLC. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,4 +30,4 @@ test ! -d ${WSO2_SERVER_HOME} && echo "WSO2 Docker product home does not exist" 
 test -d ${config_volume} && [[ "$(ls -A ${config_volume})" ]] && cp -RL ${config_volume}/* ${WSO2_SERVER_HOME}/
 
 # start WSO2 server
-sh ${WSO2_SERVER_HOME}/bin/dashboard.sh "$@"
+sh ${WSO2_SERVER_HOME}/bin/micro-integrator.sh "$@"

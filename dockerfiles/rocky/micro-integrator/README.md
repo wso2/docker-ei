@@ -1,6 +1,6 @@
-# Dockerfile for WSO2 Micro Integrator Dashboard
+# Dockerfile for WSO2 Micro Integrator
 
-This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image for WSO2 Micro Integrator Dashboard 4.2.0.
+This section defines the step-by-step instructions to build an [RockyLinux](https://hub.docker.com/_/rockylinux) Linux based Docker image for WSO2 Micro Integrator 4.3.0.
 
 ## Prerequisites
 
@@ -15,23 +15,21 @@ This section defines the step-by-step instructions to build an [Ubuntu](https://
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/monitoring-dashboard` directory will be referred to as
-> `MONITORING_DASHBOARD_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/rockylinux/micro-integrator` directory will be referred to as `MI_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
-- Download wso2mi-dashboard-4.2.0.zip from [here](https://wso2.com/micro-integrator)
+- Download wso2mi-4.3.0.zip from [here](https://wso2.com/micro-integrator)
 - Host the product pack using a webserver.
-- Navigate to `<MONITORING_DASHBOARD_DOCKERFILE_HOME>` directory. <br>
-- Change <MI_DASHBOARD_DIST_URL> in Dockerfile to the URL of the product pack.
-  Execute `docker build` command as shown below.
-    + `docker build -t wso2mi-dashboard:4.2.0 .`
+- Navigate to `<MI_DOCKERFILE_HOME>` directory. 
+- Execute `docker build` command as shown below.
+    + `docker build -t wso2mi:4.3.0-rocky .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9743:9743 wso2mi-dashboard:4.2.0`
+- `docker run -it -p 8253:8253 -p 8290:8290 wso2mi:4.3.0-rocky`
 
 ## How to update configurations
 
@@ -40,8 +38,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the MI container if it's already running.
 
-In WSO2 Micro Integrator Monitoring Dashboard 4.2.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf
-/server`.<br>
+In WSO2 MI 4.3.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf`.<br>
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
 offset value (`[server]->offset`) to 11.
 
@@ -55,13 +52,12 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 
 ```
 docker run -it \
--p 9744:9744 \
+-p 8254:8254 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2mi-dashboard:4.2.0
+wso2mi:4.3.0-rocky
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-dashboard-4.2.0/conf/server folder of the
-> container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2mi-4.3.0/conf folder of the container.
 
 ## WSO2 Private Docker images
 
