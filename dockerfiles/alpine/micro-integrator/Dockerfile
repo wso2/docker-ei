@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.18.5
+FROM alpine:3.21.3
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -25,15 +25,19 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-17.0.6+10
+ENV JAVA_VERSION jdk-21.0.6+7
 
-# install Temurin OpenJDK 17
+# install Temurin OpenJDK 21
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='0df7c1a58debee2668931ba4a07cb642475b23a5c61473761b6f293eba7c024a'; \
-         BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.6%2B10/OpenJDK17U-jdk_x64_alpine-linux_hotspot_17.0.6_10.tar.gz'; \
+         ESUM='6c66470a9143ad562570a34c1583d9fa50bf904f6f9ced642e9d800ce043a0f3'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.6_7.tar.gz'; \
+         ;; \
+       aarch64|arm64) \
+         ESUM='2798990401d9c47eaeddb7d5148f577770e4c1013b9223290a43765463204ae4'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_aarch64_alpine-linux_hotspot_21.0.6_7.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -55,7 +59,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.3.0.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -66,7 +70,7 @@ ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2mi
-ARG WSO2_SERVER_VERSION=4.3.0
+ARG WSO2_SERVER_VERSION=4.4.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}

@@ -1,8 +1,12 @@
 # Changelog
 
-All notable changes to this project `4.2.x` per each release will be documented in this file.
+All notable changes to this project `4.4.x` per each release will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+## [v4.2.0.8] - 2025-02-20
+### Changed
+- Updated OS and JDK versions in micro-integrator Dockerfiles for Alpine, Rocky and Ubuntu for MI 4.4.0 release.
 
 ## [v4.2.0.7] - 2024-07-19
 ### Changed
