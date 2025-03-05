@@ -21,6 +21,11 @@ FROM rockylinux/rockylinux:9.5
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
+RUN dnf install -y glibc-locale-source glibc-langpack-en \
+    && localedef -i en_US -f UTF-8 en_US.UTF-8 \
+    && echo "LANG=en_US.UTF-8" > /etc/locale.conf \
+    && echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+
 # install JDK Dependencies
 RUN yum -y update && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
@@ -100,7 +105,7 @@ RUN \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
 # remove unnecesary packages
-RUN yum remove -y nc unzip wget
+RUN yum remove -y unzip wget
 
 # set the user and work directory
 USER ${USER_ID}

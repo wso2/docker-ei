@@ -100,9 +100,6 @@ RUN \
     && rm -f ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
-# remove unnecesary packages
-RUN apk del netcat-openbsd
-
 # set the user and work directory
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
