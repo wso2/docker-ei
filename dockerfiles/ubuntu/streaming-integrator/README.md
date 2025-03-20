@@ -1,4 +1,4 @@
-# Dockerfile for WSO2 Integration Control Plane
+# Dockerfile for WSO2 Streaming Integrator
 
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
 for WSO2 Streaming Integrator 4.3.0.
@@ -16,14 +16,14 @@ for WSO2 Streaming Integrator 4.3.0.
 git clone https://github.com/wso2/docker-ei.git
 ```
 
->The local copy of the `dockerfiles/ubuntu/integration-control-plane` directory will be referred to as `INTEGRATION_CONTROL_PLANE_DOCKERFILE_HOME` from this point onwards.
+>The local copy of the `dockerfiles/ubuntu/streaming-integrator` directory will be referred to as `SI_DOCKERFILE_HOME` from this point onwards.
 
 ##### 2. Build the Docker image.
 
 - Download wso2si-4.3.0.zip from [here](https://wso2.com/integration/streaming-integrator/)
 - Host the product pack using a webserver.
-- Navigate to `<INTEGRATION_CONTROL_PLANE_DOCKERFILE_HOME>` directory. <br>
-- Change <INTEGRATION_CONTROL_PLANE_DIST_URL> in Dockerfile to the URL of the product pack.
+- Navigate to `<SI_DOCKERFILE_HOME>` directory. <br>
+- Change <SI_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
     + `docker build -t wso2si:4.3.0 .`
 
@@ -37,18 +37,18 @@ git clone https://github.com/wso2/docker-ei.git
 ## How to update configurations
 
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
-As an example, steps required to change the port offset using `deployment.toml` is as follows:
+As an example, steps required to change the port offset using `deployment.yaml` is as follows:
 
-##### 1. Stop the WSO2 Integration Control Plane container if it's already running.
+##### 1. Stop the SI container if it's already running.
 
-In WSO2 Integration Control Plane 1.0.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf/server/`.<br>
-Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
-offset value (`[server]->offset`) to 1.
+In SI product distribution, `deployment.yaml` configuration file can be found at `<DISTRIBUTION_HOME>/conf/server`.
+Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/server/deployment.yaml` and
+increase the offset value under ports by 1.
 
-##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.toml`.
+##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/server/deployment.yaml`.
 
 ```
-chmod o+r <SOURCE_CONFIGS>/deployment.toml
+chmod o+r <SOURCE_CONFIGS>/server/deployment.yaml
 ```
 
 ##### 3. Run the image by mounting the file to container as follows:
@@ -60,7 +60,7 @@ docker run -it \
 wso2si:4.3.0
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-43.0/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-4.3.0/conf folder of the container.
 
 ## WSO2 Private Docker images
 
