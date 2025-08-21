@@ -21,8 +21,9 @@ FROM alpine:3.19.0
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# install dependencies
-RUN apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
+# update the package list and upgrade installed packages
+RUN apk update && apk upgrade --no-cache \
+    && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
 ENV JAVA_VERSION jdk-17.0.6+10
