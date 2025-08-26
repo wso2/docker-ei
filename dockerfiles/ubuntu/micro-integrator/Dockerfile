@@ -63,10 +63,10 @@ RUN set -eux; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
-    PATH="/opt/java/openjdk/bin:$PATH"
+    PATH="/opt/java/openjdk/bin:$PATH" 
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.1"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
