@@ -54,7 +54,7 @@ RUN \
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
-RUN \
+RUN apk update && apk upgrade --no-cache && \
     apk add --no-cache \
         bash \
         netcat-openbsd \
