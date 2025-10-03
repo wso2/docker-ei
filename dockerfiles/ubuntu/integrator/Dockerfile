@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Ubuntu Focal Docker image
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -116,7 +116,7 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 RUN \
     apt-get update && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        netcat \
+        netcat-openbsd \
         unzip \
         wget \
         zip \
