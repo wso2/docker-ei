@@ -63,14 +63,14 @@ RUN \
         wget \
         zip \
     && rm -rf /var/cache/yum/*
-# install AdoptOpenJDK HotSpot
+# download and install OpenJDK 11 from Adoptium
 RUN \
     mkdir -p ${JAVA_HOME} \
-    && wget -O OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.5%2B10/OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz \
-    && echo "ae050e35d7d769098c6f45a1c22f346cff883f117702e0fd7ce3661676ac0e84  OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz" | sha256sum -c - \
-    && tar -xf OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz -C ${JAVA_HOME} --strip-components=1 \
+    && wget -O OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz \
+    && echo "7dfd551795a8884b26cbb02e0301da95db40160bb194f48271dc2ef9367f50c2  OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz" | sha256sum -c - \
+    && tar -xf OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz -C ${JAVA_HOME} --strip-components=1 \
     && chown wso2carbon:wso2 -R ${JAVA_HOME} \
-    && rm -f OpenJDK11U-jdk_x64_linux_11.0.5_10.tar.gz
+    && rm -f OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz
 # add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \

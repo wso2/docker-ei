@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Ubuntu Focal Docker image
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -28,31 +28,31 @@ RUN apt-get update && apt-get upgrade -y \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_VERSION jdk-11.0.14+9
+ENV JAVA_VERSION jdk-11.0.28+6
 
 # install OpenJDK 11
 RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \
     case "${ARCH}" in \
        aarch64|arm64) \
-         ESUM='0ba188a2a739733163cd0049344429d2284867e04ca452879be24f3b54320c9a'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='32c316cb3998a9c9dee2829fbb577ea1c0ed666700cec73e049d44c342bb19af'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.28_6.tar.gz'; \
          ;; \
        armhf|arm) \
-         ESUM='a0ba2fa6a982fe6c09c721ac9c72c8e5323991a529403daacac323549df4495d'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_arm_linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='b33c99068804bbd7e4aa4bd1c5419ae88ec77833e5e5339ab06a00546a2b0711'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_arm_linux_hotspot_11.0.28_6.tar.gz'; \
          ;; \
        ppc64el|powerpc:common64) \
-         ESUM='91c63331faba8c842aef312d415b3e67aecf4f662a36c275f5cb278f7bce1410'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='e272abd162b3de68093630929453feba3e63a5ab1bbb912379f6a4aa968ef06a'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_ppc64le_linux_hotspot_11.0.28_6.tar.gz'; \
          ;; \
        s390x|s390:64-bit) \
-         ESUM='4dd43e06830e62d65c698b393db10bab39ec6575de08db8d2f5b66cfe09c8c85'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='ac3f94fdcc5372e90f44fad9cd03ec0e3fd3535fea06c120f85e4a7534c6de04'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_s390x_linux_hotspot_11.0.28_6.tar.gz'; \
          ;; \
        amd64|i386:x86-64) \
-         ESUM='1189bee178d11402a690edf3fbba0c9f2ada1d3a36ff78929d81935842ef24a9'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz'; \
+         ESUM='7dfd551795a8884b26cbb02e0301da95db40160bb194f48271dc2ef9367f50c2'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.28%2B6/OpenJDK11U-jdk_x64_linux_hotspot_11.0.28_6.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -116,7 +116,7 @@ COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 RUN \
     apt-get update && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        netcat \
+        netcat-openbsd \
         unzip \
         wget \
         zip \
