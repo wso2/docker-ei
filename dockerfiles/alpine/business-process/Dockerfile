@@ -19,7 +19,7 @@
 # set base Docker image to AdoptOpenJDK Alpine Docker image
 FROM eclipse-temurin:11.0.28_6-jdk-alpine-3.22
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.9"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v6.6.0.10"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -54,7 +54,7 @@ RUN \
 # copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 # install required packages
-RUN \
+RUN apk update && apk upgrade --no-cache && \
     apk add --no-cache \
         bash \
         netcat-openbsd \
