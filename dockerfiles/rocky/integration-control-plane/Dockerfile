@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Rocky Linux Docker image
-FROM rockylinux/rockylinux:10.0
+FROM rockylinux/rockylinux:9
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
