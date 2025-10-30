@@ -23,7 +23,7 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install dependencies
 RUN apt-get update && apt-get upgrade -y \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales python-is-python3 netcat unzip wget \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales python-is-python3 netcat-openbsd unzip wget \
     && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
@@ -107,7 +107,7 @@ RUN \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
 # remove unnecesary packages
-RUN apt-get purge -y netcat unzip wget
+RUN apt-get purge -y netcat-openbsd unzip wget
 
 # set the user and work directory
 USER ${USER_ID}
