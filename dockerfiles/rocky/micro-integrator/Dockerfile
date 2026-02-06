@@ -22,7 +22,7 @@ FROM rockylinux/rockylinux:9.5
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install JDK Dependencies
-RUN yum -y update && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
+RUN yum -y update && yum install -y tzdata openssl ca-certificates fontconfig gzip tar bsdtar nc unzip wget \
     && yum clean all
 
 ENV JAVA_VERSION jdk-21.0.6+7
@@ -52,7 +52,7 @@ RUN set -eux; \
     echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
-    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    bsdtar -xf /tmp/openjdk.tar.gz --strip-components=1; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
