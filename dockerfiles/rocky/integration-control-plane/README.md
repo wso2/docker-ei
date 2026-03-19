@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 Integration Control Plane
 
-This section defines the step-by-step instructions to build an [RockyLinux](https://hub.docker.com/_/rockylinux) Linux based Docker image for WSO2 Integration Control Plane 1.0.0.
+This section defines the step-by-step instructions to build an [RockyLinux](https://hub.docker.com/_/rockylinux) Linux based Docker image for WSO2 Integration Control Plane 2.0.0.
 
 ## Prerequisites
 
@@ -19,18 +19,18 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Build the Docker image.
 
-- Download wso2-integration-control-plane-1.0.0.zip from [here](https://wso2.com/micro-integrator)
+- Download wso2-integration-control-plane-2.0.0.zip from [here](https://wso2.com/products/downloads/?product=wso2integrator&package=icp)
 - Host the product pack using a webserver.
 - Navigate to `<INTEGRATION_CONTROL_PLANE_DOCKERFILE_HOME>` directory. <br>
 - Change <INTEGRATION_CONTROL_PLANE_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
-    + `docker build -t wso2-integration-control-plane:1.0.0-rocky .`
+    + `docker build -t wso2-integration-control-plane:2.0.0-rocky .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9743:9743 wso2-integration-control-plane:1.0.0-rocky`
+- `docker run -it -p 9445:9445 -p 9446:9446 -p 9447:9447 -p 9448:9448 -p 9449:9449 wso2-integration-control-plane:2.0.0-rocky`
 
 ## How to update configurations
 
@@ -39,7 +39,7 @@ As an example, steps required to change the port offset using `deployment.toml` 
 
 ##### 1. Stop the WSO2 Integration Control Plane container if it's already running.
 
-In WSO2 Integration Control Plane 1.0.0 product distribution, `deployment.toml` configuration file can be
+In WSO2 Integration Control Plane 2.0.0 product distribution, `deployment.toml` configuration file can be
  found at `<DISTRIBUTION_HOME>/conf/server/`.<br>
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
 offset value (`[server]->offset`) to 1.
@@ -54,12 +54,12 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 
 ```
 docker run -it \
--p 9744:9744 \
+-p 9445:9445 -p 9446:9446 -p 9447:9447 -p 9448:9448 -p 9449:9449 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
-wso2-integration-control-plane:1.0.0-rocky
+wso2-integration-control-plane:2.0.0-rocky
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2-integration-control-plane-1.0.0/conf/server folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2-integration-control-plane-2.0.0/conf/server folder of the container.
 
 ## WSO2 Private Docker images
 
