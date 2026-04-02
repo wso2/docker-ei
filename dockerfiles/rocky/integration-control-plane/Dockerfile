@@ -21,13 +21,14 @@ FROM rockylinux/rockylinux:9
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-RUN dnf install -y glibc-locale-source glibc-langpack-en \
+RUN dnf update -y \
+    && dnf install -y glibc-locale-source glibc-langpack-en \
     && localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && echo "LANG=en_US.UTF-8" > /etc/locale.conf \
     && echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 
 # install JDK Dependencies
-RUN yum -y update && yum -y upgrade && yum install -y tzdata openssl ca-certificates fontconfig gzip tar bsdtar nc unzip wget \
+RUN yum -y update && yum -y upgrade && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
 ENV JAVA_VERSION jdk-21.0.6+7
@@ -57,7 +58,7 @@ RUN set -eux; \
     echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
     mkdir -p /opt/java/openjdk; \
     cd /opt/java/openjdk; \
-    bsdtar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
