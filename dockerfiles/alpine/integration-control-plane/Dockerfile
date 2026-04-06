@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.22.2
+FROM alpine:3.23.3
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
@@ -25,41 +25,41 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-21.0.6+7
+ENV JAVA_VERSION=jdk-21.0.10+7
 
 # Install Temurin OpenJDK 21
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='6c66470a9143ad562570a34c1583d9fa50bf904f6f9ced642e9d800ce043a0f3'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.6_7.tar.gz'; \
+         ESUM='8eb39f442c3c603e414af43844b419a9b5d4f3fe221181f323aa4eec1bd20cf8'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.10_7.tar.gz'; \
          ;; \
        aarch64|arm64) \
-         ESUM='2798990401d9c47eaeddb7d5148f577770e4c1013b9223290a43765463204ae4'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%2B7/OpenJDK21U-jdk_aarch64_alpine-linux_hotspot_21.0.6_7.tar.gz'; \
+         ESUM='19eba6c3877612157ef1f46deb92745b4567cfcd64b79f15449c68cd2b7501e3'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_alpine-linux_hotspot_21.0.10_7.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
          exit 1; \
          ;; \
     esac; \
-	  wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
-	  echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
-	  mkdir -p /opt/java/openjdk; \
-	  tar --extract \
-	      --file /tmp/openjdk.tar.gz \
-	      --directory /opt/java/openjdk \
-	      --strip-components 1 \
-	      --no-same-owner \
-	  ; \
+    wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    mkdir -p /opt/java/openjdk; \
+    tar --extract \
+        --file /tmp/openjdk.tar.gz \
+        --directory /opt/java/openjdk \
+        --strip-components 1 \
+        --no-same-owner \
+    ; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.5.0.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -70,7 +70,7 @@ ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2-integration-control-plane
-ARG WSO2_SERVER_VERSION=1.0.0
+ARG WSO2_SERVER_VERSION=2.0.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
@@ -109,7 +109,7 @@ ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose server ports
-EXPOSE 9743
+EXPOSE 9445 9446 9447 9448 9449
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
