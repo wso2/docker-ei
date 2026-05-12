@@ -107,7 +107,7 @@ RUN \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
 # remove unnecesary packages
-RUN apt-get purge -y unzip wget
+RUN apt-get purge -y wget
 
 # set the user and work directory
 USER ${USER_ID}
