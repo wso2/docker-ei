@@ -105,7 +105,7 @@ RUN \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
 # remove unnecesary packages
-RUN yum remove -y unzip wget
+RUN yum remove -y wget
 
 # set the user and work directory
 USER ${USER_ID}

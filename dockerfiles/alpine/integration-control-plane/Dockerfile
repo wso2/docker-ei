@@ -22,7 +22,7 @@ FROM alpine:3.23.3
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # install dependencies
-RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
+RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd bash unzip \
     && rm -rf /var/cache/apk/*
 
 ENV JAVA_VERSION=jdk-21.0.10+7
