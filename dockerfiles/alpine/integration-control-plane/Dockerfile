@@ -16,36 +16,44 @@
 #
 # ------------------------------------------------------------------------
 
-# set base Docker image to Alpine Docker image
-FROM alpine:3.23.3
+# Temporary stage: copies libgcc_s.so.1 to a known path regardless of host arch
+FROM ubuntu:22.04 AS libgcc-provider
+RUN mkdir -p /libgcc && find /usr/lib -name 'libgcc_s.so.1' -exec cp {} /libgcc/libgcc_s.so.1 \;
+
+# Final image: Alpine with real glibc compat (allows glibc-compiled netty-tcnative .so to load)
+FROM frolvlad/alpine-glibc:alpine-3.22_glibc-2.42
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# install dependencies
-RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd bash unzip \
+RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd bash unzip curl \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION=jdk-21.0.10+7
+# netty-tcnative requires libgcc_s.so.1 for C++ exception unwinding.
+# The provider stage normalizes the path so this single COPY works on any host arch.
+RUN mkdir -p /usr/glibc-compat/lib
+COPY --from=libgcc-provider /libgcc/libgcc_s.so.1 /usr/glibc-compat/lib/libgcc_s.so.1
 
-# Install Temurin OpenJDK 21
+ENV JAVA_VERSION=jdk-21.0.11+10
+
+# Install glibc-compiled Temurin JRE (NOT the alpine-linux/musl variant)
 RUN set -eux; \
-    ARCH="$(apk --print-arch)"; \
+    ARCH="$(uname -m)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='8eb39f442c3c603e414af43844b419a9b5d4f3fe221181f323aa4eec1bd20cf8'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.10_7.tar.gz'; \
+         ESUM='e5038aae3ca9ff670bc696496b0728dbd23d280026bad30291cb919221ecfdcb'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.11%2B10/OpenJDK21U-jre_x64_linux_hotspot_21.0.11_10.tar.gz'; \
          ;; \
        aarch64|arm64) \
-         ESUM='19eba6c3877612157ef1f46deb92745b4567cfcd64b79f15449c68cd2b7501e3'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.10%2B7/OpenJDK21U-jdk_aarch64_alpine-linux_hotspot_21.0.10_7.tar.gz'; \
+         ESUM='fa23d9d9945053e67bcc7638410eabf1e17a7672c7c95a24f70cd08b8407d36e'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.11%2B10/OpenJDK21U-jre_aarch64_linux_hotspot_21.0.11_10.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
          exit 1; \
          ;; \
     esac; \
-    wget -O /tmp/openjdk.tar.gz ${BINARY_URL}; \
-    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    curl -fL -o /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM}  /tmp/openjdk.tar.gz" | sha256sum -c -; \
     mkdir -p /opt/java/openjdk; \
     tar --extract \
         --file /tmp/openjdk.tar.gz \
@@ -56,19 +64,16 @@ RUN set -eux; \
     rm -rf /tmp/openjdk.tar.gz;
 
 ENV JAVA_HOME=/opt/java/openjdk \
-    PATH="/opt/java/openjdk/bin:$PATH"
+    PATH="/usr/glibc-compat/bin:/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
       com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.0"
 
-# set Docker image build arguments
-# build arguments for user/group configurations
 ARG USER=wso2carbon
 ARG USER_ID=10802
 ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
-# build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2-integration-control-plane
 ARG WSO2_SERVER_VERSION=2.0.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
@@ -84,32 +89,29 @@ ARG MOTD='printf "\n\
  Read more about Apache License, Version 2.0 here @ http://www.apache.org/licenses/LICENSE-2.0.\n"'
 ENV ENV=${USER_HOME}"/.ashrc"
 
-# create the non-root user and group and set MOTD login message
 RUN \
     addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
     && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
     && echo ${MOTD} > "${ENV}"
 
-# copy init script to user home
 COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
 
-# add the WSO2 product distribution to user's home directory
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
 
-# set the user and work directory
+# Remove Alpine marker so icp.sh does not add -Dio.netty.handler.ssl.noOpenSsl=true.
+# With glibc present the native tcnative library loads correctly and that flag must not be set.
+RUN rm -f /etc/alpine-release
+
 USER ${USER_ID}
 WORKDIR ${USER_HOME}
 
-# set environment variables
 ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
-# expose server ports
 EXPOSE 9445 9446 9449
 
-# initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]
