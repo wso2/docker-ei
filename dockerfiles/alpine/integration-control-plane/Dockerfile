@@ -94,7 +94,7 @@ RUN \
     && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER} \
     && echo ${MOTD} > "${ENV}"
 
-COPY --chown=wso2carbon:wso2 docker-entrypoint.sh ${USER_HOME}/
+COPY --chown=${USER}:${USER_GROUP} docker-entrypoint.sh ${USER_HOME}/
 
 RUN \
     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
