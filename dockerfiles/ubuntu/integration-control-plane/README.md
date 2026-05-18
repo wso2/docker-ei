@@ -30,7 +30,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9445:9445 -p 9446:9446 -p 9447:9447 -p 9448:9448 -p 9449:9449 wso2-integration-control-plane:2.0.0`
+- `docker run -it -p 9445:9445 -p 9446:9446 -p 9449:9449 wso2-integration-control-plane:2.0.0`
 
 ## How to update configurations
 
@@ -53,7 +53,7 @@ chmod o+r <SOURCE_CONFIGS>/deployment.toml
 
 ```
 docker run -it \
--p 9445:9445 -p 9446:9446 -p 9447:9447 -p 9448:9448 -p 9449:9449 \
+-p 9445:9445 -p 9446:9446 -p 9449:9449 \
 --volume <SOURCE_CONFIGS>/deployment.toml:<TARGET_CONFIGS>/deployment.toml \
 wso2-integration-control-plane:2.0.0
 ```
