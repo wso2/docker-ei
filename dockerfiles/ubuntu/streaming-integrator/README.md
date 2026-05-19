@@ -1,7 +1,7 @@
-# Dockerfile for WSO2 Streaming Integrator
+# Dockerfile for WSO2 Integrator: SI
 
 This section defines the step-by-step instructions to build an [Ubuntu](https://hub.docker.com/_/ubuntu/) Linux based Docker image
-for WSO2 Streaming Integrator 4.4.0.
+for WSO2 Integrator: SI 4.4.0.
 
 ## Prerequisites
 

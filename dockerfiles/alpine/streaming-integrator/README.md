@@ -1,6 +1,6 @@
-# Dockerfile for WSO2 Streaming Integrator
+# Dockerfile for WSO2 Integrator: SI
 
-This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 Streaming Integrator 4.4.0.
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 Integrator: SI 4.4.0.
 
 ## Prerequisites
 
@@ -54,7 +54,7 @@ chmod o+r <SOURCE_CONFIGS>/server/deployment.yaml
 
 ```
 docker run -it \
--p 9445:9445 \
+-p 9444:9444 \
 --volume <SOURCE_CONFIGS>/server/deployment.yaml:<TARGET_CONFIGS>/server/deployment.yaml \
 wso2si:4.4.0-alpine
 ```

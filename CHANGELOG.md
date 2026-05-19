@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [v4.4.0.0] - 2026-05-18
 ### Added
-- Added Dockerfiles for Streaming Integrator (SI) 4.4.0 on Alpine, Rocky Linux 9.5, and Ubuntu 24.04, bundling Temurin OpenJDK 25.0.2+10.
+- Added Dockerfiles for WSO2 Integrator: SI 4.4.0 on Alpine, Rocky Linux 9.5, and Ubuntu 24.04, bundling Temurin OpenJDK 25.0.2+10.
 
 ## [v4.2.0.8] - 2025-02-20
 ### Changed
