@@ -15,7 +15,7 @@ RUN dnf update -y \
 
 ENV JAVA_VERSION jdk-25.0.2+10
 
-# install Temurin OpenJDK 21
+# install Temurin OpenJDK 25
 RUN set -eux; \
     ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
     case "${ARCH}" in \

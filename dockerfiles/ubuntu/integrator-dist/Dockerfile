@@ -10,7 +10,7 @@ RUN apt-get update && apt-get upgrade -y \
 
 ENV JAVA_VERSION jdk-25.0.2+10
 
-# install Temurin OpenJDK 21
+# install Temurin OpenJDK 25
 RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \
     case "${ARCH}" in \
