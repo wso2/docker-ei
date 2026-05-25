@@ -1,9 +1,9 @@
-FROM rockylinux:9.5
+FROM rockylinux/rockylinux:9.5
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 RUN dnf update -y \
-    && dnf install -y ca-certificates curl glibc-langpack-en unzip wget \
+    && dnf install -y binutils ca-certificates curl glibc-langpack-en unzip wget \
     && dnf clean all
 
 ENV JAVA_VERSION jdk-21.0.6+7
