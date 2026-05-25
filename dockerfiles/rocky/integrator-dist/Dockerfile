@@ -2,8 +2,13 @@ FROM rockylinux/rockylinux:9.5
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
+RUN dnf install -y glibc-locale-source glibc-langpack-en \
+    && localedef -i en_US -f UTF-8 en_US.UTF-8 \
+    && echo "LANG=en_US.UTF-8" > /etc/locale.conf \
+    && echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+
 RUN dnf update -y \
-    && dnf install -y binutils ca-certificates curl glibc-langpack-en unzip wget \
+    && dnf install -y binutils ca-certificates curl unzip wget \
     && dnf clean all
 
 ENV JAVA_VERSION jdk-21.0.6+7
