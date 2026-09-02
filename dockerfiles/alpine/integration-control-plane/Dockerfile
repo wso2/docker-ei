@@ -75,7 +75,7 @@ ARG USER_GROUP=wso2
 ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
 ARG WSO2_SERVER_NAME=wso2-integration-control-plane
-ARG WSO2_SERVER_VERSION=2.0.0
+ARG WSO2_SERVER_VERSION=2.1.0
 ARG WSO2_SERVER_REPOSITORY=micro-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
@@ -97,7 +97,7 @@ RUN \
 COPY --chown=${USER}:${USER_GROUP} docker-entrypoint.sh ${USER_HOME}/
 
 RUN \
-    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+    curl -fL -o ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && rm -f ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME}
