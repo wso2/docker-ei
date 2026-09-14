@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Ubuntu Docker image
-FROM ubuntu:25.10
+FROM ubuntu:26.04
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
