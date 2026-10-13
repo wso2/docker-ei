@@ -4,6 +4,14 @@ All notable changes to this project `4.4.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v4.4.1.0] - 2026-10-13
+### Changed
+- Updated streaming-integrator Dockerfiles for WSO2 Integrator: SI 4.4.1, moving to Alpine 3.24.2, Rocky Linux 9.8, Ubuntu 26.04 and Temurin OpenJDK 25.0.4.1+1.
+### Fixed
+- Added bash to the Alpine streaming-integrator image so that `bin/extension-installer.sh` can run.
+- Exposed the Siddhi Store Query API ports 7070 and 7443 in the streaming-integrator images.
+- Installed glibc-langpack-en in the Rocky streaming-integrator image so the configured en_US.UTF-8 locale is available.
+
 ## [v4.4.0.0] - 2026-05-18
 ### Added
 - Added Dockerfiles for WSO2 Integrator: SI 4.4.0 on Alpine, Rocky Linux 9.5, and Ubuntu 24.04, bundling Temurin OpenJDK 25.0.2+10.
