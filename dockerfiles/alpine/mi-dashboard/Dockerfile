@@ -17,23 +17,24 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.18.9
+FROM alpine:3.24.2
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-# install JDK Dependencies
-RUN apk add --no-cache tzdata musl-locales musl-locales-lang \
+# Update the package list and upgrade installed packages and install JDK Dependencies
+RUN apk update && apk upgrade --no-cache \
+    && apk add --no-cache tzdata musl-locales musl-locales-lang \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-11.0.25+9
+ENV JAVA_VERSION jdk-11.0.32.1+1
 
 # install OpenJDK 11
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='0a431310ccccc36c85b1274b5d31e368fdc8cf62cb7c2ed98d7b59eb5a13dc82'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.25%2B9/OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.25_9.tar.gz'; \
+         ESUM='1dc1d3259fa4ca7a2db43c539a60bfa7fc0ea595f445a71ef36d28120f3094aa'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.32.1%2B1/OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.32.1_1.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -61,7 +62,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.1.0.10"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.1.0.11"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
