@@ -35,13 +35,13 @@ git clone https://github.com/wso2/docker-ei.git
 ## How to update configurations
 
 Configurations would lie on the Docker host machine and they can be volume mounted to the container. <br>
-As an example, steps required to change the port offset using `deployment.toml` is as follows:
+As an example, steps required to change the log level using `deployment.toml` is as follows:
 
 ##### 1. Stop the WSO2 Integration Control Plane container if it's already running.
 
-In WSO2 Integration Control Plane 2.1.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf/server/`.<br>
+In WSO2 Integration Control Plane 2.1.0 product distribution, `deployment.toml` configuration file can be found at `<DISTRIBUTION_HOME>/conf/`.<br>
 Copy the file to some suitable location of the host machine, referred to as `<SOURCE_CONFIGS>/deployment.toml` and change the<br>
-offset value (`[server]->offset`) to 1.
+`logLevel` value to `"DEBUG"`.
 
 ##### 2. Grant read permission to `other` users for `<SOURCE_CONFIGS>/deployment.toml`.
 
@@ -58,7 +58,7 @@ docker run -it \
 wso2-integration-control-plane:2.1.0
 ```
 
-> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2-integration-control-plane-2.1.0/conf/server folder of the container.
+> In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2-integration-control-plane-2.1.0/conf folder of the container.
 
 ## WSO2 Private Docker images
 
