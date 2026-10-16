@@ -17,28 +17,28 @@
 # ------------------------------------------------------------------------
 
 # set base Docker image to Alpine Docker image
-FROM alpine:3.24.2
+FROM alpine:3.21.3
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 # update the package list and upgrade installed packages
 RUN apk update && apk upgrade --no-cache \
-    && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd bash \
+    && apk add --no-cache tzdata musl-locales musl-locales-lang netcat-openbsd \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION=jdk-25.0.4.1+1
+ENV JAVA_VERSION=jdk-25.0.2+10
 
 # install Temurin OpenJDK 25
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='f18648ee5ce45261f50dc9493fdae7ddebaa2a7a857cafda3e2a448a79c03dee'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_x64_alpine-linux_hotspot_25.0.4.1_1.tar.gz'; \
+         ESUM='961f13ba0ee1e18c41c50ab642361e4283dee5e7947a48ed6a72c8a661d0cca0'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_alpine-linux_hotspot_25.0.2_10.tar.gz'; \
          ;; \
        aarch64|arm64) \
-         ESUM='8d19373d427017d86ac87cf6a47ba49746be864832f60b52b7e3b1531c6b2cb8'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.4.1%2B1/OpenJDK25U-jdk_aarch64_alpine-linux_hotspot_25.0.4.1_1.tar.gz'; \
+         ESUM='e8d928fb018eabb31a148ebadaa5a5ec69273e6562afede21c426960a6a67143'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_aarch64_alpine-linux_hotspot_25.0.2_10.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -60,7 +60,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.1.0"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.0"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
@@ -71,7 +71,7 @@ ARG USER_GROUP_ID=10802
 ARG USER_HOME=/home/${USER}
 # build arguments for WSO2 product installation
 ARG WSO2_SERVER_NAME=wso2si
-ARG WSO2_SERVER_VERSION=4.4.1
+ARG WSO2_SERVER_VERSION=4.4.0
 ARG WSO2_SERVER_REPOSITORY=streaming-integrator
 ARG WSO2_SERVER=${WSO2_SERVER_NAME}-${WSO2_SERVER_VERSION}
 ARG WSO2_SERVER_HOME=${USER_HOME}/${WSO2_SERVER}
@@ -113,7 +113,7 @@ ENV WORKING_DIRECTORY=${USER_HOME} \
     WSO2_SERVER_HOME=${WSO2_SERVER_HOME}
 
 # expose server ports
-EXPOSE 9711 9611 7711 7611 9090 9443 7070 7443
+EXPOSE 9711 9611 7711 7611 9090 9443
 
 # initiate container and start WSO2 Carbon server
 ENTRYPOINT ["/home/wso2carbon/docker-entrypoint.sh"]

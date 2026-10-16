@@ -1,6 +1,6 @@
 # Dockerfile for WSO2 Integrator: SI
 
-This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 Integrator: SI 4.4.1.
+This section defines the step-by-step instructions to build an [Alpine](https://hub.docker.com/_/alpine/) Linux based Docker image for WSO2 Integrator: SI 4.4.0.
 
 ## Prerequisites
 
@@ -19,18 +19,18 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Build the Docker image.
 
-- Download wso2si-4.4.1.zip from [here](https://wso2.com/integration/streaming-integrator/)
+- Download wso2si-4.4.0.zip from [here](https://wso2.com/integration/streaming-integrator/)
 - Host the product pack using a webserver.
 - Navigate to `<SI_DOCKERFILE_HOME>` directory. <br>
 - Change <SI_DIST_URL> in Dockerfile to the URL of the product pack.
   Execute `docker build` command as shown below.
-    + `docker build -t wso2si:4.4.1-alpine .`
+    + `docker build -t wso2si:4.4.0-alpine .`
 
 > By default, the Docker image will prepackage the General Availability (GA) release version of the relevant WSO2 product.
 
 ##### 3. Running the Docker image.
 
-- `docker run -it -p 9443:9443 wso2si:4.4.1-alpine`
+- `docker run -it -p 9443:9443 wso2si:4.4.0-alpine`
   
 
 ## How to update configurations
@@ -56,10 +56,10 @@ chmod o+r <SOURCE_CONFIGS>/server/deployment.yaml
 docker run -it \
 -p 9444:9444 \
 --volume <SOURCE_CONFIGS>/server/deployment.yaml:<TARGET_CONFIGS>/server/deployment.yaml \
-wso2si:4.4.1-alpine
+wso2si:4.4.0-alpine
 ```
 
->In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-4.4.1/conf folder of the container.
+>In here, <TARGET_CONFIGS> refers to /home/wso2carbon/wso2si-4.4.0/conf folder of the container.
 
 ## WSO2 Private Docker images
 
