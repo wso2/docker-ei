@@ -19,7 +19,7 @@ git clone https://github.com/wso2/docker-ei.git
 
 ##### 2. Build the Docker image.
 
-- Download wso2mi-4.0.0.zip from [here](https://wso2.com/products/downloads/?product=wso2integrator&package=mi)
+- Download wso2mi-4.7.0.zip from [here](https://wso2.com/products/downloads/?product=wso2integrator&package=mi)
 - Host the product pack using a webserver.
 - Navigate to `<MI_DOCKERFILE_HOME>` directory. 
 - Execute `docker build` command as shown below.
