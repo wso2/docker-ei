@@ -4,6 +4,10 @@ All notable changes to this project `4.4.x` per each release will be documented 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [v4.4.1.1] - 2026-11-01
+### Changed
+- Updated the Temurin OpenJDK in the streaming-integrator Dockerfiles for SI 4.4.1 to 25.0.5+8, which removes the eMudhra/emSign affected root CAs from the JDK cacerts.
+
 ## [v4.4.1.0] - 2026-10-13
 ### Changed
 - Updated streaming-integrator Dockerfiles for WSO2 Integrator: SI 4.4.1, moving to Alpine 3.24.2, Rocky Linux 9.8, Ubuntu 26.04 and Temurin OpenJDK 25.0.4.1+1.
