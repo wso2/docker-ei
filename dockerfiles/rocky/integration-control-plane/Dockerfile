@@ -31,7 +31,8 @@ RUN dnf update -y \
 RUN yum -y update && yum -y upgrade && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
-ENV JAVA_VERSION jdk-21.0.13+9
+# JAVA_VERSION is the x64 JDK. aarch64 uses jdk-21.0.13+9 (no aarch64 build of jdk-21.0.13.1+2).
+ENV JAVA_VERSION jdk-21.0.13.1+2
 
 # install Temurin OpenJDK 21
 RUN set -eux; \
@@ -42,12 +43,12 @@ RUN set -eux; \
          BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.13_9.tar.gz'; \
          ;; \
        ppc64el|powerpc:common64) \
-         ESUM='cfaedcc659213833ead9c2a50987d8dcbd0e7a2d82217abb43acb64c0dd3d8cc'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.13_9.tar.gz'; \
+         ESUM='4d3d75690785cf593002446005427bb3c61de163f2469343572cdcb0d258ed62'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_ppc64le_linux_hotspot_21.0.13.1_2.tar.gz'; \
          ;; \
        amd64|i386:x86-64) \
-         ESUM='d7f5d5cf865a2902b70ff549b97586a7d3f234e016f041ab447ea740c7d66d1c'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz'; \
+         ESUM='bb8a93f9ae6e7a693b2b721e85dbeff26ae1a77447985a8d7afcdd9c7cf6222e'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_x64_linux_hotspot_21.0.13.1_2.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -65,7 +66,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.5.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.5.0.9"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
