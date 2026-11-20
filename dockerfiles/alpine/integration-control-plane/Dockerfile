@@ -33,15 +33,16 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-local
 RUN mkdir -p /usr/glibc-compat/lib
 COPY --from=libgcc-provider /libgcc/libgcc_s.so.1 /usr/glibc-compat/lib/libgcc_s.so.1
 
-ENV JAVA_VERSION=jdk-21.0.13+9
+# JAVA_VERSION is the x64 JRE. aarch64 uses jdk-21.0.13+9 (no aarch64 build of jdk-21.0.13.1+2).
+ENV JAVA_VERSION=jdk-21.0.13.1+2
 
 # Install glibc-compiled Temurin JRE (NOT the alpine-linux/musl variant)
 RUN set -eux; \
     ARCH="$(uname -m)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='a535a1df9c6284d9618872984e026ae0352d1f7e9e0605425c0e6114f47351dd'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jre_x64_linux_hotspot_21.0.13_9.tar.gz'; \
+         ESUM='18f44fab9065217f3ba61d0eef8a7b5f3c3713aa7293001b0d4ac10ede3850f0'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jre_x64_linux_hotspot_21.0.13.1_2.tar.gz'; \
          ;; \
        aarch64|arm64) \
          ESUM='b1734db7ade49c3f6acc6ae06233b8c2dd90e3e2f00f67000ae1c972aaa64d8c'; \
@@ -67,7 +68,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/usr/glibc-compat/bin:/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.3"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.4"
 
 ARG USER=wso2carbon
 ARG USER_ID=10802
