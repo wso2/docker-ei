@@ -30,7 +30,8 @@ RUN dnf install -y glibc-locale-source glibc-langpack-en \
 RUN yum -y update && yum -y upgrade && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
-ENV JAVA_VERSION=jdk-25.0.5+8
+# JAVA_VERSION is the x64 JDK. aarch64 uses jdk-25.0.5+8 (no aarch64 build of jdk-25.0.5.1+2).
+ENV JAVA_VERSION=jdk-25.0.5.1+2
 
 # install Temurin OpenJDK 25
 RUN set -eux; \
@@ -41,12 +42,12 @@ RUN set -eux; \
          BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_linux_hotspot_25.0.5_8.tar.gz'; \
          ;; \
        ppc64el|powerpc:common64) \
-         ESUM='47825886fd72e86c94e6fd1687a13bebb4ae729e24d2788be0d294589bf07297'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_ppc64le_linux_hotspot_25.0.5_8.tar.gz'; \
+         ESUM='cfffd074eb1fb7a7b38cae9341363c1c35094a5b5f7d49c08b406159dae65872'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5.1%2B2/OpenJDK25U-jdk_ppc64le_linux_hotspot_25.0.5.1_2.tar.gz'; \
          ;; \
        amd64|i386:x86-64) \
-         ESUM='68982529869257d0ee6b824ec5aa270ff8b118bb438670da0b97ebdab178d7fb'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5_8.tar.gz'; \
+         ESUM='760f91b22c3efc9bd1b64ff950598231be82928cc807e30691a0e7a2995a62c0'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5.1%2B2/OpenJDK25U-jdk_x64_linux_hotspot_25.0.5.1_2.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -64,7 +65,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.2"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.6.0.4"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
