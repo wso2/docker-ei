@@ -25,7 +25,8 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN yum -y update && yum install -y tzdata openssl curl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
-ENV JAVA_VERSION jdk-17.0.21+9
+# JAVA_VERSION is the x64 JDK. aarch64 and ppc64le use jdk-17.0.21+9 (no builds of jdk-17.0.21.1+2 for these).
+ENV JAVA_VERSION jdk-17.0.21.1+2
 
 # install Temurin OpenJDK 17
 RUN set -eux; \
@@ -40,8 +41,8 @@ RUN set -eux; \
          BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jdk_ppc64le_linux_hotspot_17.0.21_9.tar.gz'; \
          ;; \
        amd64|i386:x86-64) \
-         ESUM='8b9b611d917e3dfd8419d3566b5949226f69b052fed7e109c1368add1dfe8711'; \
-         BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21%2B9/OpenJDK17U-jdk_x64_linux_hotspot_17.0.21_9.tar.gz'; \
+         ESUM='0b0ac5eab6db6abaec68c9913bcddb31321e5da411c45073d520d9c125e6f7b4'; \
+         BINARY_URL='https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.21.1%2B2/OpenJDK17U-jdk_x64_linux_hotspot_17.0.21.1_2.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -59,7 +60,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.15"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.2.0.16"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
