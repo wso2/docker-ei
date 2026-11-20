@@ -26,15 +26,15 @@ RUN apk update && apk upgrade --no-cache \
     && apk add --no-cache tzdata musl-locales musl-locales-lang \
     && rm -rf /var/cache/apk/*
 
-ENV JAVA_VERSION jdk-11.0.32.1+1
+ENV JAVA_VERSION jdk-11.0.33+10
 
 # install OpenJDK 11
 RUN set -eux; \
     ARCH="$(apk --print-arch)"; \
     case "${ARCH}" in \
        amd64|x86_64) \
-         ESUM='1dc1d3259fa4ca7a2db43c539a60bfa7fc0ea595f445a71ef36d28120f3094aa'; \
-         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.32.1%2B1/OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.32.1_1.tar.gz'; \
+         ESUM='d9deaccb8137409f91acdcfaa24e7c4b247163b425b29c33fe536c78f75dc237'; \
+         BINARY_URL='https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.33%2B10/OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.33_10.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -62,7 +62,7 @@ RUN echo Verifying install ... \
     && echo Complete.
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.1.0.11"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.1.0.12"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
