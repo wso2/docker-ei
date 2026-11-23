@@ -31,7 +31,6 @@ RUN dnf update -y \
 RUN yum -y update && yum -y upgrade && yum install -y tzdata openssl ca-certificates fontconfig gzip tar nc unzip wget \
     && yum clean all
 
-# JAVA_VERSION is the x64 JDK. aarch64 uses jdk-21.0.13+9 (no aarch64 build of jdk-21.0.13.1+2).
 ENV JAVA_VERSION jdk-21.0.13.1+2
 
 # install Temurin OpenJDK 21
@@ -39,8 +38,8 @@ RUN set -eux; \
     ARCH="$(objdump="$(command -v objdump)" && objdump --file-headers "$objdump" | awk -F '[:,]+[[:space:]]+' '$1 == "architecture" { print $2 }')"; \
     case "${ARCH}" in \
        aarch64|arm64) \
-         ESUM='e3522e707fc7dbe2a72c30746b1e7068301a0213ecd213d4491f35a14eb55578'; \
-         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.13_9.tar.gz'; \
+         ESUM='8c72816a6b308842d5ed1f13e5826b69c567da4784f7238d7e800efa71fe54b1'; \
+         BINARY_URL='https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13.1%2B2/OpenJDK21U-jdk_aarch64_linux_hotspot_21.0.13.1_2.tar.gz'; \
          ;; \
        ppc64el|powerpc:common64) \
          ESUM='4d3d75690785cf593002446005427bb3c61de163f2469343572cdcb0d258ed62'; \
@@ -66,7 +65,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.5.0.9"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.5.0.11"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
