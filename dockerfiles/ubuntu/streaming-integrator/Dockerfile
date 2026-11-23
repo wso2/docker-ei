@@ -28,7 +28,6 @@ RUN apt-get update && apt-get upgrade -y \
     && locale-gen en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 
-# JAVA_VERSION is the x64 JDK. aarch64 uses jdk-25.0.5+8 (no aarch64 build of jdk-25.0.5.1+2).
 ENV JAVA_VERSION=jdk-25.0.5.1+2
 
 # install Temurin OpenJDK 25
@@ -36,8 +35,8 @@ RUN set -eux; \
     ARCH="$(dpkg --print-architecture)"; \
     case "${ARCH}" in \
        aarch64|arm64) \
-         ESUM='bb5b2ded252f21c6090cf780b0a408ad0d83bbb557e702955643557f13231880'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_linux_hotspot_25.0.5_8.tar.gz'; \
+         ESUM='c37879e0d08eeb1baa69fcbb7758cd455b7b1c0ceab1e2a136ccb1713c530984'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5.1%2B2/OpenJDK25U-jdk_aarch64_linux_hotspot_25.0.5.1_2.tar.gz'; \
          ;; \
        ppc64el|powerpc:common64) \
          ESUM='cfffd074eb1fb7a7b38cae9341363c1c35094a5b5f7d49c08b406159dae65872'; \
@@ -67,7 +66,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.8"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.4.0.10"
 
 # set Docker image build arguments
 # build arguments for user/group configurations
