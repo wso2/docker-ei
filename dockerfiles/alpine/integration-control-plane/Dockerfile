@@ -33,7 +33,6 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache tzdata musl-local
 RUN mkdir -p /usr/glibc-compat/lib
 COPY --from=libgcc-provider /libgcc/libgcc_s.so.1 /usr/glibc-compat/lib/libgcc_s.so.1
 
-# JAVA_VERSION is the x64 JRE. aarch64 uses jdk-25.0.5+8 (no aarch64 build of jdk-25.0.5.1+2).
 ENV JAVA_VERSION=jdk-25.0.5.1+2
 
 # Install glibc-compiled Temurin JRE (NOT the alpine-linux/musl variant)
@@ -45,8 +44,8 @@ RUN set -eux; \
          BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5.1%2B2/OpenJDK25U-jre_x64_linux_hotspot_25.0.5.1_2.tar.gz'; \
          ;; \
        aarch64|arm64) \
-         ESUM='963931723891302ebb2687178532c3d793d71e2577cd058061c7efb396140a86'; \
-         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_aarch64_linux_hotspot_25.0.5_8.tar.gz'; \
+         ESUM='c6161dcfb365024fbfbcda265343d562d6f821c78dd8e7aeaeaf294893f6ff8b'; \
+         BINARY_URL='https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5.1%2B2/OpenJDK25U-jre_aarch64_linux_hotspot_25.0.5.1_2.tar.gz'; \
          ;; \
        *) \
          echo "Unsupported arch: ${ARCH}"; \
@@ -68,7 +67,7 @@ ENV JAVA_HOME=/opt/java/openjdk \
     PATH="/usr/glibc-compat/bin:/opt/java/openjdk/bin:$PATH"
 
 LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>" \
-      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.7.0.3"
+      com.wso2.docker.source="https://github.com/wso2/docker-ei/releases/tag/v4.7.0.5"
 
 ARG USER=wso2carbon
 ARG USER_ID=10802
